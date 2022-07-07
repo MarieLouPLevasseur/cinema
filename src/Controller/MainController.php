@@ -17,7 +17,6 @@ class MainController extends AbstractController
      */
     public function homepage() :Response
     {
-        // dump('controller');
 
         // return new Response('<h1>Homepage</h1>');
         return $this->render('main/homepage.html.twig',[
@@ -51,10 +50,25 @@ class MainController extends AbstractController
      */
     public function show() :Response
     {
-        // dump($_REQUEST);
 
         return $this->render('main/show.html.twig',[
             'title' =>'Film du jour',
+        ]);
+
+    }
+
+
+    /**
+     * Show Favorite
+     *
+     * @Route("/favorite")
+     * @return Response
+     */
+    public function favorite() :Response
+    {
+
+        return $this->render('main/favorite.html.twig',[
+            'title' =>'Films Favoris',
         ]);
 
     }
