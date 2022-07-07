@@ -43,4 +43,20 @@ class MainController extends AbstractController
 
     }
 
+     /**
+     * Show One Movie
+     *
+     * @Route("/show")
+     * @return Response
+     */
+    public function show() :Response
+    {
+        // dump($_REQUEST);
+
+        return $this->render('main/show.html.twig',[
+            'title' =>'Film du jour',
+        ]);
+
+    }
+
 }
