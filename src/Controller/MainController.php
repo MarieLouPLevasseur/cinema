@@ -64,10 +64,26 @@ class MainController extends AbstractController
         // TODO ce serait mieux d'avoir une classe qui récupère un film par ID
          // pour se faire on peut inclure le fichier directement
          require __DIR__ . '/../../sources/data.php';
-    dump($id);
+
+         dump($id);
+
+         //si l'id n'existe pas on arrete le script
+         if (! isset($shows[$id]))
+         {
+             // on donne le code d'erreur 
+             // le throw permet de respecter le flow de symfony et faire un try catch
+            //  try>throw>catch
+             // permet de pouvoir exécuter du code malgré l'erreur 
+             // et de garder une 404: page non trouvé en environnement de prod
+             throw $this->createNotFoundException('The product does not exist');
+
+         }
+
+
+         //sinon on continue le script
 
         $show = $shows[$id];
-    dump($show);
+    // dump($show);
 
         // fournir les infos à la vue
 
