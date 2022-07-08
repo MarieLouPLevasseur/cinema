@@ -12,7 +12,7 @@ class MainController extends AbstractController
     /**
      *  Show list
      *
-     * @Route("/")
+     * @Route("/", name="homepage", methods="GET")
      * @return Response
      */
     public function homepage() :Response
@@ -29,7 +29,7 @@ class MainController extends AbstractController
      /**
      * Show movie list 
      *
-     * @Route("/list")
+     * @Route("/list", name="movie_list", methods="GET")
      * @return Response
      */
     public function list() :Response
@@ -49,24 +49,32 @@ class MainController extends AbstractController
 
     }
 
-    // @Route("/film/{id}", requirements={"id"="d*"})
+    // @Route("/film/{id}", requirements={"id"="\d+"})
 
      /**
      * Show One Movie
-     * @Route("/film/{id}", requirements={"id"="\d+"})
+     * @Route("/film/{id}",name="movie_show", requirements={"id"="\d+"}, methods="GET")
      *
      * @param int $id
      * @return Response
      */
-    public function movie($id) :Response
+    public function movie(int $id) :Response
     {
+        //  préparer les données
+        // TODO ce serait mieux d'avoir une classe qui récupère un film par ID
+         // pour se faire on peut inclure le fichier directement
+         require __DIR__ . '/../../sources/data.php';
+    dump($id);
 
-        dump($id);
-        // $data = $this->getData('contact');
-        // dump($data);
+        $show = $shows[$id];
+    dump($show);
+
+        // fournir les infos à la vue
 
         return $this->render('main/movie.html.twig',[
             'title' =>'Film du jour',
+            'show' => $show,
+
         ]);
 
     }
@@ -75,7 +83,7 @@ class MainController extends AbstractController
     /**
      * Show Favorite
      *
-     * @Route("/favoris")
+     * @Route("/favoris", name="movie_favorites", methods="GET")
      * @return Response
      */
     public function favorite() :Response
