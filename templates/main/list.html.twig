@@ -33,20 +33,20 @@
             <div class="col-12 col-lg-9">
 
                 <h2 class="text-muted fw-bold mb-4">Les films et séries/Résultats de recherche</h2>
+{# boucle #}
+                {% for current_show in show_list %}
 
-                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm bg-white position-relative">
-                    <div class="col-4 movie__poster" style="background-image: url(https://m.media-amazon.com/images/M/MV5BNThmZGY4NzgtMTM4OC00NzNkLWEwNmEtMjdhMGY5YTc1NDE4XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg);">
+              <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm bg-white position-relative">
+                    <div class="col-4 movie__poster" style="background-image: url({{ current_show.poster }});">
                         <img src="images/poster-placeholder.png" class="img-fluid">
                         <!-- img src="https://m.media-amazon.com/images/M/MV5BNThmZGY4NzgtMTM4OC00NzNkLWEwNmEtMjdhMGY5YTc1NDE4XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg" class="img-fluid" -->
                     </div>
                     <div class="col-8 p-4 d-flex flex-column position-static">
                         <a href="" class="movie__favorite fs-1 my-2 mx-3 link-danger"><i class="bi bi-bookmark-plus"></i></a>
-                        <strong class="d-inline-block mb-2 text-primary">Film</strong>
-                        <h3 class="mb-1">A Bug's Life</h3>
-                        <div class="mb-1 text-muted">93 min</div>
-                        <p><small>Tilt, fourmi quelque peu tête en l'air, détruit par
-                                inadvertance la
-                                récolte de la saison.</small>
+                        <strong class="d-inline-block mb-2 text-primary">{{ current_show.type }}</strong>
+                        <h3 class="mb-1">{{ current_show.title }}</h3>
+                        <div class="mb-1 text-muted">{{ current_show.duration }} min</div>
+                        <p><small>{{ current_show.summary }}</small>
                         </p>
                         <div class="d-flex" style="color: orange;">
                             <i class="bi bi-star-fill"></i>
@@ -54,15 +54,16 @@
                             <i class="bi bi-star-fill"></i>
                             <i class="bi bi-star-fill"></i>
                             <i class="bi bi-star-half"></i>
-                            <span class="ps-1">4.8</span>
+                            <span class="ps-1">{{ current_show.rating }}</span>
                         </div>
                         <a href="./show.html" class="fs-1 mt-3 text-danger align-self-start">
                             <i class="bi bi-arrow-right-square"></i>
                         </a>
                     </div>
                 </div>
+            {% endfor %}
 
-                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm bg-white position-relative">
+                {# <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm bg-white position-relative">
                     <div class="col-4 movie__poster" style="background-image: url(https://m.media-amazon.com/images/M/MV5BYTRiNDQwYzAtMzVlZS00NTI5LWJjYjUtMzkwNTUzMWMxZTllXkEyXkFqcGdeQXVyNDIzMzcwNjc@._V1_SX300.jpg);">
                         <!-- img src="https://m.media-amazon.com/images/M/MV5BYTRiNDQwYzAtMzVlZS00NTI5LWJjYjUtMzkwNTUzMWMxZTllXkEyXkFqcGdeQXVyNDIzMzcwNjc@._V1_SX300.jpg"
                             class="img-fluid" -->
@@ -90,7 +91,7 @@
                         </a>
                         
                     </div>
-                </div>
+                </div> #}
             </div>
 
             <nav class="col-lg-9 offset-lg-3">

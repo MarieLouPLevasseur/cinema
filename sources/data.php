@@ -46,5 +46,16 @@ $shows = [
         'rating' => 4.2
     ],
 
+    [
+        'type' => 'Film',
+        'title' => 'Da Vinci Code',
+        'release_date' => 2006,
+        'duration' => 149,
+        'summary' => '1983, à Hawkins dans l\'Indiana. Après la disparition d\'un garçon de 12 ans dans des circonstances mystérieuses, la petite ville du Midwest est témoin d\'étranges phénomènes.',
+        'synopsis' => "Une nuit, le professeur Robert Langdon, éminent spécialiste de l'étude des symboles, est appelé d'urgence au Louvre : le conservateur du musée a été assassiné, mais avant de mourir, il a laissé de mystérieux symboles... Avec l'aide de la cryptologue Sophie Neveu, Langdon va mener l'enquête et découvrir des signes dissimulés dans les oeuvres de Léonard de Vinci.",
+        'poster' => 'https://www.cine-feuilles.ch/storage/app/uploads/public/5a3/d5b/b12/thumb_17976_360_480_0_0_auto.jpg',
+        'rating' => 5
+    ],
+
 ];
 
