@@ -8,7 +8,7 @@
 
         <div class="row mb-2">
 {# on inclus les catérogies #}
-            {% include('main/_genres_list.html.twig') %}
+            {% include('movie/_genres_list.html.twig') %}
 
             
 
@@ -19,7 +19,7 @@
 
                 {% for show_id, current_show in show_list %}
 
-                    {% include ('main/_show_detail.html.twig') %}
+                    {% include ('movie/_show_detail.html.twig') %}
 
             {% endfor %}
 

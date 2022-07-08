@@ -85,7 +85,7 @@ class MovieController extends AbstractController
                 }
             }
         // on fournit le tableau à la vue pour dynamiser le template
-        return $this->render('main/favorite.html.twig',[
+        return $this->render('movie/favorite.html.twig',[
             'title' =>'Mes Favoris',
             'show_list' => $favoriteShows,
 
@@ -108,7 +108,7 @@ class MovieController extends AbstractController
         // dump($shows);
 
 
-        return $this->render('main/list.html.twig',[
+        return $this->render('movie/list.html.twig',[
             'title' =>'Liste des films et séries',
             'show_list' => $shows,
 
@@ -154,7 +154,7 @@ class MovieController extends AbstractController
 
         // fournir les infos à la vue
 
-        return $this->render('main/movie.html.twig',[
+        return $this->render('movie/movie.html.twig',[
             'title' =>'Film du jour',
             'show' => $show,
 
