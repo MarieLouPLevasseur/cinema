@@ -9,6 +9,20 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends AbstractController
 {
 
+/**
+     * favorites action
+     *
+     * @Route("/api", name="api_list", methods="GET")
+     * @return Response
+     */
+    public function apiList() :Response
+    {
+        // récupérer tous les movies
+        require __DIR__ . '/../../sources/data.php';
+
+        return $this->json($shows);
+    }
+
     /**
      *  Show homepage
      *
