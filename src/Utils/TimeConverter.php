@@ -60,6 +60,11 @@ class TimeConverter  extends AbstractExtension
         }
         if ($minutes > 0) {
 
+            if ($result != '') 
+            {
+                $result .= ' ';
+            }
+            
             $result .= "{$minutes}min";
         }
         if ($seconds > 0) {
