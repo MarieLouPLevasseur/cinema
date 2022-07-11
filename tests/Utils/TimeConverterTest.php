@@ -52,7 +52,7 @@ class TimeConverterTest extends TestCase
             [60, '1h', 'test Heure'],
             [0.5,'30s'],
             [1, '1min'],
-            // [1.5, '1min 30s'],
+            [1.5, '1min 30s'],
             // [61.5, '1h 1min 30s'],
         // [60.5, '1h 0min 30s'],
         // [1440, '1j'],

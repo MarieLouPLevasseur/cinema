@@ -64,10 +64,10 @@ class TimeConverter  extends AbstractExtension
         }
         if ($seconds > 0) {
 
-            // if ($result != '') 
-            // {
-            //     $result .= ' ';
-            // }
+            if ($result != '') 
+            {
+                $result .= ' ';
+            }
             $result .= "{$seconds}s";
         }
 
