@@ -32,7 +32,7 @@ class TimeConverter  extends AbstractExtension
     // }
 
         //TEST a supprimer
-        // $totalMinutes = 1600.5;
+        // $totalMinutes = 1440.5;
 
 
         //**** calcul jours **** */
@@ -94,7 +94,17 @@ class TimeConverter  extends AbstractExtension
             $result .= "{$hours}h";
         }
 
-        
+          // si les heures sont nulles, on ne les affiche que si encadrement avec jours et minutes OU secondes >0
+          if ($hours == 0 && $seconds >0 | $hours >0 && $days >0){
+
+            // + espace d'affichage ergonomie visuel
+            if ($result != '') {
+            $result .= ' ';
+            }
+
+        $result .= "{$hours}h";
+
+        }
 /******************************
  ******* GESTION MINUTES *******
  ******************************/
@@ -110,7 +120,7 @@ class TimeConverter  extends AbstractExtension
             $result .= "{$minutes}min";
         }
         // si les minutes sont nulles, on ne les affiche que si encadrement avec heures et secondes >0
-        if ($minutes == 0 && $seconds >0 && $hours >0 ){
+        if ($minutes == 0 && $seconds >0 && $hours >0 | $days >0){
 
             // + espace d'affichage ergonomie visuel
             if ($result != '') {
@@ -123,7 +133,7 @@ class TimeConverter  extends AbstractExtension
 
         // si secondes >0 on affiche sa valeur
         if ($seconds > 0) {
-
+            
             // + espace d'affichage ergonomie visuel
             if ($result != '') 
             {
