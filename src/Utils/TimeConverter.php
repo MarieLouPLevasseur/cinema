@@ -32,20 +32,37 @@ class TimeConverter  extends AbstractExtension
     // }
 
         //TEST a supprimer
-        // $totalMinutes = 60.5;
+        // $totalMinutes = 1600.5;
 
+
+        //**** calcul jours **** */
+        $days = floor($totalMinutes/1440);
+        // var_dump($days);
+
+        //**** calcul heures **** */
         // on divise par 60 pour avoir le nombre d'heures
+            // on enlève le nb jour (1jour = 1440min)
             // on arrondi à l'entier inférieur (pour avoir le nombre d'heure entière)
-        $hours = floor($totalMinutes / 60);
+        $hours = floor(($totalMinutes-($days *1440))  /60 );
         // var_dump($hours);
 
-        //on soustrait du total pour obtenir les minutes
-        $minutes = floor($totalMinutes - ( 60 * $hours ));
+        //**** calcul minutes **** */
+        //on soustrait du total:
+            // les jours (1 jour  = 1440 min)
+            // et les heures (1h = 60 min)
+        $minutes = floor($totalMinutes -($days *1440) -( 60 * $hours ));
         // var_dump($minutes);
 
-        // convertion en secondes
-        $seconds = 60 * ($totalMinutes - ( 60 * $hours ) - $minutes);
+        //**** calcul secondes **** */
+        // on soustrait du total:
+            // les jours (1 jour  = 1440 min)
+            // et les heures (1h = 60 min)
+            // les minutes (déjà en minutes)
+        $seconds = 60 * ( $totalMinutes -($days *1440) -( 60 * $hours ) - ($minutes));
         // var_dump($seconds);
+
+
+
 
 
 
@@ -53,16 +70,38 @@ class TimeConverter  extends AbstractExtension
         // result vaut null par défaut
         $result = "";
 
+/******************************
+ ******* GESTION JOURS ********
+ ******************************/
+        // si days >0 on affiche sa valeur
+        if ($days > 0) {
 
+            
+            $result .= "{$days}j";
+        }
+/******************************
+ ******* GESTION HEURES *******
+ ******************************/
+        // si hours >0 on affiche sa valeur
         if ($hours > 0) {
+            
+            // + espace d'affichage ergonomie visuel
+            if ($result != '') 
+            {
+                $result .= ' ';
+            }
 
             $result .= "{$hours}h";
         }
 
         
-        
+/******************************
+ ******* GESTION MINUTES *******
+ ******************************/
+        // si minutes >0 on affiche sa valeur
         if ($minutes > 0) {
 
+            // + espace d'affichage ergonomie visuel
             if ($result != '') 
             {
                 $result .= ' ';
@@ -70,20 +109,22 @@ class TimeConverter  extends AbstractExtension
 
             $result .= "{$minutes}min";
         }
-        
-        if ($minutes == 0 && $hours >0 && $seconds >0){
+        // si les minutes sont nulles, on ne les affiche que si encadrement avec heures et secondes >0
+        if ($minutes == 0 && $seconds >0 && $hours >0 ){
 
-        if ($result != '') {
+            // + espace d'affichage ergonomie visuel
+            if ($result != '') {
             $result .= ' ';
-        }
+            }
 
         $result .= "{$minutes}min";
 
         }
-        
 
+        // si secondes >0 on affiche sa valeur
         if ($seconds > 0) {
-            
+
+            // + espace d'affichage ergonomie visuel
             if ($result != '') 
             {
                 $result .= ' ';
