@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Utils\TimeConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -125,7 +126,7 @@ class MovieController extends AbstractController
      * @param int $id
      * @return Response
      */
-    public function movie(int $id) :Response
+    public function movie(int $id, TimeConverter $timeConverter) :Response
     {
         //  préparer les données
         // TODO ce serait mieux d'avoir une classe qui récupère un film par ID
@@ -152,11 +153,18 @@ class MovieController extends AbstractController
         $show = $shows[$id];
     // dump($show);
 
+    // on créer un objet TimeConvert et on appel sa méthode
+    $timeConverter = new TimeConverter();
+    // dump($timeConverter->convert($show['duration']));
+    // avoir la durée au format xxhyym
+
+
         // fournir les infos à la vue
 
         return $this->render('movie/movie.html.twig',[
             'title' =>'Film du jour',
             'show' => $show,
+            'duration_in_minutes' => $timeConverter->convert($show['duration'])
 
         ]);
 
