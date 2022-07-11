@@ -32,20 +32,20 @@ class TimeConverter  extends AbstractExtension
     // }
 
         //TEST a supprimer
-        // $totalMinutes = 60;
+        // $totalMinutes = 60.5;
 
         // on divise par 60 pour avoir le nombre d'heures
             // on arrondi à l'entier inférieur (pour avoir le nombre d'heure entière)
         $hours = floor($totalMinutes / 60);
-        var_dump($hours);
+        // var_dump($hours);
 
         //on soustrait du total pour obtenir les minutes
         $minutes = floor($totalMinutes - ( 60 * $hours ));
-        var_dump($minutes);
+        // var_dump($minutes);
 
         // convertion en secondes
         $seconds = 60 * ($totalMinutes - ( 60 * $hours ) - $minutes);
-        var_dump($seconds);
+        // var_dump($seconds);
 
 
 
@@ -58,45 +58,43 @@ class TimeConverter  extends AbstractExtension
 
             $result .= "{$hours}h";
         }
+
+        
+        
         if ($minutes > 0) {
 
             if ($result != '') 
             {
                 $result .= ' ';
             }
-            
+
             $result .= "{$minutes}min";
         }
-        if ($seconds > 0) {
+        
+        if ($minutes == 0 && $hours >0 && $seconds >0){
 
+        if ($result != '') {
+            $result .= ' ';
+        }
+
+        $result .= "{$minutes}min";
+
+        }
+        
+
+        if ($seconds > 0) {
+            
             if ($result != '') 
             {
                 $result .= ' ';
             }
             $result .= "{$seconds}s";
         }
-
-        return $result;
         
-
-        // //Toutes les valeurs sont >0 : je les affiches TOUTES
-        // if($hours >0 && $minutes >0 && $seconds > 0){
-        //     $result .= "{$hours}h {$minutes}m {$seconds}h";
-
-        // }
-
-        // //Les valeurs haute (heures) et basse (seconds) sont >0 : je les affiches TOUTES y compris les 0 dans l'encadrement
-        // if ($minutes ===0 && $hours > 0 && $seconds > 0) {
-        //     $result .= "{$hours}h {$minutes}m {$seconds}h";
-        // }
-
-        // // Valeur UNIQUE >0
-        // if($hours>0 && $minutes===0 && $seconds ===0){
-        //     $result .= "{$hours}h";
-
-        // }
-    
-        }
+       
+        return $result;
+    }
+          
 
                  
     
