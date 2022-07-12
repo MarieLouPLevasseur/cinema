@@ -74,74 +74,125 @@ class TimeConverter  extends AbstractExtension
  ******* GESTION JOURS ********
  ******************************/
         // si days >0 on affiche sa valeur
-        if ($days > 0) {
+//         if ($days > 0) {
 
             
-            $result .= "{$days}j";
-        }
-/******************************
- ******* GESTION HEURES *******
- ******************************/
-        // si hours >0 on affiche sa valeur
-        if ($hours > 0) {
+//             $result .= "{$days}j";
+//         }
+// /******************************
+//  ******* GESTION HEURES *******
+//  ******************************/
+//         // si hours >0 on affiche sa valeur
+//         if ($hours > 0) {
             
-            // + espace d'affichage ergonomie visuel
-            if ($result != '') 
-            {
-                $result .= ' ';
-            }
+//             // + espace d'affichage ergonomie visuel
+//             if ($result != '') 
+//             {
+//                 $result .= ' ';
+//             }
 
-            $result .= "{$hours}h";
-        }
+//             $result .= "{$hours}h";
+//         }
 
-          // si les heures sont nulles, on ne les affiche que si encadrement avec jours et minutes OU secondes >0
-          if ($hours == 0 && $seconds >0 | $hours >0 && $days >0){
+//           // si les heures sont nulles, on ne les affiche que si encadrement avec jours et minutes OU secondes >0
+//           if ($hours == 0 && $seconds >0 | $hours >0 && $days >0){
 
-            // + espace d'affichage ergonomie visuel
-            if ($result != '') {
-            $result .= ' ';
-            }
+//             // + espace d'affichage ergonomie visuel
+//             if ($result != '') {
+//             $result .= ' ';
+//             }
 
-        $result .= "{$hours}h";
+//         $result .= "{$hours}h";
 
-        }
-/******************************
- ******* GESTION MINUTES *******
- ******************************/
-        // si minutes >0 on affiche sa valeur
-        if ($minutes > 0) {
+//         }
+// /******************************
+//  ******* GESTION MINUTES *******
+//  ******************************/
+//         // si minutes >0 on affiche sa valeur
+//         if ($minutes > 0) {
 
-            // + espace d'affichage ergonomie visuel
-            if ($result != '') 
-            {
-                $result .= ' ';
-            }
+//             // + espace d'affichage ergonomie visuel
+//             if ($result != '') 
+//             {
+//                 $result .= ' ';
+//             }
 
-            $result .= "{$minutes}min";
-        }
-        // si les minutes sont nulles, on ne les affiche que si encadrement avec heures et secondes >0
-        if ($minutes == 0 && $seconds >0 && $hours >0 | $days >0){
+//             $result .= "{$minutes}min";
+//         }
+//         // si les minutes sont nulles, on ne les affiche que si encadrement avec heures et secondes >0
+//         if ($minutes == 0 && $seconds >0 && $hours >0 | $days >0){
 
-            // + espace d'affichage ergonomie visuel
-            if ($result != '') {
-            $result .= ' ';
-            }
+//             // + espace d'affichage ergonomie visuel
+//             if ($result != '') {
+//             $result .= ' ';
+//             }
 
-        $result .= "{$minutes}min";
+//         $result .= "{$minutes}min";
 
-        }
+//         }
 
-        // si secondes >0 on affiche sa valeur
-        if ($seconds > 0) {
+//         // si secondes >0 on affiche sa valeur
+//         if ($seconds > 0) {
             
-            // + espace d'affichage ergonomie visuel
-            if ($result != '') 
-            {
-                $result .= ' ';
-            }
-            $result .= "{$seconds}s";
-        }
+//             // + espace d'affichage ergonomie visuel
+//             if ($result != '') 
+//             {
+//                 $result .= ' ';
+//             }
+//             $result .= "{$seconds}s";
+//         }
         
+
+        /** ***************PROPOSITION ECRITURE EN TABLEAU (CORRECTION) ********* */
+        // les if sont difficilement lisible lorsque nombreuse
+        // Rangement en tableau:
+            // parcourir pour supprimer les éléments qu'on ne veut pas afficher
+                // du haut vers le bas  (jours vers secondes) on affiche dès qu'on commence à trouver autre chose que 0
+                // du bas vers le haut (secondes vers les jours): on affiche dès qu'on commence à trouver autre chose que 0
+
+        // on créer un tableau pour chaque type de résultat:
+        $resultArray[] = "{$days}j";
+        $resultArray[] = "{$hours}h";
+        $resultArray[] = "{$minutes}min";
+        $resultArray[] = "{$seconds}s";
+
+        // On parcours le tableau en partant du haut
+        foreach($resultArray as $currentKey => $currentData){
+            // si différent de 0 on arrête et on affiche
+                //autre possibilité: if (substr($currentData, 0, 1) === '0')
+
+                if ($currentData[0]!== '0'){
+                    break;
+                }
+                // si 0, on ne veux pas l'afficher, donc on l'enlève
+                unset($resultArray[$currentKey]);
+
+        }
+
+        // On retourne le tableau pour le parcourir du bas vers le haut
+        $resultArray = array_reverse($resultArray);
+
+        foreach($resultArray as $currentKey => $currentData)
+        {
+            // "1h"
+            // ? si la data ne commence pas par un 0 on arrete 
+            // if (substr($currentData, 0, 1) === '0')
+            if ($currentData[0] !== '0')
+            {
+                break;
+            }
+
+            // ? sinon on ne veux pas l'afficher, donc on l'enlève du tableau
+            unset($resultArray[$currentKey]);
+        }
+        // on réinverse le tableau pour le remettre dans le bon ordre
+        $resultArray = array_reverse($resultArray);
+
+        // permet de concaténer en séparant par le séparateur de notre choix (ici un espace)
+        $result = implode(' ', $resultArray);
+
+
+        /************************************************************************* */
        
         return $result;
     }
