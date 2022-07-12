@@ -33,3 +33,109 @@ WHERE `casting`.`movie_id` = 1;
 -- Calculer, pour chaque film, la moyenne des critiques par film (en une seule requête).
 
 ```
+
+## REQUETES a effectuer en challenge:
+
+### Récupérer les genres associés à un film donné.
+```sql
+
+SELECT `genre`.*
+FROM `movie` JOIN `movie_genre` 
+ON `movie`.`id` = `movie_genre`.`movie_id`
+JOIN  `genre`
+ON `movie_genre`.`genre_id` = `genre`.`id`
+WHERE `movie`.`id` = '(id)'
+
+```
+
+
+### Récupérer les saisons associées à un film/série donné.
+
+```sql
+
+SELECT `season`.*
+FROM `season` 
+JOIN `movie` ON  `movie`.`id`= `season`.`movie_id` 
+WHERE `movie`.`id` = '(id)'
+
+```
+
+### Récupérer les critiques pour un film donné.
+
+
+```sql
+
+SELECT `review`.*
+FROM `review` 
+JOIN `movie` ON  `movie`.`id`= `review`.`movie_id` 
+WHERE `movie`.`id` = '(id)'
+
+```
+
+
+### Récupérer les critiques pour un film donné, ainsi que le nom de l'utilisateur associé
+
+```sql
+
+SELECT `review`.* , `user`.`nickname` AS Author_name
+FROM `review` 
+JOIN `movie` ON  `movie`.`id`= `review`.`movie_id` 
+JOIN `user` ON  `user`.`id`= `review`.`user_id` 
+WHERE `movie`.`id` = '(id)'
+
+```
+
+### Calculer, pour chaque film, la moyenne des critiques par film (en une seule requête).
+
+```sql
+
+SELECT `movie`.`title` ,  avg(`review`.`rating`)
+FROM `movie` 
+INNER JOIN `review` ON  `review`.`movie_id`= `movie`.`id` 
+GROUP BY `movie`.`id`
+
+```
+
+
+### Récupérer tous les films pour une année de sortie donnée.
+
+```sql
+
+SELECT *
+FROM `movie` 
+WHERE `release_date` LIKE  '(année)%'
+
+```
+
+### Récupérer tous les films pour un tire donné (par ex. 'Epic Movie').
+
+```sql
+
+SELECT *
+FROM `movie` 
+WHERE `title` =  '(title)'
+
+```
+
+### Récupérer tous les films dont le titre contient une chaîne donnée.
+
+```sql
+SELECT *
+FROM `movie` 
+WHERE `title` LIKE  '%(chaine)%'
+```
+
+
+
+BONUS
+
+### Récupérer la liste des films de la page 2 (grâce à LIMIT). (exemple Nb fiml par page = 10)
+```sql
+
+```
+
+### Testez la requête en faisant varier le nombre de films par page et le numéro de page.
+
+```sql
+
+```
