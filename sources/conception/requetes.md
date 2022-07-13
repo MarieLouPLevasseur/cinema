@@ -18,6 +18,8 @@ OFFSET -- pour préciser à quel élément commencer l'affichage ( pratique pour
 
 Nous listons ici les requêtes dont nous aurons besoin pour les différentes pages (cf [révisions SQL](https://github.com/O-clock-De-Vinci/symfo-rappels-mcd-sql-gregoclock#requ%C3%AAtes-sql-pour-le-projet))
 
+## REQUETE DE PAGE
+
 ```sql
 -- Récupérer tous les films
 SELECT * FROM `movie` -- @steve A
@@ -48,6 +50,18 @@ WHERE `movie`.`id` = '(id)'
 
 ```
 
+CORRECTION: 
+inutile de faire la jointure  de movie vers movie_genre car movie_genre a déjà l'id movie (à movie_id) et il n'y a pas de récupération de donnée de movie: 
+
+        ```sql
+        SELECT g.name
+        FROM genre g
+        INNER JOIN movie_genre mg ON mg.genre_id = g.id
+        WHERE mg.movie_id = 5
+
+        ```
+
+
 
 ### Récupérer les saisons associées à un film/série donné.
 
@@ -60,6 +74,15 @@ WHERE `movie`.`id` = '(id)'
 
 ```
 
+Correction : la demande ne précisait pas les infos films, uniquement les infos saison. La saison contient déjà le movie_id donc pas de jointure nécessaire: 
+
+        ```sql
+
+        SELECT * 
+        FROM season 
+        WHERE movie_id = 5
+        ```
+
 ### Récupérer les critiques pour un film donné.
 
 
@@ -71,6 +94,14 @@ JOIN `movie` ON  `movie`.`id`= `review`.`movie_id`
 WHERE `movie`.`id` = '(id)'
 
 ```
+Correction : idem review contient déjà movie_id: jointure pas nécessaire
+
+        ```sql
+        SELECT * 
+        FROM `review`
+        WHERE `movie_id` = 5
+
+        ```
 
 
 ### Récupérer les critiques pour un film donné, ainsi que le nom de l'utilisateur associé
@@ -85,6 +116,18 @@ WHERE `movie`.`id` = '(id)'
 
 ```
 
+CORRECTION: meme principe movie_id déjà dans review donc inutile d'aller le récupérer dans la table movie
+
+        ```sql
+
+        SELECT r.*, u.nickname 
+        from review r
+        INNER JOIN user u ON u.id = r.user_id
+        where r.movie_id = 5
+        ```
+
+
+
 ### Calculer, pour chaque film, la moyenne des critiques par film (en une seule requête).
 
 ```sql
@@ -96,7 +139,18 @@ GROUP BY `movie`.`id`
 
 ```
 
+### idem pour un film donné
+        CORRECTION: 
 
+        ```sql
+        SELECT `movie`.`title` ,  AVG(`review`.`rating`) -- @MarieLou
+        FROM `movie` 
+        INNER JOIN `review` ON  `review`.`movie_id`= `movie`.`id` 
+        WHERE movie.id = 5
+        -- GROUP BY `movie`.`id` -- @Steve A puisque l'on a qu'une movie le group by est facultatif
+        ```
+
+## REQUETE DE RECHERCHE
 ### Récupérer tous les films pour une année de sortie donnée.
 
 ```sql
@@ -106,6 +160,14 @@ FROM `movie`
 WHERE `release_date` LIKE  '(année)%'
 
 ```
+
+CORRECTION: il existe des fonction qui permettent de récupérer que l'année: 
+
+        ```sql
+        SELECT *
+        FROM movie
+        WHERE YEAR(release_date) = 2014
+        ```
 
 ### Récupérer tous les films pour un tire donné (par ex. 'Epic Movie').
 
@@ -125,17 +187,30 @@ FROM `movie`
 WHERE `title` LIKE  '%(chaine)%'
 ```
 
+CORRECTION: Pour comparer des chaines de caractère une bonne astuce est de tout mettre en majuscule (ou minuscule) grâce à la fontion `UPPER` avant la comparaison
+
+        ```sql
+
+        SELECT *
+        FROM `movie`
+        WHERE UPPER(title) LIKE "%EPIC%"
+        ```
 
 
 BONUS
 
 ### Récupérer la liste des films de la page 2 (grâce à LIMIT). (exemple Nb fiml par page = 10)
+    (Testez la requête en faisant varier le nombre de films par page et le numéro de page.)
+
+CORRECTION: Testez la requête en faisant varier le nombre de films par page et le numéro de page.
+
+
 ```sql
 
+SELECT * 
+FROM movie
+ORDER BY `title`
+LIMIT 10 -- limite le nombre de résultats
+OFFSET 10 -- on veut à partir du 10eme élément ( car les 10 premiers sont sur la première) le offset commence à 0
 ```
 
-### Testez la requête en faisant varier le nombre de films par page et le numéro de page.
-
-```sql
-
-```
