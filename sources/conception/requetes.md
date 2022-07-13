@@ -214,3 +214,73 @@ LIMIT 10 -- limite le nombre de résultats
 OFFSET 10 -- on veut à partir du 10eme élément ( car les 10 premiers sont sur la première) le offset commence à 0
 ```
 
+## CONTRAINTES
+
+### Ne pas avoir 2 genres identiques: 
+- On ajoute "alter index" avec "unique" et "le nom du champs" qui doit etre unique
+- case sensitive (E ou e sera évincé)
+
+Ajouter une contrainte d'unicité sur une colonne
+
+```sql
+ALTER TABLE `genre`
+ADD UNIQUE `unique_name` (`name`);
+```
+
+### on peut faire des contraintes d'unicité sur plusieurs colonnes: ne pas vouloir que le titre et la date de sortie soit identique (car alors c'est le meme film)
+  
+```sql
+
+ALTER TABLE `movie`
+ADD UNIQUE `title_release_date` (`title`, `release_date`);
+```
+
+### si on supprime un id user, on peut toujours afficher la critique: 
+
+on supprime l'id en le mettant null possible 
+on pense à faire le LEFT join
+pour afficher l'auteur anonyme
+    - soit on le fait en php avec un IF
+    - soit on le fait en requete SQL
+
+-- du coup il faut utiliser un LEFT JOIN
+```sql
+SELECT r.* 
+FROM review r
+LEFT JOIN user u ON u.id = r.user_id
+WHERE r.movie_id = 5;
+```
+
+-- on peut meme remplacer le NULL par du texte grace au "switch case" de MYSQL
+```sql
+SELECT 
+CASE 
+    WHEN u.nickname is Null then 'anonyme' 
+    ELSE u.nickname 
+END  as username
+, r.* 
+FROM review r
+LEFT JOIN user u ON u.id = r.user_id
+WHERE r.movie_id = 5;
+```
+
+### La suppression d'un film implique la suppression de l'intégralité de son contenu
+
+```sql
+-- requête récupérée d'adminer
+ALTER TABLE `movie_genre`
+DROP FOREIGN KEY `movie_genre_ibfk_1`,
+ADD FOREIGN KEY (`movie_id`) REFERENCES `movie` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
+
+-- @steve a
+ALTER TABLE `season` ADD CONSTRAINT `season_movie_id` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`id`) ON DELETE CASCADE;
+ALTER TABLE `review` ADD CONSTRAINT `review_movie_id` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`id`) ON DELETE CASCADE;
+ALTER TABLE `casting` ADD CONSTRAINT `casting_movie_id` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`id`) ON DELETE CASCADE;
+```
+
+### La suppression d'un utilisateur conserve ses critiques
+Lorsque l'on supprime un user les review liés passent le user_id à null
+
+```sql
+ALTER TABLE `review` ADD CONSTRAINT `user_movie_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL;
+```
