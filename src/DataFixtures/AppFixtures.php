@@ -489,9 +489,371 @@ $persons =[
     "firstname" =>"Alfred",     //    Manuel Aringarosa
     "lastname"  =>"Molina",
     ],
- 
+// bug's life
 
+    [
+    "firstname" =>"John",     //    Harry le moustique
+    "lastname"  =>"Lasseter",
+    ],
+    [
+    "firstname" =>"Joe",     //    Heimlich
+    "lastname"  =>"Ranft",
+    ],
+    [
+    "firstname" =>"Andrew",     //    Bug Zapper Bug
+    "lastname"  =>" Stanton",
+    ],
+    [
+    "firstname" =>"Dave",     //    Tilt
+    "lastname"  =>" Foley",
+    ],
+ 
+    [
+    "firstname" =>"Kevin",     //    Le Borgne
+    "lastname"  =>"Spacey",
+    ],
+    [
+    "firstname" =>"John",     //    Lilipuce
+    "lastname"  =>"Ratzenberger",
+    ],
+// aline
+    [
+    "firstname" =>"Valérie",     //    Aline Dieu
+    "lastname"  =>"Lemercier",
+    ],
+    [
+    "firstname" =>"Sylvain",     //    Guy-Claude Kamar
+    "lastname"  =>"Marcel",
+    ],
+    [
+    "firstname" =>"Danielle",     //    Sylvette
+    "lastname"  =>"Fichaud",
+    ],
+    [
+    "firstname" =>"Roc",     //    Anglomard
+    "lastname"  =>"LaFortune",
+    ],
+// Stranger Things
+    [
+    "firstname" =>"Millie",     //    Onze
+    "lastname"  =>"Bobby Brown",
+    ],
+    [
+    "firstname" =>"Finn",     //    Mike Wheeler
+    "lastname"  =>"Wolfhard",
+    ],
+    [
+    "firstname" =>"Caleb",     //    Lucas Sinclair
+    "lastname"  =>"McLaughlin",
+    ],
+    [
+    "firstname" =>"Noah",     //    Will Byers
+    "lastname"  =>"Schnapp",
+    ],
+    [
+    "firstname" =>"Sadie",     //   Max
+    "lastname"  =>"Sink",
+    ],
+// Ghosbuster
+    [
+    "firstname" =>"Bill",     //   Dr Peter Venkman
+    "lastname"  =>"Murray",
+    ],
+    [
+    "firstname" =>"Dan",     //  Dr Raymond Stantz
+    "lastname"  =>"Aykroyd",
+    ],
+    [
+    "firstname" =>"Harold",     //  Dr Egon Spengler
+    "lastname"  =>"Ramis",
+    ],
+    [
+    "firstname" =>"Sigourney",     //  Dana Barrett
+    "lastname"  =>"Weaver",
+    ],
+    [
+    "firstname" =>"Ernie",     //  Winston Zeddemore
+    "lastname"  =>"Hudson",
+    ],
+    [
+    "firstname" =>"Annie",     //  Janine Melnitz
+    "lastname"  =>"Potts",
+    ],
+    [
+    "firstname" =>"Rick",     //  Louis Tully
+    "lastname"  =>"Moranis",
+    ],
+// Le Grinch
+    [
+    "firstname" =>"Jim",     //  Le Grinch
+    "lastname"  =>"Carrey",
+    ],
+    [
+    "firsname" =>"Taylor",     //  Cindy Lou Who
+    "lastname"  =>"Momsen",
+    ],
+    [
+    "firstname" =>"Christine",     //  Martha May Whovier
+    "lastname"  =>"Baranski",
+    ],
+    [
+    "firstname" =>"Jeffrey",     //  Maire Augustus Maywho
+    "lastname"  =>"Tambor",
+    ],
+//The man from earth
+    [
+    "firstname" =>"David",     //  John Oldman
+    "lastname"  =>"Lee Smith",
+    ],
+    [
+    "firstname" =>"John",     //  Harry
+    "lastname"  =>"Billingsley",
+    ],
+    [
+    "firstname" =>"William",     //  Dr. Arthur M. Jenkins
+    "lastname"  =>"Katt",
+    ],
+    [
+    "firstname" =>"Tony",     //  Dan
+    "lastname"  =>"Todd",
+    ],
+    [
+    "firstname" =>"Ellen",     //  Edith
+    "lastname"  =>"Crawford",
+    ],
+    [
+    "firstname" =>"Annika",     //  Sandy
+    "lastname"  =>"Peterson",
+    ],
+    [
+    "firstname" =>"Alexis",     //  Linda Murphy
+    "lastname"  =>"Thorpe",
+    ],
+//Interstellar
+    [
+    "firstname" =>"Matthew",     //  Joseph Cooper
+    "lastname"  =>"McConaughey",
+    ],
+    [
+    "firstname" =>"Anne",     //  Amelia Brand
+    "lastname"  =>"Hathaway",
+    ],
+    [
+    "firstname" =>"Jessica",     //   Murphy Cooper
+    "lastname"  =>"Chastain",
+    ],
+    [
+    "firstname" =>"Michael",     //   Professeur John Brand
+    "lastname"  =>"Caine",
+    ],
+    [
+    "firstname" =>"Mackenzie",     //   Murphy Cooper
+    "lastname"  =>"Foy",
+    ],
+    
+    [
+    "firstname" =>"Timothée",     //   Tom Cooper
+    "lastname"  =>"Chalamet",
+    ],
+     
+    [
+    "firstname" =>"Matt",     //   Dr Mann
+    "lastname"  =>"Damon",
+    ],
+// Matrix
+    [
+    "firstname" =>"Keanu",     //   Thomas A. Anderson, alias « Neo »
+    "lastname"  =>"Reeves",
+    ],
+    [
+    "firstname" =>"Carrie-Anne",     //   Trinity
+    "lastname"  =>"Moss",
+    ],
+    [
+    "firstname" =>"Laurence",     //   Morpheus
+    "lastname"  =>"Fishburne",
+    ], 
+    [
+    "firstname" =>"Hugo",     //   l'agent Smith
+    "lastname"  =>"Weaving",
+    ], 
+    [
+    "firstname" =>"Gloria",     //   l'Oracle
+    "lastname"  =>"Foster",
+    ], 
+    [
+    "firstname" =>"Joe",     //    Cypher ou Mr Reagan
+    "lastname"  =>"Pantoliano",
+    ], 
+    [
+    "firstname" =>"Marcus",     //     Tank
+    "lastname"  =>"Chong",
+    ], 
+    [
+    "firstname" =>"Matt",     //     le Mulot
+    "lastname"  =>"Doran",
+    ], 
+ 
+    [
+    "firstname" =>"Belinda",     //     Switch
+    "lastname"  =>"McClory",
+    ], 
+    [
+    "firstname" =>"Julian",     //     Apoc
+    "lastname"  =>"Arahanga",
+    ], 
+    [
+    "firstname" =>"Anthony Ray",     //     Dozer
+    "lastname"  =>"Parker",
+    ], 
+    [
+    "firstname" =>"Paul",     //     l'agent Brown
+    "lastname"  =>"Goddard",
+    ], 
+    [
+    "firstname" =>"Robert",     //     l'agent Jones
+    "lastname"  =>"Taylor",
+    ], 
+// starship troopers
+    [
+    "firstname" =>"Denise",     //     Carmen Ibanez
+    "lastname"  =>"Richards",
+    ], 
+    [
+    "firstname" =>"Dina",     //     Dizzy Flores
+    "lastname"  =>"Meyer",
+    ], 
+    [
+    "firstname" =>"Casper",     //     Johnny Rico
+    "lastname"  =>"Van Dien",
+    ], 
+    [
+    "firstname" =>"Jake",     //     Ace Levy
+    "lastname"  =>"Busey",
+    ], 
+    [
+    "firstname" =>"Neil Patrick ",     //    Carl Jenkins
+    "lastname"  =>"Harris",
+    ], 
+    [
+    "firstname" =>"Clancy ",     //   Sergeant Charles Zim
+    "lastname"  =>"Brown",
+    ], 
+    [
+    "firstname" =>"Amy ",     //   Pilot Cadet Stack Lumbreiser
+    "lastname"  =>"Smart",
+    ], 
+// Thor
+    [
+    "firstname" =>"Chris ",     //   Thor
+    "lastname"  =>"Hemsworth",
+    ], 
+    [
+    "firstname" =>"Natalie ",     //   Jane Foster / The Mighty Thor
+    "lastname"  =>"Portman",
+    ], 
+    [
+    "firstname" =>"Christian ",     //   Gorr le Boucher
+    "lastname"  =>"Bale",
+    ], 
+    [
+    "firstname" =>"Tessa ",     //   Valkyrie
+    "lastname"  =>"Thompson",
+    ], 
+    [
+    "firstname" =>"Russell ",     //   Zeus
+    "lastname"  =>"Crowe",
+    ], 
+    [
+    "firstname" =>"Jaimie ",     //   Sif
+    "lastname"  =>"Alexander",
+    ], 
+    [
+    "firstname" =>"Chris ",     //   Peter Quill / Star-Lord
+    "lastname"  =>"Pratt",
+    ], 
+    [
+    "firstname" =>"Dave ",     //   Drax
+    "lastname"  =>"Bautista",
+    ], 
+// truman show
+    [
+    "firstname" =>"Jim ",     //   Truman Burbank
+    "lastname"  =>"Carrey",
+    ], 
+    [
+    "firstname" =>"Laura ",     //   Meryl Burbank, Hannah Gill
+    "lastname"  =>"Linney",
+    ], 
+    [
+    "firstname" =>"Ed ",     //  Christof
+    "lastname"  =>"Harris",
+    ], 
+    [
+    "firstname" =>"Natascha ",     //  Lauren Garland
+    "lastname"  =>"McElhone",
+    ], 
+    [
+    "firstname" =>"Noah ",     // Marlon
+    "lastname"  =>"Emmerich",
+    ], 
+// la cité de la peur
+
+    [
+    "firstname" =>"Alain ",     // Serge Karamazov
+    "lastname"  =>"Chabat",
+    ], 
+    [
+    "firstname" =>"Chantal ",     // Odile Deray
+    "lastname"  =>"Lauby",
+    ], 
+    [
+    "firstname" =>"Dominique ",     // Simon Jérémi
+    "lastname"  =>"Farrugia",
+    ], 
+    [
+    "firstname" =>"Gérard ",     // Le commissaire Patrick Bialès
+    "lastname"  =>"Darmon",
+    ], 
+    [
+    "firstname" =>"Sam ",     // Emile Gravier
+    "lastname"  =>"Karmann",
+    ], 
+    [
+    "firstname" =>"Valérie ",     // La veuve joyeuse
+    "lastname"  =>"Lemercier",
+    ], 
+// django unchained
+    [
+    "firstname" =>"Quentin ",     // Frankie
+    "lastname"  =>"Tarantino",
+    ], 
+    [
+    "firstname" =>"Jamie",     // Django
+    "lastname"  =>"Foxx",
+    ], 
+    [
+    "firstname" =>"Christoph",     // Docteur King Schultz
+    "lastname"  =>"Waltz",
+    ], 
+    [
+    "firstname" =>"Leonardo",     // Calvin Candie
+    "lastname"  =>"DiCaprio",
+    ], 
+    [
+    "firstname" =>"Samuel",     // Stephen
+    "lastname"  =>"L. Jackson",
+    ], 
+    [
+    "firstname" =>"Kerry",     // Broomhilda von Shaft
+    "lastname"  =>"Washington",
+    ], 
+    [
+    "firstname" =>"Don",     // Big Daddy
+    "lastname"  =>"Johnson",
+    ], 
 ];
+ 
 
 foreach ($persons as $currentPerson)
 {
@@ -533,6 +895,110 @@ $roles =[
         "Bézu Fache",
         "Sir Leigh Teabing",
         "Manuel Aringarosa",
+// Bug's Life
+        "Harry le moustique",
+        "Heimlich",
+        "Bug Zapper Bug ",
+        "Tilt",
+        "Le Borgne",
+        "Lilipuce",
+        "Princesse Atta",
+// Aline
+        "Aline Dieu",
+        "Guy-Claude Kamar",
+        "Sylvette",
+        "Anglomard",
+// Stranger Things
+       "Onze",
+       "Mike Wheeler",
+       "Lucas Sinclair",
+       "Will Byers",
+       "Max",
+//Ghostbuster
+        "Dr Peter Venkman",
+        "Dr Raymond Stantz",
+        "Dr Egon Spengler",
+        "Dana Barrett",
+        "Winston Zeddemore",
+        "Janine Melnitz",
+        "Louis Tully",
+// le Grinch
+        "Le Grinch",
+        "Cindy Lou Who",
+        "Martha May Whovier",
+        "Maire Augustus Maywho",
+//the man of earth
+
+        "John Oldman",
+        "Harry",
+        "Dr. Arthur M. Jenkins",
+        "Dan",
+        "Edith",
+        "Sandy",
+        "Linda Murphy",
+//interstellar
+        "Joseph Cooper",
+        "Amelia Brand",
+        "Murphy Cooper",
+        "Professeur John Brand",
+        "Murphy Cooper",
+        "Tom Cooper",
+        "Dr Mann",
+// Matrix
+        "Thomas A. Anderson, alias « Neo »",
+        "Trinity",
+        "Morpheus",
+        "l'agent Smith",
+        "l'Oracle",
+        "Cypher ou Mr Reagan",
+        "Tank",
+        "le Mulot",
+        "Switch",
+        "Apoc",
+        "Dozer",
+        "l'agent Brown",
+        "l'agent Jones",
+// Starship troopers
+        "Carmen Ibanez",
+        "Dizzy Flores",
+        "Johnny Rico",
+        "Ace Levy",
+        "Carl Jenkins ",
+        "Sergeant Charles Zim ",
+        "Pilot Cadet Stack Lumbreiser",
+// Thor
+        "Thor",
+        "Jane Foster / The Mighty Thor",
+        "Gorr le Boucher",
+        "Valkyrie",
+        "Zeus",
+        "Sif",
+        "Peter Quill / Star-Lord",
+        "Dave",
+        "Drax",
+// Truman Show
+        "Truman Burbank",
+        "Meryl Burbank, Hannah Gill",
+        "Christof",
+        "Lauren Garland",
+        "Marlon",
+// La cité de la peur
+        "Serge Karamazov",
+        "Odile Deray",
+        "Simon Jérémi",
+        "Le commissaire Patrick Bialès",
+        "Emile Gravier",
+        "La veuve joyeuse",
+// Django unchained
+        "Frankie",
+        "Django",
+        "Docteur King Schultz",
+        "Calvin Candie",
+        "Stephen",
+        "Broomhilda von Shaft",
+        "Big Daddy",
+
+
 ];
 
         foreach ($roles as $currentRole)

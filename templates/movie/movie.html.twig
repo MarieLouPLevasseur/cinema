@@ -41,16 +41,16 @@
                             <span class="ps-1">{{ show.rating }}</span>
                         </div>
         {# TODO (fixé actuellement a FILM par défaut dans l'entité) on affiche que si c'est une série, inutile si film #}
-        
+{# {{dump(show.castings)}} #}
                     {% if show.type == 'Série' %}
 
-                        <h2>3 Saisons</h2>
+                        {# <h2>{{show.seasons.number}}</h2> #}
                         <ul class="list-unstyled">
                             <li><span class="badge bg-danger fs-6 mb-2">Saison 1</span><small class="ms-1">(10 épisodes)</small></li>
                             <li><span class="badge bg-danger fs-6 mb-2">Saison 2</span><small class="ms-1">(11 épisodes)</small></li>
                             <li><span class="badge bg-danger fs-6 mb-2">Saison 3</span><small class="ms-1">(12 épisodes)</small></li>
                         </ul>
-                        {% endif %}
+                    {% endif %}
 
                         <dl class="row">
                             <dt class="col-sm-12">Avec</dt>
