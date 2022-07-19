@@ -5,8 +5,10 @@
     </div>
     <div class="col-8 p-4 d-flex flex-column position-static">
         <a href="{{ path('movie_favorites_add', {id: current_show.id}) }}" class="movie__favorite fs-1 my-2 mx-3 link-danger"><i class="bi bi-bookmark-plus"></i></a>
+{# TODO changer le type car actuellement fixé en dur: créer un nouveau champs dans movie pour le fixer #}
         <strong class="d-inline-block mb-2 text-primary">{{ current_show.type }}</strong>
         <h3 class="mb-1">{{ current_show.title }}</h3>
+{# TODO si le type est un films on affiche la durée, sinon on devrait afficher le nombre d'épisode/saison? Ou alors on met la durée d'un épisodes et les infos saison apres synopsis? #}
         <div class="mb-1 text-muted">{{ current_show.duration|minToHours }}</div>
         <p><small>{{ current_show.summary }}</small>
         </p>
