@@ -32,3 +32,25 @@ PERSON: person_code, firstname, lastname
 Acting in, 0N PERSON, 0N MOVIE: role, credit_order
 SEASON: season_code, season_number, episodes_number
 ```
+
+
+
+
+MCD avec la relation avec attribut review convertie en entité
+
+```
+SEASON: season_code, season_number, episodes_number
+Belongs to, 0N GENRE, 0N MOVIE
+GENRE: genre_code, name
+:
+
+Has, 0N MOVIE, 11 SEASON
+MOVIE: ISAN, title, released_at, duration, summary, synopsis, poster, rating
+reviews, 11 REVIEW, 0N MOVIE
+REVIEW: content, rating
+
+PERSON: person_code, firstname, lastname
+Acting in, 0N PERSON, 0N MOVIE: role, credit_order
+USER: email, username, role
+writes, 0N USER, 11 REVIEW
+```

@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\MovieRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MainController extends AbstractController
 {
@@ -17,13 +18,17 @@ class MainController extends AbstractController
      * @Route("/", name="homepage", methods="GET")
      * @return Response
      */
-    public function homepage() :Response
+    public function homepage(MovieRepository $movieRepository) :Response
     {
 
         // préparer les données
         // ? récupérer les fichiers movies
         // pour se faire on peut inclure le fichier directement
-        require __DIR__ . '/../../sources/data.php';
+        // require __DIR__ . '/../../sources/data.php';
+
+        $shows = $movieRepository->findAll();
+        $homepageShows = [];
+
         // on récupère que 2 éléments au hasard du tableau shows
         // spoiler normalement ce code on le rangerait dans une classe
         // array_rand 

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MovieRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -56,6 +58,44 @@ class Movie
      * @ORM\Column(type="float", nullable=true)
      */
     private $rating;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Season::class, mappedBy="movie", orphanRemoval=true)
+     */
+    private $seasons;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Genre::class,  inversedBy="movies")
+     */
+    private $movies;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Review::class, mappedBy="movie", orphanRemoval=true)
+     */
+    private $reviews;
+
+    public function __construct()
+    {
+        $this->seasons = new ArrayCollection();
+        $this->movies = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
+    }
+
+//  TODO temporaire: mis en dur pour créer un type film par défaut
+    /**
+     * cette méthode sert à Twig pour pouvoir afficher une valeur lorsque l'on fait un show.type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        // ? si il y a des saisons associés alors c'est une Série
+
+        // ? sinon c'est un film
+        return 'Film';
+    }
+
+
 
     public function getId(): ?int
     {
@@ -154,6 +194,93 @@ class Movie
     public function setRating(?float $rating): self
     {
         $this->rating = $rating;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Season>
+     */
+    public function getSeasons(): Collection
+    {
+        return $this->seasons;
+    }
+
+    public function addSeason(Season $season): self
+    {
+        if (!$this->seasons->contains($season)) {
+            $this->seasons[] = $season;
+            $season->setMovie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSeason(Season $season): self
+    {
+        if ($this->seasons->removeElement($season)) {
+            // set the owning side to null (unless already changed)
+            if ($season->getMovie() === $this) {
+                $season->setMovie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Genre>
+     */
+    public function getMovies(): Collection
+    {
+        return $this->movies;
+    }
+
+    public function addMovie(Genre $movie): self
+    {
+        if (!$this->movies->contains($movie)) {
+            $this->movies[] = $movie;
+            $movie->addMovie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMovie(Genre $movie): self
+    {
+        if ($this->movies->removeElement($movie)) {
+            $movie->removeMovie($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Review>
+     */
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+
+    public function addReview(Review $review): self
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews[] = $review;
+            $review->setMovie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Review $review): self
+    {
+        if ($this->reviews->removeElement($review)) {
+            // set the owning side to null (unless already changed)
+            if ($review->getMovie() === $this) {
+                $review->setMovie(null);
+            }
+        }
 
         return $this;
     }

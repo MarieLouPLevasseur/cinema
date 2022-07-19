@@ -17,7 +17,7 @@
                 <h2 class="text-muted fw-bold mb-4">Les films et séries/Résultats de recherche</h2>
 {# boucle en appelant le template pour l'affichage des films#}
 
-                {% for show_id, current_show in show_list %}
+                {% for current_show in show_list %}
 
                     {% include ('movie/_show_detail.html.twig') %}
 

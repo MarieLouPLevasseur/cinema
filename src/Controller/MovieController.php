@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Movie;
 use App\Utils\TimeConverter;
+use App\Repository\MovieRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -57,7 +59,7 @@ class MovieController extends AbstractController
      * @Route("/favoris", name="movie_favorites", methods="GET")
      * @return Response
      */
-    public function favorites(Request $request) :Response
+    public function favorites(MovieRepository $movieRepository, Request $request) :Response
     {
 
         // on démarre une session 
@@ -71,20 +73,24 @@ class MovieController extends AbstractController
             //récup du tableau favoris de la sessions
         $showIdFavorites = $session->get('show_id_favorites', []);
         // on place nos données
+        // require __DIR__ . '/../../sources/data.php';
 
-        require __DIR__ . '/../../sources/data.php';
+        $favoriteShows = $movieRepository->findBy([
+            "id" => $showIdFavorites, 
+        ]);
+
         // tableau pour le stockage des films validés: 
-        $favoriteShows = [];
+        // $favoriteShows = [];
 
         // on parcours le tableau des films favoris de la session
-            foreach ($showIdFavorites as $currentShowId)
-            {
-                // si le film existe on le met dans le tableau de nos favoris
-                if (isset($shows[$currentShowId]))
-                {
-                    $favoriteShows[$currentShowId] = $shows[$currentShowId];
-                }
-            }
+            // foreach ($showIdFavorites as $currentShowId)
+            // {
+            //     // si le film existe on le met dans le tableau de nos favoris
+            //     if (isset($shows[$currentShowId]))
+            //     {
+            //         $favoriteShows[$currentShowId] = $shows[$currentShowId];
+            //     }
+            // }
         // on fournit le tableau à la vue pour dynamiser le template
         return $this->render('movie/favorite.html.twig',[
             'title' =>'Mes Favoris',
@@ -100,11 +106,14 @@ class MovieController extends AbstractController
      * @Route("/list", name="movie_list", methods="GET")
      * @return Response
      */
-    public function list() :Response
+    public function list(MovieRepository $movieRepository) :Response
     {
         // récupérer la liste des films
         //inclure la page source ou le fichier directement
-        require __DIR__ . '/../../sources/data.php';
+        // on ne veut plus les données en dur:
+        // require __DIR__ . '/../../sources/data.php';
+
+        $shows = $movieRepository->findAll();
 
         // dump($shows);
 
@@ -126,35 +135,35 @@ class MovieController extends AbstractController
      * @param int $id
      * @return Response
      */
-    public function movie(int $id, TimeConverter $timeConverter) :Response
+    public function show(Movie $show, TimeConverter $timeConverter) :Response
     {
         //  préparer les données
         // TODO ce serait mieux d'avoir une classe qui récupère un film par ID
          // pour se faire on peut inclure le fichier directement
-         require __DIR__ . '/../../sources/data.php';
+        //  require __DIR__ . '/../../sources/data.php';
 
-         dump($id);
+        //  dump($id);
 
          //si l'id n'existe pas on arrete le script
-         if (! isset($shows[$id]))
-         {
-             // on donne le code d'erreur 
-             // le throw permet de respecter le flow de symfony et faire un try catch
-            //  try>throw>catch
-             // permet de pouvoir exécuter du code malgré l'erreur 
-             // et de garder une 404: page non trouvé en environnement de prod
-             throw $this->createNotFoundException('The product does not exist');
+        //  if (! isset($shows[$id]))
+        //  {
+        //      // on donne le code d'erreur 
+        //      // le throw permet de respecter le flow de symfony et faire un try catch
+        //     //  try>throw>catch
+        //      // permet de pouvoir exécuter du code malgré l'erreur 
+        //      // et de garder une 404: page non trouvé en environnement de prod
+        //      throw $this->createNotFoundException('The product does not exist');
 
-         }
+        //  }
 
 
          //sinon on continue le script
 
-        $show = $shows[$id];
+        // $show = $shows[$id];
     // dump($show);
 
     // on créer un objet TimeConvert et on appel sa méthode
-    $timeConverter = new TimeConverter();
+    // $timeConverter = new TimeConverter();
     // dump($timeConverter->convert($show['duration']));
     // avoir la durée au format xxhyym
 
@@ -164,7 +173,7 @@ class MovieController extends AbstractController
         return $this->render('movie/movie.html.twig',[
             'title' =>'Film du jour',
             'show' => $show,
-            'duration_in_minutes' => $timeConverter->convert($show['duration'])
+            'duration_in_minutes' => $timeConverter->convert($show->getDuration())
 
         ]);
 
