@@ -41,6 +41,7 @@
                             <span class="ps-1">{{ show.rating }}</span>
                         </div>
         {# TODO (fixé actuellement a FILM par défaut dans l'entité) on affiche que si c'est une série, inutile si film #}
+        
                     {% if show.type == 'Série' %}
 
                         <h2>3 Saisons</h2>
@@ -55,11 +56,11 @@
                             <dt class="col-sm-12">Avec</dt>
                             <dd class="col-sm-12">
 
-                    {# TODO liste des acteurs (PERSON->firstname , lastname) incarnant le personnage X (casting->role) #}
+        {# TODO liste des acteurs (PERSON->firstname , lastname) incarnant le personnage X (casting->role) #}
 
                     {% for current_casting in show.castings %}
 
-                              <b>  {{current_casting.role}}</b> <i>incarné par  </i> <b>X (à venir)</b><br>
+                              <b>  {{current_casting.role}}</b> <i>incarné par  </i> <b> {{current_casting.person.firstname}}  {{current_casting.person.lastname}}</b><br>
                                 {# Acteur 2 (La reine)<br> 
                                 Acteur 3 (Franz)<br> #}
                     {% endfor %}
