@@ -23,6 +23,7 @@
                         <h3 class="mb-1">{{ show.title }}</h3>
                         <div class="mb-1 text-muted">{{ duration_in_minutes ?  duration_in_minutes : show.duration ~ ' min'}}</div>
                         <p>
+            {# TODO affichage du genre: boucle car peut avoir plusieurs genre #}
                             <span class="badge bg-warning text-dark">Animation</span>
                             <span class="badge bg-warning text-dark">Aventure</span>
                             <span class="badge bg-warning text-dark">Comédie</span>
@@ -39,7 +40,7 @@
                             <i class="bi bi-star-half"></i>
                             <span class="ps-1">{{ show.rating }}</span>
                         </div>
-                    {# on affiche que si c'est une série, inutile si film #}
+        {# TODO (fixé actuellement a FILM par défaut dans l'entité) on affiche que si c'est une série, inutile si film #}
                     {% if show.type == 'Série' %}
 
                         <h2>3 Saisons</h2>
@@ -53,9 +54,16 @@
                         <dl class="row">
                             <dt class="col-sm-12">Avec</dt>
                             <dd class="col-sm-12">
-                                Acteur 1 (Tilt)<br>
-                                Acteur 2 (La reine)<br>
-                                Acteur 3 (Franz)<br>
+
+                    {# TODO liste des acteurs (PERSON->firstname , lastname) incarnant le personnage X (casting->role) #}
+
+                    {% for current_casting in show.castings %}
+
+                              <b>  {{current_casting.role}}</b> <i>incarné par  </i> <b>X (à venir)</b><br>
+                                {# Acteur 2 (La reine)<br> 
+                                Acteur 3 (Franz)<br> #}
+                    {% endfor %}
+
                             </dd>
                             <dt class="col-sm-12">Pays</dt>
                             <dd class="col-sm-12">USA</dd>
