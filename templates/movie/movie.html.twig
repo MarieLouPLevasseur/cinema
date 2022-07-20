@@ -23,7 +23,7 @@
                         <h3 class="mb-1">{{ show.title }}</h3>
                         <div class="mb-1 text-muted">{{ duration_in_minutes ?  duration_in_minutes : show.duration ~ ' min'}}</div>
                         <p>
-            {# TODO affichage du genre: boucle car peut avoir plusieurs genre #}
+            {# affichage du genre: boucle car peut avoir plusieurs genre #}
                         {% for current_genre in show.genres %}
 
                             <span class="badge bg-warning text-dark">{{ current_genre.name }}</span>
@@ -65,11 +65,11 @@
                             <dt class="col-sm-12">Avec</dt>
                             <dd class="col-sm-12">
 
-        {# TODO liste des acteurs (PERSON->firstname , lastname) incarnant le personnage X (casting->role) #}
+        {#  liste des acteurs (PERSON->firstname , lastname) incarnant le personnage X (casting->role) #}
 
                     {% for current_casting in show.castings %}
 
-                              {# <b>  {{current_casting.role}}</b> <i>incarné par  </i> <b> {{current_casting.person.firstname}}  {{current_casting.person.lastname}}</b><br> #}
+                              <b>  {{current_casting.role}}</b> <i>incarné par  </i> <b> {{current_casting.person.firstname}}  {{current_casting.person.lastname}}</b><br>
                                 {# Acteur 2 (La reine)<br> 
                                 Acteur 3 (Franz)<br> #}
                     {% endfor %}
@@ -81,6 +81,11 @@
                             <dd class="col-sm-12">{{ show.releasedAt|date('Y') }}</dd>
                         </dl>
 
+                    {% for current_review in show.reviews %}
+
+                              <b>  {{current_review.content}}</b> <i>écrit par  </i> <b> {{current_review.user.username}}  </b> </br>
+                               
+                    {% endfor %}
                     </div>
                 </div>
 
