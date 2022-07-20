@@ -27,8 +27,6 @@ class RandomFixtures extends Fixture implements DependentFixtureInterface
 
 
         $nbPerson = 100;
-        // $product = new Product();
-        // $manager->persist($product);
         // $allMovies = $this->getReference('movie-list');
         $allMovies = $manager->getRepository(Movie::class)->findAll();
 

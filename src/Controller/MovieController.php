@@ -135,7 +135,7 @@ class MovieController extends AbstractController
      * @param int $id
      * @return Response
      */
-    public function show(Movie $show, TimeConverter $timeConverter) :Response
+    public function show(Movie $show, MovieRepository $movieRepository, TimeConverter $timeConverter) :Response
     {
         //  préparer les données
         // TODO ce serait mieux d'avoir une classe qui récupère un film par ID
@@ -167,7 +167,10 @@ class MovieController extends AbstractController
     // dump($timeConverter->convert($show['duration']));
     // avoir la durée au format xxhyym
 
+    // nouvelle requete pour optimiser performance de la récup des datas (issus des jointures)
+    $movie = $movieRepository->findForShow($show->getId());
 
+ 
         // fournir les infos à la vue
 
         return $this->render('movie/movie.html.twig',[

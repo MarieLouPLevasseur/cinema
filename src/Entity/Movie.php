@@ -94,9 +94,11 @@ class Movie
      */
     public function getType() :string
     {
-        // ? si il y a des saisons associées alors c'est une Série
-
-        // ? sinon c'est un film
+         // ? si il y a des saisons associées alors c'est une Série
+         if (count($this->getSeasons()) > 0) {
+             return 'Série';
+         }
+        //  sinon c'est un film
         return 'Film';
     }
 

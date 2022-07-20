@@ -24,10 +24,14 @@
                         <div class="mb-1 text-muted">{{ duration_in_minutes ?  duration_in_minutes : show.duration ~ ' min'}}</div>
                         <p>
             {# TODO affichage du genre: boucle car peut avoir plusieurs genre #}
-                            <span class="badge bg-warning text-dark">Animation</span>
-                            <span class="badge bg-warning text-dark">Aventure</span>
+                        {% for current_genre in show.genres %}
+
+                            <span class="badge bg-warning text-dark">{{ current_genre.name }}</span>
+                        {% endfor %}
+
+                            {# <span class="badge bg-warning text-dark">Aventure</span>
                             <span class="badge bg-warning text-dark">Comédie</span>
-                            <span class="badge bg-warning text-dark">Famille</span>
+                            <span class="badge bg-warning text-dark">Famille</span> #}
                         </p>
                         <p>{{ show.synopsis }}
                         </p>
@@ -40,15 +44,20 @@
                             <i class="bi bi-star-half"></i>
                             <span class="ps-1">{{ show.rating }}</span>
                         </div>
-        {# TODO (fixé actuellement a FILM par défaut dans l'entité) on affiche que si c'est une série, inutile si film #}
+        {#  modifier dans Entité si saison = série sinon fixé a Film par défaut ) on affiche que si c'est une série, inutile si film #}
 {# {{dump(show.castings)}} #}
                     {% if show.type == 'Série' %}
 
                         {# <h2>{{show.seasons.number}}</h2> #}
+                        <h2>{{ show.seasons|length }} Saisons</h2>
+
                         <ul class="list-unstyled">
-                            <li><span class="badge bg-danger fs-6 mb-2">Saison 1</span><small class="ms-1">(10 épisodes)</small></li>
+                         {% for current_season in show.seasons %}
+                                <li><span class="badge bg-danger fs-6 mb-2">Saison {{ current_season.number }}</span><small class="ms-1">({{ current_season.episodeCount }} épisodes)</small></li>
+                            {% endfor %}
+                            {# <li><span class="badge bg-danger fs-6 mb-2">Saison 1</span><small class="ms-1">(10 épisodes)</small></li>
                             <li><span class="badge bg-danger fs-6 mb-2">Saison 2</span><small class="ms-1">(11 épisodes)</small></li>
-                            <li><span class="badge bg-danger fs-6 mb-2">Saison 3</span><small class="ms-1">(12 épisodes)</small></li>
+                            <li><span class="badge bg-danger fs-6 mb-2">Saison 3</span><small class="ms-1">(12 épisodes)</small></li> #}
                         </ul>
                     {% endif %}
 
@@ -60,7 +69,7 @@
 
                     {% for current_casting in show.castings %}
 
-                              <b>  {{current_casting.role}}</b> <i>incarné par  </i> <b> {{current_casting.person.firstname}}  {{current_casting.person.lastname}}</b><br>
+                              {# <b>  {{current_casting.role}}</b> <i>incarné par  </i> <b> {{current_casting.person.firstname}}  {{current_casting.person.lastname}}</b><br> #}
                                 {# Acteur 2 (La reine)<br> 
                                 Acteur 3 (Franz)<br> #}
                     {% endfor %}

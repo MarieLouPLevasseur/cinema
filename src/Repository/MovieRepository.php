@@ -39,6 +39,24 @@ class MovieRepository extends ServiceEntityRepository
         }
     }
 
+    public function findForShow($movieId): ?Movie
+    {
+         $entityManager = $this->getEntityManager();
+         $query = $entityManager->createQuery(
+             // ! les alias sont obligatoire ici
+             'SELECT m, g, c, p
+             FROM App\Entity\Movie m
+             JOIN m.genres g
+             JOIN m.castings c
+             JOIN c.person p
+             WHERE m.id = :movie_id
+             '
+         )->setParameter('movie_id', $movieId);
+ 
+         // returns an array of Product objects
+         return $query->getOneOrNullResult();
+        }
+
 //    /**
 //     * @return Movie[] Returns an array of Movie objects
 //     */
