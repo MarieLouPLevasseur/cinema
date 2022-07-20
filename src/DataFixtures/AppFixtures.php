@@ -9,6 +9,7 @@ use App\Entity\Person;
 use App\Entity\Season;
 use DateTimeImmutable;
 use App\Entity\Casting;
+use App\Entity\Review;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 
@@ -661,8 +662,183 @@ class AppFixtures extends Fixture
             "lastname"  =>"Johnson",
             ],
         ];
-//********************FIN DOUBLON **************************** */
+    //********************FIN DOUBLON **************************** */
 
+    // **** USER (écrit les critiques: email, username, role *********
+
+    $loremFirstName = [
+        //garcons
+            "Aaron",
+            "Antonin",
+            "Anthony",
+            'Ayoub',
+            'Bastien',
+            'Alan',
+            'Aymeric',
+            'Bryan',
+            'Charles',
+            'Elias',
+            'Dorian',
+            'Dylan',
+            'Alex',
+            'Augustin',
+            'Alban',
+            'Gabin',
+            'Guillaume',
+            'Samuel',
+            'Simon',
+            'Kevin',
+            'Sacha',
+            'Tristan',
+            'Victor',
+            'Jordan',
+            'Killian',
+            'Marius',
+            'Vincent',
+        //filles
+            'Andrea',
+            'Audrey',
+            'Angele',
+            'Adele',
+            'Alexia',
+            'Amandine',
+            'Angelina',
+            'Chiara',
+            'Claire',
+            'Coralie',
+            'Elsa',
+            'Agathe',
+            'Constance',
+            'Eleonore',
+            'Elisa',
+            'Elodie',
+            'Fanny',
+            "Alice",
+            'Anna',
+            'Apolline',
+            'Candice',
+            'Charline',
+            'Elise',
+            'Emilie',
+            'Amelie',
+            'Axelle',
+            'Capucine',
+            'Flavie',
+            'Heloise',
+            'Emeline',
+            'Leonie',
+            'Carla',
+            'Cassandra',
+            'Clarisse',
+            'Elina',
+            'Clementine',
+            'Elena',
+            'Marion',
+            'Melina',
+            'Marine',
+            'Melissa',
+            'Lise'
+        ];
+
+            $loremLastName= [
+            "Lawson",
+            "Bailey",
+            "Espinoza",
+            "Stuart",
+            "Wyatt",
+            "Kerr",
+            "Ball",
+            "Bradley",
+            "Duran",
+            "Moody",
+            "Alvarado",
+            "Boyle",
+            "Riley",
+            "Castillo",
+            "Charles",
+            "Dalton",
+            "Murray",
+            "Eaton",
+            "Khan",
+            "Leonard",
+            "Craig",
+            "Villanueva",
+            "Wise",
+            "Goodman",
+            "Stein",
+            "Solomon",
+            "Haney",
+            "Beard",
+            "Rojas"
+        ];
+
+        $loremRole = ["admin", "co-admin", "simple_user"];
+    //tableau des objects users
+        $allUsers =[];
+
+        for ($i = 0; $i < 55; $i++) {
+            $userObj = new User();
+            $userFirstNameKeyRandom = (array_rand($loremFirstName));
+            $userFirstNameDefault = $loremFirstName[$userFirstNameKeyRandom];
+
+            $userLastNameKeyRandom = (array_rand($loremFirstName));
+            $userLastNameDefault = $loremFirstName[$userLastNameKeyRandom];
+
+            $userRoleKeyRandom = (array_rand($loremRole));
+            $userRoleDefault = $loremRole[$userRoleKeyRandom];
+            
+            $userObj->setUsername($userFirstNameDefault." ".$userLastNameDefault);
+            $userObj->setEmail($userFirstNameDefault.".".$userLastNameDefault."@gmail.com");
+            $userObj->setRole($userRoleDefault);
+
+            // mise en tableau pour réutilisation ultérieure
+            $allUsers[]= $userObj;
+
+            $manager->persist($userObj);
+        }
+
+    // **** REVIEW 3-4 par users (critiques film: movie_id, user_id, content, rating *********
+
+                // **** Reviews *********
+                $LoremReviewArray = [];
+                $LoremReviewArray[] = 'Hi mindless mortuis soulless creaturas, imo evil stalking monstra adventus resi dentevil vultus comedat cerebella viventium. Qui animated corpse, cricket bat max brucks terribilem incessu zomby. The voodoo sacerdos flesh eater, suscitat mortuos comedere carnem virus.';
+                $LoremReviewArray[] = 'Hamburger ribeye t-bone, meatball boudin ham pork belly shank picanha bresaola. Cupim sausage sirloin tri-tip, flank chuck tenderloin tongue leberkas bacon ham spare ribs pig. Sausage pig sirloin, ham hock picanha ham pork belly bacon bresaola pork strip steak landjaeger jerky salami. Burgdoggen short ribs rump jowl kielbasa salami. Capicola meatball boudin leberkas burgdoggen. Alcatra flank ball tip, kevin filet mignon bresaola t-bone chuck turkey chicken beef pork belly burgdoggen fatback.';
+                $LoremReviewArray[] = 'Fruitcake apple pie fruitcake gingerbread chocolate bar bear claw candy croissant marzipan. Danish oat cake gingerbread chocolate bar muffin marshmallow chocolate sweet jelly beans. Chocolate caramels bonbon gummies chocolate bar.';      
+                $LoremReviewArray[] = "Cibolac de verrat de mangeux d'marde de crucifix d'esprit de câline de bine de gériboire de p'tit Jésus de caltor de patente à gosse de mosus de saintes fesses de cibouleau de bâtard de calvinouche de sacristi de cibole d'astie de cossin de Jésus Marie Joseph de ciboire de mautadine.";
+                $LoremReviewArray[] = "Purée de sapristi de charrue d'enfant d'chienne de mosus de taboire de boswell de charogne de viande à chien de sacrament de baptême d'ostifie de bâtard de sacristi d'estique de cimonaque de maudite marde de batèche de mangeux d'marde de calvinouche de ciboire de cibolac.";
+                $LoremReviewArray[] = "Baptême de sainte-viarge d'enfant d'chienne de saint-ciarge de viande à chien de bout d'ciarge de cibolac de verrat de marde de calvinouche de charrue de Jésus de plâtre de patente à gosse de charogne de mautadine de bâtard de torrieux de tabarouette de Jésus Marie Joseph de cibole de purée de ciarge";
+                $LoremReviewArray[] = "Ostifie d'étole de batince de ciboire de cul de calvinouche de viande à chien de verrat de bout d'viarge de batèche de saint-cimonaque de mosus d'enfant d'chienne d'ostie de gériboire de patente à gosse de cibole de sapristi de cibolac de ciarge de baptême de bâtard.";
+                $LoremReviewArray[] = "But I've got news for them, too. And Ashley said that when she was nine years old, her mother got cancer. It is where our union grows stronger. That is why we will honor our agreement with Iraq's democratically-elected government to remove combat troops from Iraqi cities by July, and to remove all our troops from Iraq by 2012. But we can only achieve it together.Thank you, God Bless you, and God Bless the United States of America.";
+                $LoremReviewArray[] ="Last time we took up immigration reform, it failed. I love this country, and so do you, and so does John McCain. As a student of history, I also know civilization's debt to Islam. That experience guides my conviction that partnership between America and Islam must be based on what Islam is, not what it isn't. Thank you, and God bless America.";
+
+                // tableau des objets reviews
+                $allReviews =[];
+
+                // for ($i = 1; $i <= 50; $i++) {
+                //     $ReviewKeyRandom = (array_rand($LoremReviewArray));
+                //     $ReviewDefault = $LoremReviewArray[$ReviewKeyRandom];
+
+                //     $reviewObj = new Review();
+                //     $reviewObj->setRating(mt_rand(1,5));
+                //     $reviewObj->setContent($ReviewDefault);
+
+                //     // Sélection d'un utilisateur aléatoire
+                //     $randUserIdx = mt_rand(1, sizeof($allUsers));
+                //     $randUserIdx -- ;
+                //     // dump(sizeof(($allUsers)));
+                //     // dump($randUserIdx);
+                //     $randomUser = $allUsers[$randUserIdx];
+                //     // dump($randomUser);
+                //     $reviewObj->setUser($randomUser);
+
+                //     // mise en tableau pour réutilisation ultérieure
+                //     $allReviews[]=$reviewObj;
+
+                //     // ! je pense que c'est ce persiste qui attend le movie ID mais movie Id est déclaré plus bas :-/
+                //     // $manager->persist($reviewObj);
+
+                // }
+                // dd($allReviews);
 
         // ********** MOVIES : isan, title, duration (min), summary, released_at, synopsis, poster, rating) **********
 
@@ -1708,9 +1884,10 @@ class AppFixtures extends Fixture
             $movieObj->setIsan($currentMovie['isan']);
             $movieObj->setReleasedAt(new DateTimeImmutable($currentMovie['released_at']));
 
-            //********* */ récupération des clés! *************
+        // *******************************************************************
+        //********* */ récupération des clés et des collections! *************
 
-            // ? ** GENRE ** : plusieurs genre possible donc boucle:
+            // ? ** GENRE ** : plusieurs genres possible donc boucle:
 
             foreach ($currentMovie['genres'] as $currentGenreName) {
                 // $currentGenre = Action
@@ -1722,7 +1899,7 @@ class AppFixtures extends Fixture
                 //  attend un objet et pas un array
                 $movieObj->addGenre($currentGenreObj);
 
-                $manager->persist($movieObj);
+                // $manager->persist($movieObj);
 
             }
             // $movieObj ->addGenre($currentMovie['genres']);
@@ -1730,6 +1907,7 @@ class AppFixtures extends Fixture
 
             // ? ** SAISON ** : plusieurs saisons possible donc boucle:
 
+            // si des saison existe on les ajoute autrement non
             if (isset($currentMovie['seasons'])) {
                 foreach ($currentMovie['seasons'] as $currentSeasonInfos) {
                     $currentSeasonObj = new Season();
@@ -1754,12 +1932,9 @@ class AppFixtures extends Fixture
                     
                 // on l'ajoute à movie
                 $castingObj->setMovie($movieObj);
-                // dd($castingObj->getMovie());
                     
-                // on fixe les castings:
                 // ? ** PERSON (acteurs) ** : prénom et nom donc boucle pour y placer les infos
                 // ? condition car pour l'instant que GOT enregistré
-                // dump($currentCastingRole);
 
             // on ajoute chaque casting au movie: 
             $movieObj->addCasting($castingObj);
@@ -1779,152 +1954,57 @@ class AppFixtures extends Fixture
                 }
                 $manager->persist($castingObj);
             }
-            // si utilisation report des données dans un autre fixture
-            // $movieObjArray[] = $movieObj;
+        // ? ** Review (critiques) ** : récupéréer 3-4 critiques par films
+        // tire au sort le nombre de reviews qui sera affecté
+        $aleaCount = mt_rand(3,5);
+        // dd($aleaCount);
+            for ($i = 0; $i<=$aleaCount; $i ++){
+            // récupération de tous les reviews $allReviews généré plus haut
 
+
+
+        // pour chaque nouvelle review on crée un contenu aléatoire
+            $ReviewKeyRandom = (array_rand($LoremReviewArray));
+            $ReviewDefault = $LoremReviewArray[$ReviewKeyRandom];
+
+            // on affecte les données dans un objet
+            $reviewObj = new Review();
+            $reviewObj->setRating(mt_rand(1,5));
+            $reviewObj->setContent($ReviewDefault);
+
+        // Sélection d'un utilisateur aléatoire pour chaque revieuw
+            $randUserIdx = mt_rand(1, sizeof($allUsers));
+            $randUserIdx -- ;
+            // dump(sizeof(($allUsers)));
+            // dump($randUserIdx);
+            $randomUser = $allUsers[$randUserIdx];
+            // dump($randomUser);
+            $reviewObj->setUser($randomUser);
+
+        // Affectation du film à la review
+            $reviewObj->setMovie($movieObj);
+
+        // Affection de la review au film
+            $movieObj->addReview($reviewObj);
+
+
+        // On persiste notre review
+            $manager->persist($reviewObj);
+        // On persiste notre film
             $manager->persist($movieObj);
+
+            }
+        
+        // si utilisation report des données dans un autre fixture
+        // $movieObjArray[] = $movieObj;
+            $manager->persist($movieObj);
+
+            // dd($movieObj);
         }
       
     
         // cela permet de rendre disponible notre tableau de d'objet dans les autres fixtures
-        // $this->addReference('movie-list', $movieObjArray);
-
-
-        // **** USER (écrit les critiques: email, username, role *********
-
-        $loremFirstName = [
-    //garcons
-         "Aaron",
-         "Antonin",
-         "Anthony",
-         'Ayoub',
-         'Bastien',
-         'Alan',
-         'Aymeric',
-         'Bryan',
-         'Charles',
-         'Elias',
-         'Dorian',
-         'Dylan',
-         'Alex',
-         'Augustin',
-         'Alban',
-         'Gabin',
-         'Guillaume',
-         'Samuel',
-         'Simon',
-         'Kevin',
-         'Sacha',
-         'Tristan',
-         'Victor',
-         'Jordan',
-         'Killian',
-         'Marius',
-         'Vincent',
-    //filles
-         'Andrea',
-         'Audrey',
-         'Angele',
-         'Adele',
-         'Alexia',
-         'Amandine',
-         'Angelina',
-         'Chiara',
-         'Claire',
-         'Coralie',
-         'Elsa',
-         'Agathe',
-         'Constance',
-         'Eleonore',
-         'Elisa',
-         'Elodie',
-         'Fanny',
-         "Alice",
-         'Anna',
-         'Apolline',
-         'Candice',
-         'Charline',
-         'Elise',
-         'Emilie',
-         'Amelie',
-         'Axelle',
-         'Capucine',
-         'Flavie',
-         'Heloise',
-         'Emeline',
-         'Leonie',
-         'Carla',
-         'Cassandra',
-         'Clarisse',
-         'Elina',
-         'Clementine',
-         'Elena',
-         'Marion',
-         'Melina',
-         'Marine',
-         'Melissa',
-         'Lise'
-    ];
-
-        $loremLastName= [
-         "Lawson",
-         "Bailey",
-         "Espinoza",
-         "Stuart",
-         "Wyatt",
-         "Kerr",
-         "Ball",
-         "Bradley",
-         "Duran",
-         "Moody",
-         "Alvarado",
-         "Boyle",
-         "Riley",
-         "Castillo",
-         "Charles",
-         "Dalton",
-         "Murray",
-         "Eaton",
-         "Khan",
-         "Leonard",
-         "Craig",
-         "Villanueva",
-         "Wise",
-         "Goodman",
-         "Stein",
-         "Solomon",
-         "Haney",
-         "Beard",
-         "Rojas"
-    ];
-
-        $loremRole = ["admin", "co-admin", "simple_user"];
-
-        for ($i = 0; $i < 55; $i++) {
-            $user = new User();
-            $userFirstNameKeyRandom = (array_rand($loremFirstName));
-            $userFirstNameDefault = $loremFirstName[$userFirstNameKeyRandom];
-
-            $userLastNameKeyRandom = (array_rand($loremFirstName));
-            $userLastNameDefault = $loremFirstName[$userLastNameKeyRandom];
-
-            $userRoleKeyRandom = (array_rand($loremRole));
-            $userRoleDefault = $loremRole[$userRoleKeyRandom];
-
-            // TODO affecter 3-4 user par review
-            
-            $user->setUsername($userFirstNameDefault." ".$userLastNameDefault);
-            $user->setEmail($userFirstNameDefault.".".$userLastNameDefault."@gmail.com");
-            $user->setRole($userRoleDefault);
-
-            $manager->persist($user);
-        }
-
-
-        // **** REVIEW 3-4 par users (critiques film: movie_id, user_id, content, rating *********
-
-    
-
+        // $this->addReference('movie-list', $movieObjArray);  
 
         $manager->flush();
     }
