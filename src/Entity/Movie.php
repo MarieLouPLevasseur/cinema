@@ -65,9 +65,9 @@ class Movie
     private $seasons;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Genre::class,  inversedBy="movies")
+     * @ORM\ManyToMany(targetEntity=Genre::class, inversedBy="movies")
      */
-    private $movies;
+    private $genres;
 
     /**
      * @ORM\OneToMany(targetEntity=Review::class, mappedBy="movie", orphanRemoval=true)
@@ -75,33 +75,30 @@ class Movie
     private $reviews;
 
     /**
-     * @ORM\OneToMany(targetEntity=Casting::class, mappedBy="movie")
+     * @ORM\OneToMany(targetEntity=Casting::class, mappedBy="movie", orphanRemoval=true)
      */
     private $castings;
 
     public function __construct()
     {
         $this->seasons = new ArrayCollection();
-        $this->movies = new ArrayCollection();
+        $this->genres = new ArrayCollection();
         $this->reviews = new ArrayCollection();
         $this->castings = new ArrayCollection();
     }
 
-//  TODO temporaire: mis en dur pour créer un type film par défaut
     /**
      * cette méthode sert à Twig pour pouvoir afficher une valeur lorsque l'on fait un show.type
      *
      * @return string
      */
-    public function getType()
+    public function getType() :string
     {
-        // ? si il y a des saisons associés alors c'est une Série
+        // ? si il y a des saisons associées alors c'est une Série
 
         // ? sinon c'est un film
         return 'Film';
     }
-
-
 
     public function getId(): ?int
     {
@@ -214,6 +211,7 @@ class Movie
 
     public function addSeason(Season $season): self
     {
+        // le maker nous aide à remplir le coté propriétaire.
         if (!$this->seasons->contains($season)) {
             $this->seasons[] = $season;
             $season->setMovie($this);
@@ -237,25 +235,25 @@ class Movie
     /**
      * @return Collection<int, Genre>
      */
-    public function getMovies(): Collection
+    public function getGenres(): Collection
     {
-        return $this->movies;
+        return $this->genres;
     }
 
-    public function addMovie(Genre $movie): self
+    public function addGenre(Genre $genre): self
     {
-        if (!$this->movies->contains($movie)) {
-            $this->movies[] = $movie;
-            $movie->addMovie($this);
+        if (!$this->genres->contains($genre)) {
+            $this->genres[] = $genre;
+            $genre->addMovie($this);
         }
 
         return $this;
     }
 
-    public function removeMovie(Genre $movie): self
+    public function removeGenre(Genre $genre): self
     {
-        if ($this->movies->removeElement($movie)) {
-            $movie->removeMovie($this);
+        if ($this->genres->removeElement($genre)) {
+            $genre->removeMovie($this);
         }
 
         return $this;

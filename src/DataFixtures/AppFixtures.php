@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Genre;
 use App\Entity\Movie;
 use App\Entity\Person;
+use App\Entity\Season;
 use DateTimeImmutable;
 use App\Entity\Casting;
 use Doctrine\Persistence\ObjectManager;
@@ -40,18 +41,180 @@ class AppFixtures extends Fixture
         //  $genreKeyRandom = (array_rand($genres));
         //     $genreDefault = $genres[$genreKeyRandom];
     
+    // création d'un tableau pour réutilisation des indexations pour les clés étrangères
+        $genreObjArray = [];
+
             foreach ($genres as $currentGenre)
             {
                 $genreObj = new Genre();
                 $genreObj->setName($currentGenre);
     
+            // md5 permet de faire un hachage (une espece de token) pour s'assurer que les clés sont uniques
+                  // permet d'avoir pour chaque genre une chaine de caractère
+                  // différente ET qui ne contient que des chiffres et des lettres
+
+             $genreObjArray[md5($currentGenre)] = $genreObj;
+
                 $manager->persist($genreObj);
             }
+
+// ******************************************
+
+// **** CASTING (personnages d'un film: person_id, role, credit_order, movie_id *********
+
+$roles =[
+    //game of throne
+            "Daenerys Targaryen",
+            "Sansa Stark",
+            "Jon Snow",
+            "Arya Stark",
+            "Cersei Lannister",
+            "Khal Drogo",
+            "Tyrion Lannister",
+            "Brienne de Torth, Brienne",
+            "Ygrid",
+            "Robb Stark",
+            "Margaery Tyrell",
+            "Oberyn Martell",
+            "Jaime Lannister",
+            "Theon Greyjoy",
+            "Bran Stark",
+            "Missandei",
+            "Samwell Tarly",
+            "Dickon Tarly",
+    // Da Vinci Code
+            "Robert Langdon",
+            "Sophie Neveu",
+            "Silas",
+            "Bézu Fache",
+            "Sir Leigh Teabing",
+            "Manuel Aringarosa",
+    // Bug's Life
+            "Harry le moustique",
+            "Heimlich",
+            "Bug Zapper Bug ",
+            "Tilt",
+            "Le Borgne",
+            "Lilipuce",
+            "Princesse Atta",
+    // Aline
+            "Aline Dieu",
+            "Guy-Claude Kamar",
+            "Sylvette",
+            "Anglomard",
+    // Stranger Things
+            "Onze",
+            "Mike Wheeler",
+            "Lucas Sinclair",
+            "Will Byers",
+            "Max",
+    //Ghostbuster
+            "Dr Peter Venkman",
+            "Dr Raymond Stantz",
+            "Dr Egon Spengler",
+            "Dana Barrett",
+            "Winston Zeddemore",
+            "Janine Melnitz",
+            "Louis Tully",
+    // le Grinch
+            "Le Grinch",
+            "Cindy Lou Who",
+            "Martha May Whovier",
+            "Maire Augustus Maywho",
+    //the man of earth
+            "John Oldman",
+            "Harry",
+            "Dr. Arthur M. Jenkins",
+            "Dan",
+            "Edith",
+            "Sandy",
+            "Linda Murphy",
+    //interstellar
+            "Joseph Cooper",
+            "Amelia Brand",
+            "Murphy Cooper",
+            "Professeur John Brand",
+            "Murphy Cooper",
+            "Tom Cooper",
+            "Dr Mann",
+    // Matrix
+            "Thomas A. Anderson, alias « Neo »",
+            "Trinity",
+            "Morpheus",
+            "l'agent Smith",
+            "l'Oracle",
+            "Cypher ou Mr Reagan",
+            "Tank",
+            "le Mulot",
+            "Switch",
+            "Apoc",
+            "Dozer",
+            "l'agent Brown",
+            "l'agent Jones",
+    // Starship troopers
+            "Carmen Ibanez",
+            "Dizzy Flores",
+            "Johnny Rico",
+            "Ace Levy",
+            "Carl Jenkins ",
+            "Sergeant Charles Zim ",
+            "Pilot Cadet Stack Lumbreiser",
+    // Thor
+            "Thor",
+            "Jane Foster / The Mighty Thor",
+            "Gorr le Boucher",
+            "Valkyrie",
+            "Zeus",
+            "Sif",
+            "Peter Quill / Star-Lord",
+            "Dave",
+            "Drax",
+    // Truman Show
+            "Truman Burbank",
+            "Meryl Burbank, Hannah Gill",
+            "Christof",
+            "Lauren Garland",
+            "Marlon",
+    // La cité de la peur
+            "Serge Karamazov",
+            "Odile Deray",
+            "Simon Jérémi",
+            "Le commissaire Patrick Bialès",
+            "Emile Gravier",
+            "La veuve joyeuse",
+    // Django unchained
+            "Frankie",
+            "Django",
+            "Docteur King Schultz",
+            "Calvin Candie",
+            "Stephen",
+            "Broomhilda von Shaft",
+            "Big Daddy",
+    ];
+    $roleObjArray = [];
+
+        foreach ($roles as $currentRole)
+        {
+            $roleObj = new Casting();
+            $roleObj->setRole($currentRole);
+            $roleObj->setCreditOrder(mt_rand(0,5));
+    
+            // md5 permet de faire un hachage (une espece de token) pour s'assurer que les clés sont uniques
+                  // permet d'avoir pour chaque genre une chaine de caractère
+                  // différente ET qui ne contient que des chiffres et des lettres
+            $roleObjArray[md5($currentRole)] = $roleObj;
+
+
+            $manager->persist($roleObj);
+        }
+
+
 
     // ********** MOVIES : isan, title, duration (min), summary, released_at, synopsis, poster, rating) **********
 
     $movies = [
-        1 => [
+    // bug's life
+        [
             'isan' => '',
             'type' => 'Film',
             'title' => 'A Bug\'s Life',
@@ -60,10 +223,26 @@ class AppFixtures extends Fixture
             'summary' => 'Tilt, fourmi quelque peu tête en l\'air, détruit par inadvertance la récolte de la saison.',
             'synopsis' => 'Tilt, fourmi quelque peu tête en l\'air, détruit par inadvertance la récolte de la saison. La fourmilière est dans tous ses états. En effet cette bévue va rendre fou de rage le Borgne, méchant insecte qui chaque été fait main basse sur une partie de la récolte avec sa bande de sauterelles racketteuses. Tilt décide de quitter l\'île pour recruter des mercenaires capables de chasser le Borgne.',
             'poster' => 'https://m.media-amazon.com/images/M/MV5BNThmZGY4NzgtMTM4OC00NzNkLWEwNmEtMjdhMGY5YTc1NDE4XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg',
-            'rating' => 3.8
+            'rating' => 3.8,
+            'genres' => [
+                'Action',
+                'Animation',
+                'Dessin animé',
+                'Famille',
+            ],
+            "casting" => 
+            [
+                "Harry le moustique",
+            "Heimlich",
+            "Bug Zapper Bug ",
+            "Tilt",
+            "Le Borgne",
+            "Lilipuce",
+            "Princesse Atta",
+            ]
         ],
-        
-        10 => [
+    // GOT
+        [
             'isan' => '',
             'type' => 'Série',
             'title' => 'Game of Thrones',
@@ -72,9 +251,70 @@ class AppFixtures extends Fixture
             'summary' => 'Neuf familles nobles se battent pour le contrôle des terres de Westeros, tandis qu\'un ancien ennemi revient...',
             'synopsis' => 'Il y a très longtemps, à une époque oubliée, une force a détruit l\'équilibre des saisons. Dans un pays où l\'été peut durer plusieurs années et l\'hiver toute une vie, des forces sinistres et surnaturelles se pressent aux portes du Royaume des Sept Couronnes. La confrérie de la Garde de Nuit, protégeant le Royaume de toute créature pouvant provenir d\'au-delà du Mur protecteur, n\'a plus les ressources nécessaires pour assurer la sécurité de tous. Après un été de dix années, un hiver rigoureux s\'abat sur le Royaume avec la promesse d\'un avenir des plus sombres. Pendant ce temps, complots et rivalités se jouent sur le continent pour s\'emparer du Trône de Fer, le symbole du pouvoir absolu.',
             'poster' => 'https://m.media-amazon.com/images/M/MV5BYTRiNDQwYzAtMzVlZS00NTI5LWJjYjUtMzkwNTUzMWMxZTllXkEyXkFqcGdeQXVyNDIzMzcwNjc@._V1_SX300.jpg',
-            'rating' => 4.7
+            'rating' => 4.7,
+            'genres' => [
+                "Science-fiction",
+                "Thriller",
+                "Espionnage",
+                "Action",
+            ],
+            'seasons' => [
+                [
+                    'number' => 1,
+                    'episode_count' => 10
+                ],
+                [
+                    'number' => 2 ,
+                    'episode_count' => 10
+                ],
+                [
+                    'number' => 3,
+                    'episode_count' => 10
+                ],
+                [
+                    'number' => 4,
+                    'episode_count' => 10
+                ],
+                [
+                    'number' => 5,
+                    'episode_count' => 10
+                ],
+                [
+                    'number' => 6,
+                    'episode_count' => 10
+                ],
+                [
+                    'number' => 7,
+                    'episode_count' => 7
+                ],
+                [
+                    'number' => 8,
+                    'episode_count' => 6
+                ]
+                ],
+            "casting" => 
+            [
+                "Daenerys Targaryen",
+                "Sansa Stark",
+                "Jon Snow",
+                "Arya Stark",
+                "Cersei Lannister",
+                "Khal Drogo",
+                "Tyrion Lannister",
+                "Brienne de Torth, Brienne",
+                "Ygrid",
+                "Robb Stark",
+                "Margaery Tyrell",
+                "Oberyn Martell",
+                "Jaime Lannister",
+                "Theon Greyjoy",
+                "Bran Stark",
+                "Missandei",
+                "Samwell Tarly",
+                "Dickon Tarly",
+            ]
         ],
-        
+    // Aline
         [
             'isan' => '',
             'type' => 'Film',
@@ -84,9 +324,19 @@ class AppFixtures extends Fixture
             'summary' => 'Québec, fin des années 60, Sylvette et Anglomard accueillent leur 14ème enfant : Aline. On lui découvre un don, elle a une voix en or.',
             'synopsis' => 'Québec, fin des années 60, Sylvette et Anglomard accueillent leur 14ème enfant : Aline. Dans la famille Dieu, la musique est reine et quand Aline grandit on lui découvre un don, elle a une voix en or. Lorsqu’il entend cette voix, le producteur de musique Guy-Claude n’a plus qu’une idée en tête… faire d’Aline la plus grande chanteuse au monde. Epaulée par sa famille et guidée par l’expérience puis l’amour naissant de Guy-Claude, ils vont ensemble écrire les pages d’un destin hors du commun.',
             'poster' => 'https://m.media-amazon.com/images/M/MV5BNjUxYTQ3YzItNjU5Ny00ZGM0LWJkMGUtN2FkMWRiNjFlY2ExXkEyXkFqcGdeQXVyMzcwMzExMA@@._V1_SX300.jpg',
-            'rating' => 4.0
+            'rating' => 4.0,
+            'genres' => [
+                "Documentaire",
+            ],
+            "casting" => 
+            [
+                "Aline Dieu",
+                "Guy-Claude Kamar",
+                "Sylvette",
+                "Anglomard",
+            ]
         ],
-        
+    // Strangers Thing   
         [
             'isan' => '',
             'type' => 'Série',
@@ -96,9 +346,41 @@ class AppFixtures extends Fixture
             'summary' => '1983, à Hawkins dans l\'Indiana. Après la disparition d\'un garçon de 12 ans dans des circonstances mystérieuses, la petite ville du Midwest est témoin d\'étranges phénomènes.',
             'synopsis' => 'A Hawkins, en 1983 dans l\'Indiana. Lorsque Will Byers disparaît de son domicile, ses amis se lancent dans une recherche semée d’embûches pour le retrouver. Dans leur quête de réponses, les garçons rencontrent une étrange jeune fille en fuite. Les garçons se lient d\'amitié avec la demoiselle tatouée du chiffre "11" sur son poignet et au crâne rasé et découvrent petit à petit les détails sur son inquiétante situation. Elle est peut-être la clé de tous les mystères qui se cachent dans cette petite ville en apparence tranquille…',
             'poster' => 'https://m.media-amazon.com/images/M/MV5BN2ZmYjg1YmItNWQ4OC00YWM0LWE0ZDktYThjOTZiZjhhN2Q2XkEyXkFqcGdeQXVyNjgxNTQ3Mjk@._V1_SX300.jpg',
-            'rating' => 4.2
+            'rating' => 4.2,
+            'genres' => [
+                "Fantastique",
+                "Policier",
+                "Thriller",
+                "Science-fiction",
+            ],
+            'seasons' => [
+                [
+                    'number' => 1,
+                    'episode_count' => 8
+                ],
+                [
+                    'number' => 2 ,
+                    'episode_count' => 9
+                ],
+                [
+                    'number' => 3,
+                    'episode_count' => 8
+                ],
+                [
+                    'number' => 4,
+                    'episode_count' => 9
+                ]
+                ],
+            "casting" => 
+            [
+                "Onze",
+                "Mike Wheeler",
+                "Lucas Sinclair",
+                "Will Byers",
+                "Max",
+            ]
         ],
-    
+    // davinci Code
         [
             'isan' => '',
             'type' => 'Film',
@@ -108,9 +390,23 @@ class AppFixtures extends Fixture
             'summary' => '1983, à Hawkins dans l\'Indiana. Après la disparition d\'un garçon de 12 ans dans des circonstances mystérieuses, la petite ville du Midwest est témoin d\'étranges phénomènes.',
             'synopsis' => "Une nuit, le professeur Robert Langdon, éminent spécialiste de l'étude des symboles, est appelé d'urgence au Louvre : le conservateur du musée a été assassiné, mais avant de mourir, il a laissé de mystérieux symboles... Avec l'aide de la cryptologue Sophie Neveu, Langdon va mener l'enquête et découvrir des signes dissimulés dans les oeuvres de Léonard de Vinci.",
             'poster' => 'https://www.cine-feuilles.ch/storage/app/uploads/public/5a3/d5b/b12/thumb_17976_360_480_0_0_auto.jpg',
-            'rating' => 5
+            'rating' => 5,
+            'genres' => [
+                "Documentaire",
+                "Policier",
+                "Thriller",
+            ],
+            "casting" => 
+            [
+                "Robert Langdon",
+                "Sophie Neveu",
+                "Silas",
+                "Bézu Fache",
+                "Sir Leigh Teabing",
+                "Manuel Aringarosa",
+            ]
         ],
-    
+    // ghostbuster
         [
             'type' => 'Film',
             'title' => 'Ghostbusters',
@@ -122,7 +418,23 @@ class AppFixtures extends Fixture
             'rating' => 5,
             'isan' => '',
             'released_at' => '1984-07-31',
+            'genres' => [
+                "Action",
+                "Comédie",
+                "Fantastique",
+            ],
+            "casting" => 
+            [
+                "Dr Peter Venkman",
+            "Dr Raymond Stantz",
+            "Dr Egon Spengler",
+            "Dana Barrett",
+            "Winston Zeddemore",
+            "Janine Melnitz",
+            "Louis Tully",
+            ]
         ],
+    // grinch
         [
             'type' => 'Film',
             'title' => 'Le Grinch',
@@ -138,7 +450,19 @@ class AppFixtures extends Fixture
             'rating' => 3,
             'isan' => '',
             'released_at' => '2000-12-06',
-        ],            
+            'genres' => [
+                "Comédie",
+                "Fantastique",
+            ],
+            "casting" => 
+            [
+                "Le Grinch",
+                "Cindy Lou Who",
+                "Martha May Whovier",
+                "Maire Augustus Maywho",
+            ]
+        ], 
+    // the man of earth
         [
             'type' => 'Film',
             'title' => 'The man from earth',
@@ -150,7 +474,21 @@ class AppFixtures extends Fixture
             'rating' => '5',
             'isan' => '',
             'released_at' => '2011-07-5',
+            'genres' => [
+                "Science-fiction",
+            ],
+            "casting" => 
+            [
+                "John Oldman",
+                "Harry",
+                "Dr. Arthur M. Jenkins",
+                "Dan",
+                "Edith",
+                "Sandy",
+                "Linda Murphy",
+            ]
         ],
+    // interstellar
         [
             'type' => 'Film',
             'title' => 'Interstellar',
@@ -161,7 +499,22 @@ class AppFixtures extends Fixture
             'rating' => '5',
             'isan' => '',
             'released_at' => '2014-11-05',
+            'genres' => [
+                'Drame',
+                "Science-fiction",
+            ],
+            "casting" => 
+            [
+                "Joseph Cooper",
+            "Amelia Brand",
+            "Murphy Cooper",
+            "Professeur John Brand",
+            "Murphy Cooper",
+            "Tom Cooper",
+            "Dr Mann",
+            ]
         ],
+    // matrix
         [
             'type' => 'Film',
             'title' => 'Matrix',
@@ -174,10 +527,32 @@ class AppFixtures extends Fixture
             'rating' => '5',
             'isan' => 'ISA287256810187',
             'released_at' => '1999-02-07',
-        ],            
+            'genres' => [
+                'Action',
+                'Aventure',
+                "Fantastique",
+            ],
+            "casting" => 
+            [
+                "Thomas A. Anderson, alias « Neo »",
+                "Trinity",
+                "Morpheus",
+                "l'agent Smith",
+                "l'Oracle",
+                "Cypher ou Mr Reagan",
+                "Tank",
+                "le Mulot",
+                "Switch",
+                "Apoc",
+                "Dozer",
+                "l'agent Brown",
+                "l'agent Jones",
+            ]
+        ],      
+    // starship troopers
         [
             'type' => 'Film',
-            'title' => 'STARSHIP TROOPERS',
+            'title' => 'Starship Troopers',
             'duration' => 135,
             'synopsis' => "Au XXIVe siècle, une fédération musclée fait régner sur la Terre l'ordre et la vertu, exhortant sans relâche la jeunesse à la lutte, au devoir, à l'abnégation et au sacrifice de soi. Mais aux confins de la galaxie, une armée d'arachnides se dresse contre l'espèce humaine et ces insectes géants rasent en quelques secondes la ville de Buenos-Aires. Cinq jeunes gens, cinq volontaires à peine sortis du lycée, pleins d'ardeurs et de courage, partent en mission dans l'espace pour combattre les envahisseurs. Ils sont loin de se douter de ce qui les attend.",
             'summary' => "Dans un futur lointain, les pays de la Terre se sont regroupés au sein de la Fédération, un gouvernement mondial et une stratocratie. Cette Fédération se lance alors dans la conquête de l’espace. Les terriens colonisent des planètes et explorent de nouveaux systèmes planétaires.",
@@ -185,10 +560,27 @@ class AppFixtures extends Fixture
             'rating' => '3',
             'isan' => '',
             'released_at' => '1998-01-21',
-        ],            
+            'genres' => [
+                'Action',
+                'Aventure',
+                "Fantastique",
+                "Science-fiction",
+            ],
+            "casting" => 
+            [
+                "Carmen Ibanez",
+            "Dizzy Flores",
+            "Johnny Rico",
+            "Ace Levy",
+            "Carl Jenkins ",
+            "Sergeant Charles Zim ",
+            "Pilot Cadet Stack Lumbreiser",
+            ]
+        ],   
+    // thor
         [
             'type' => 'Film',
-            'title' => 'THOR: LOVE AND THUNDER',
+            'title' => 'Thor: Love and Thunder',
             'duration' => 119,
             'synopsis' => 'Alors que Thor est en pleine introspection et en quête de sérénité, sa retraite est interrompue par un tueur galactique connu sous le nom de Gorr, qui s’est donné pour mission d’exterminer tous les dieux. Pour affronter cette menace, Thor demande l’aide de Valkyrie, de Korg et de son ex-petite amie Jane Foster, qui, à sa grande surprise, manie inexplicablement son puissant marteau, le Mjolnir. Ensemble, ils se lancent dans une dangereuse aventure cosmique pour comprendre les motivations qui poussent Gorr à la vengeance et l’arrêter avant qu’il ne soit trop tard.',
             'summary' => "Thor se lance dans un voyage différent de tout ce qu'il a connu jusqu'à présent : une quête de paix intérieure. Cependant, sa retraite est interrompue par Gorr le boucher des dieux, un tueur galactique qui cherche l'extinction des dieux.",
@@ -196,7 +588,26 @@ class AppFixtures extends Fixture
             'rating' => '2.8',
             'isan' => '',
             'released_at' => '2022-07-13',
+            'genres' => [
+                'Action',
+                'Aventure',
+                "Fantastique",
+                "Science-fiction",
+            ],
+            "casting" => 
+            [
+                "Thor",
+            "Jane Foster / The Mighty Thor",
+            "Gorr le Boucher",
+            "Valkyrie",
+            "Zeus",
+            "Sif",
+            "Peter Quill / Star-Lord",
+            "Dave",
+            "Drax",
+            ]
         ],
+    // truman show
         [
             'type' => 'Film',
             'title' => 'Truman Show',
@@ -207,7 +618,20 @@ class AppFixtures extends Fixture
             'rating' => '5',
             'isan' => '',
             'released_at' => '2022-10-28',
+            'genres' => [
+                'Drame',
+                'Comédie',
+            ],
+            "casting" => 
+            [
+            "Truman Burbank",
+            "Meryl Burbank, Hannah Gill",
+            "Christof",
+            "Lauren Garland",
+            "Marlon", 
+            ]
         ],
+    // cité de la peur
         [
             'type' => 'Film',
             'title' => 'La cité de la peur',
@@ -218,8 +642,23 @@ class AppFixtures extends Fixture
             'rating' => '5',
             'isan' => '',
             'released_at' => '1994-03-09',
+            'genres' => [
+                'Aventure',
+                'Comédie',
+                'Drame',
+                'Policier',
+            ],
+            "casting" => 
+            [
+                "Serge Karamazov",
+                "Odile Deray",
+                "Simon Jérémi",
+                "Le commissaire Patrick Bialès",
+                "Emile Gravier",
+                "La veuve joyeuse",
+            ]
         ],
-        
+    // django unchained
         [
             'type' => 'Film',
             'title' => 'Django Unchained',
@@ -231,6 +670,21 @@ class AppFixtures extends Fixture
             'rating' => '4.5',
             'isan' => '',
             'released_at' => '2013-01-16',
+            'genres' => [
+                'Action',
+                'Aventure',
+                'Western',
+            ],
+            "casting" => 
+            [
+            "Frankie",
+            "Django",
+            "Docteur King Schultz",
+            "Calvin Candie",
+            "Stephen",
+            "Broomhilda von Shaft",
+            "Big Daddy",
+            ]
         ],
     ];
 
@@ -242,6 +696,7 @@ class AppFixtures extends Fixture
         $movieObj->setSynopsis($currentMovie['synopsis']);
         $movieObj->setSummary($currentMovie['summary']);
         $movieObj->setPoster($currentMovie['poster']);
+
         // on peut convertir de plusieurs manière une chaine de caractère en entier
         // en précisant le type entre parenthèse avant la valeur
         // en utilisant des fonctions dédiées
@@ -249,8 +704,65 @@ class AppFixtures extends Fixture
         $movieObj->setIsan($currentMovie['isan']);
         $movieObj->setReleasedAt(new DateTimeImmutable($currentMovie['released_at']));
 
+        //********* */ récupération des clés! *************
+
+        // ? ** GENRE ** : plusieurs genre possible donc boucle:
+
+        foreach ($currentMovie['genres'] as $currentGenreName)
+            {
+                // $currentGenre = Action
+                // $genreObjArray [
+                //     obj('Action')
+                // ]
+                $currentGenreObj = $genreObjArray[md5($currentGenreName)];
+                // récupérer le genre du tableau $genreObjArr
+                $movieObj->addGenre($currentGenreObj);
+            }
+        // $movieObj ->addGenre($currentMovie['genres']);
+
+
+        // ? ** SAISON ** : plusieurs saisons possible donc boucle:
+
+        if (isset($currentMovie['seasons']))
+            {
+
+                foreach ($currentMovie['seasons'] as $currentSeasonInfos)
+                {
+                    
+                    $currentSeasonObj = new Season();
+                    $currentSeasonObj->setNumber($currentSeasonInfos['number']);
+                    $currentSeasonObj->setEpisodeCount($currentSeasonInfos['episode_count']);
+
+                    // on fixe les saisons: 
+                    $manager->persist($currentSeasonObj);
+
+                    // on l'ajoute à movie
+                    $movieObj->addSeason($currentSeasonObj);
+                }
+            }
+        // tableau d'object pour le transmettre a RandomFixtures
+        // $movieObjArray[] = $movieObj;
+        // ? ** CASTING ** : plusieurs roles dans le casting possible donc boucle:
+            foreach ($currentMovie['casting'] as $currentCastingRole)
+            {
+                
+                $castingObj = new Casting();
+                $castingObj->setRole($currentCastingRole);
+                $castingObj->setCreditOrder(mt_rand(1,5));
+
+                // on l'ajoute à movie
+                $castingObj->setMovie($movieObj);
+
+                // on fixe les castings: 
+                $manager->persist($castingObj);
+
+            }
         $manager->persist($movieObj);
     }
+
+    // cela permet de rendre disponible notre tableau de d'objet dans les autres fixtures
+    // $this->addReference('movie-list', $movieObjArray);
+
 
      // **** USER (écrit les critiques: email, username, role *********
 
@@ -390,629 +902,483 @@ class AppFixtures extends Fixture
 
 
     // **** PERSON (acteur d'un film : firstname, lastname) *********
-$persons =[
-// personnages série Game of Throne
-    [
-    "firstname" =>"Emilia",     //   Daenerys Targaryen
-    "lastname"  =>"Clarke",
-    ],
-    [
-    "firstname" =>"Sophie",     //   Sansa Stark
-    "lastname"  =>"Turner",
-    ],
-    [
-    "firstname" =>"Kit",        //    Jon Snow
-    "lastname"  =>"Harington",
-    ],
-    [
-    "firstname" =>"Maisie",     //     Arya Stark
-    "lastname"  =>"Williams",
-    ],
-    [
-    "firstname" =>"Lena",       //     Cersei Lannister
-    "lastname"  =>"Headey",
-    ],
-    [
-    "firstname" =>"Jason",      //     Khal Drogo
-    "lastname"  =>"Momoa",
-    ],
-    [
-    "firstname" =>"Peter",      //     Tyrion Lannister
-    "lastname"  =>"Dinklage",
-    ],
-    [
-    "firstname" =>"Gwendoline", //    Brienne de Torth, Brienne
-    "lastname"  =>"Christie",
-    ],
-    [
-    "firstname" =>"Rose",       //    Ygrid
-    "lastname"  =>"Leslie",
-    ],
-    [
-    "firstname" =>"Richard",    //     Robb Stark
-    "lastname"  =>"Madden",
-    ],
-    [
-    "firstname" =>"Natalie",    //     Margaery Tyrell
-    "lastname"  =>"Dormer",
-    ],
-    [
-    "firstname" =>"Pedro",      //     Oberyn Martell
-    "lastname"  =>"Pascal",
-    ],
-    [
-    "firstname" =>"Nikolaj",    //    Jaime Lannister
-    "lastname"  =>"Coster-Waldau",
-    ],
-    [
-    "firstname" =>"Alfie",      //     Theon Greyjoy
-    "lastname"  =>"Allen",
-    ],
-    [
-    "firstname" =>"Isaac",      //     Bran Stark
-    "lastname"  =>"Hempstead-Wright",
-    ],
-    [
-    "firstname" =>"Nathalie",  //    Missandei
-    "lastname"  =>"Emmanuel",
-    ],
-    [
-    "firstname" =>"John",       //    Samwell Tarly
-    "lastname"  =>"Bradley-West",
-    ],
-    [
-    "firstname" =>"Tom",        //     Dickon Tarly
-    "lastname"  =>"Hopper",
-    ],
-// personnages film: Da Vinci Code
-    [
-    "firstname" =>"Tom",        //     Robert Langdon
-    "lastname"  =>"Hanks",
-    ],
-    [
-    "firstname" =>"Audrey",     //     Sophie Neveu
-    "lastname"  =>"Tautou",
-    ],
-    [
-    "firstname" =>"Paul",        //     Silas
-    "lastname"  =>"Bettany",
-    ],
-    [
-    "firstname" =>"Jean",        //     Bézu Fache
-    "lastname"  =>"Reno",
-    ],
-    [
-    "firstname" =>"Ian",        //     Sir Leigh Teabing
-    "lastname"  =>"McKellen",
-    ],
-    [
-    "firstname" =>"Alfred",     //    Manuel Aringarosa
-    "lastname"  =>"Molina",
-    ],
-// bug's life
+    $persons =[
+    // personnages série Game of Throne
+        [
+        "firstname" =>"Emilia",     //   Daenerys Targaryen
+        "lastname"  =>"Clarke",
+        ],
+        [
+        "firstname" =>"Sophie",     //   Sansa Stark
+        "lastname"  =>"Turner",
+        ],
+        [
+        "firstname" =>"Kit",        //    Jon Snow
+        "lastname"  =>"Harington",
+        ],
+        [
+        "firstname" =>"Maisie",     //     Arya Stark
+        "lastname"  =>"Williams",
+        ],
+        [
+        "firstname" =>"Lena",       //     Cersei Lannister
+        "lastname"  =>"Headey",
+        ],
+        [
+        "firstname" =>"Jason",      //     Khal Drogo
+        "lastname"  =>"Momoa",
+        ],
+        [
+        "firstname" =>"Peter",      //     Tyrion Lannister
+        "lastname"  =>"Dinklage",
+        ],
+        [
+        "firstname" =>"Gwendoline", //    Brienne de Torth, Brienne
+        "lastname"  =>"Christie",
+        ],
+        [
+        "firstname" =>"Rose",       //    Ygrid
+        "lastname"  =>"Leslie",
+        ],
+        [
+        "firstname" =>"Richard",    //     Robb Stark
+        "lastname"  =>"Madden",
+        ],
+        [
+        "firstname" =>"Natalie",    //     Margaery Tyrell
+        "lastname"  =>"Dormer",
+        ],
+        [
+        "firstname" =>"Pedro",      //     Oberyn Martell
+        "lastname"  =>"Pascal",
+        ],
+        [
+        "firstname" =>"Nikolaj",    //    Jaime Lannister
+        "lastname"  =>"Coster-Waldau",
+        ],
+        [
+        "firstname" =>"Alfie",      //     Theon Greyjoy
+        "lastname"  =>"Allen",
+        ],
+        [
+        "firstname" =>"Isaac",      //     Bran Stark
+        "lastname"  =>"Hempstead-Wright",
+        ],
+        [
+        "firstname" =>"Nathalie",  //    Missandei
+        "lastname"  =>"Emmanuel",
+        ],
+        [
+        "firstname" =>"John",       //    Samwell Tarly
+        "lastname"  =>"Bradley-West",
+        ],
+        [
+        "firstname" =>"Tom",        //     Dickon Tarly
+        "lastname"  =>"Hopper",
+        ],
+    // personnages film: Da Vinci Code
+        [
+        "firstname" =>"Tom",        //     Robert Langdon
+        "lastname"  =>"Hanks",
+        ],
+        [
+        "firstname" =>"Audrey",     //     Sophie Neveu
+        "lastname"  =>"Tautou",
+        ],
+        [
+        "firstname" =>"Paul",        //     Silas
+        "lastname"  =>"Bettany",
+        ],
+        [
+        "firstname" =>"Jean",        //     Bézu Fache
+        "lastname"  =>"Reno",
+        ],
+        [
+        "firstname" =>"Ian",        //     Sir Leigh Teabing
+        "lastname"  =>"McKellen",
+        ],
+        [
+        "firstname" =>"Alfred",     //    Manuel Aringarosa
+        "lastname"  =>"Molina",
+        ],
+    // bug's life
 
-    [
-    "firstname" =>"John",     //    Harry le moustique
-    "lastname"  =>"Lasseter",
-    ],
-    [
-    "firstname" =>"Joe",     //    Heimlich
-    "lastname"  =>"Ranft",
-    ],
-    [
-    "firstname" =>"Andrew",     //    Bug Zapper Bug
-    "lastname"  =>" Stanton",
-    ],
-    [
-    "firstname" =>"Dave",     //    Tilt
-    "lastname"  =>" Foley",
-    ],
- 
-    [
-    "firstname" =>"Kevin",     //    Le Borgne
-    "lastname"  =>"Spacey",
-    ],
-    [
-    "firstname" =>"John",     //    Lilipuce
-    "lastname"  =>"Ratzenberger",
-    ],
-// aline
-    [
-    "firstname" =>"Valérie",     //    Aline Dieu
-    "lastname"  =>"Lemercier",
-    ],
-    [
-    "firstname" =>"Sylvain",     //    Guy-Claude Kamar
-    "lastname"  =>"Marcel",
-    ],
-    [
-    "firstname" =>"Danielle",     //    Sylvette
-    "lastname"  =>"Fichaud",
-    ],
-    [
-    "firstname" =>"Roc",     //    Anglomard
-    "lastname"  =>"LaFortune",
-    ],
-// Stranger Things
-    [
-    "firstname" =>"Millie",     //    Onze
-    "lastname"  =>"Bobby Brown",
-    ],
-    [
-    "firstname" =>"Finn",     //    Mike Wheeler
-    "lastname"  =>"Wolfhard",
-    ],
-    [
-    "firstname" =>"Caleb",     //    Lucas Sinclair
-    "lastname"  =>"McLaughlin",
-    ],
-    [
-    "firstname" =>"Noah",     //    Will Byers
-    "lastname"  =>"Schnapp",
-    ],
-    [
-    "firstname" =>"Sadie",     //   Max
-    "lastname"  =>"Sink",
-    ],
-// Ghosbuster
-    [
-    "firstname" =>"Bill",     //   Dr Peter Venkman
-    "lastname"  =>"Murray",
-    ],
-    [
-    "firstname" =>"Dan",     //  Dr Raymond Stantz
-    "lastname"  =>"Aykroyd",
-    ],
-    [
-    "firstname" =>"Harold",     //  Dr Egon Spengler
-    "lastname"  =>"Ramis",
-    ],
-    [
-    "firstname" =>"Sigourney",     //  Dana Barrett
-    "lastname"  =>"Weaver",
-    ],
-    [
-    "firstname" =>"Ernie",     //  Winston Zeddemore
-    "lastname"  =>"Hudson",
-    ],
-    [
-    "firstname" =>"Annie",     //  Janine Melnitz
-    "lastname"  =>"Potts",
-    ],
-    [
-    "firstname" =>"Rick",     //  Louis Tully
-    "lastname"  =>"Moranis",
-    ],
-// Le Grinch
-    [
-    "firstname" =>"Jim",     //  Le Grinch
-    "lastname"  =>"Carrey",
-    ],
-    [
-    "firsname" =>"Taylor",     //  Cindy Lou Who
-    "lastname"  =>"Momsen",
-    ],
-    [
-    "firstname" =>"Christine",     //  Martha May Whovier
-    "lastname"  =>"Baranski",
-    ],
-    [
-    "firstname" =>"Jeffrey",     //  Maire Augustus Maywho
-    "lastname"  =>"Tambor",
-    ],
-//The man from earth
-    [
-    "firstname" =>"David",     //  John Oldman
-    "lastname"  =>"Lee Smith",
-    ],
-    [
-    "firstname" =>"John",     //  Harry
-    "lastname"  =>"Billingsley",
-    ],
-    [
-    "firstname" =>"William",     //  Dr. Arthur M. Jenkins
-    "lastname"  =>"Katt",
-    ],
-    [
-    "firstname" =>"Tony",     //  Dan
-    "lastname"  =>"Todd",
-    ],
-    [
-    "firstname" =>"Ellen",     //  Edith
-    "lastname"  =>"Crawford",
-    ],
-    [
-    "firstname" =>"Annika",     //  Sandy
-    "lastname"  =>"Peterson",
-    ],
-    [
-    "firstname" =>"Alexis",     //  Linda Murphy
-    "lastname"  =>"Thorpe",
-    ],
-//Interstellar
-    [
-    "firstname" =>"Matthew",     //  Joseph Cooper
-    "lastname"  =>"McConaughey",
-    ],
-    [
-    "firstname" =>"Anne",     //  Amelia Brand
-    "lastname"  =>"Hathaway",
-    ],
-    [
-    "firstname" =>"Jessica",     //   Murphy Cooper
-    "lastname"  =>"Chastain",
-    ],
-    [
-    "firstname" =>"Michael",     //   Professeur John Brand
-    "lastname"  =>"Caine",
-    ],
-    [
-    "firstname" =>"Mackenzie",     //   Murphy Cooper
-    "lastname"  =>"Foy",
-    ],
+        [
+        "firstname" =>"John",     //    Harry le moustique
+        "lastname"  =>"Lasseter",
+        ],
+        [
+        "firstname" =>"Joe",     //    Heimlich
+        "lastname"  =>"Ranft",
+        ],
+        [
+        "firstname" =>"Andrew",     //    Bug Zapper Bug
+        "lastname"  =>" Stanton",
+        ],
+        [
+        "firstname" =>"Dave",     //    Tilt
+        "lastname"  =>" Foley",
+        ],
     
-    [
-    "firstname" =>"Timothée",     //   Tom Cooper
-    "lastname"  =>"Chalamet",
-    ],
-     
-    [
-    "firstname" =>"Matt",     //   Dr Mann
-    "lastname"  =>"Damon",
-    ],
-// Matrix
-    [
-    "firstname" =>"Keanu",     //   Thomas A. Anderson, alias « Neo »
-    "lastname"  =>"Reeves",
-    ],
-    [
-    "firstname" =>"Carrie-Anne",     //   Trinity
-    "lastname"  =>"Moss",
-    ],
-    [
-    "firstname" =>"Laurence",     //   Morpheus
-    "lastname"  =>"Fishburne",
-    ], 
-    [
-    "firstname" =>"Hugo",     //   l'agent Smith
-    "lastname"  =>"Weaving",
-    ], 
-    [
-    "firstname" =>"Gloria",     //   l'Oracle
-    "lastname"  =>"Foster",
-    ], 
-    [
-    "firstname" =>"Joe",     //    Cypher ou Mr Reagan
-    "lastname"  =>"Pantoliano",
-    ], 
-    [
-    "firstname" =>"Marcus",     //     Tank
-    "lastname"  =>"Chong",
-    ], 
-    [
-    "firstname" =>"Matt",     //     le Mulot
-    "lastname"  =>"Doran",
-    ], 
- 
-    [
-    "firstname" =>"Belinda",     //     Switch
-    "lastname"  =>"McClory",
-    ], 
-    [
-    "firstname" =>"Julian",     //     Apoc
-    "lastname"  =>"Arahanga",
-    ], 
-    [
-    "firstname" =>"Anthony Ray",     //     Dozer
-    "lastname"  =>"Parker",
-    ], 
-    [
-    "firstname" =>"Paul",     //     l'agent Brown
-    "lastname"  =>"Goddard",
-    ], 
-    [
-    "firstname" =>"Robert",     //     l'agent Jones
-    "lastname"  =>"Taylor",
-    ], 
-// starship troopers
-    [
-    "firstname" =>"Denise",     //     Carmen Ibanez
-    "lastname"  =>"Richards",
-    ], 
-    [
-    "firstname" =>"Dina",     //     Dizzy Flores
-    "lastname"  =>"Meyer",
-    ], 
-    [
-    "firstname" =>"Casper",     //     Johnny Rico
-    "lastname"  =>"Van Dien",
-    ], 
-    [
-    "firstname" =>"Jake",     //     Ace Levy
-    "lastname"  =>"Busey",
-    ], 
-    [
-    "firstname" =>"Neil Patrick ",     //    Carl Jenkins
-    "lastname"  =>"Harris",
-    ], 
-    [
-    "firstname" =>"Clancy ",     //   Sergeant Charles Zim
-    "lastname"  =>"Brown",
-    ], 
-    [
-    "firstname" =>"Amy ",     //   Pilot Cadet Stack Lumbreiser
-    "lastname"  =>"Smart",
-    ], 
-// Thor
-    [
-    "firstname" =>"Chris ",     //   Thor
-    "lastname"  =>"Hemsworth",
-    ], 
-    [
-    "firstname" =>"Natalie ",     //   Jane Foster / The Mighty Thor
-    "lastname"  =>"Portman",
-    ], 
-    [
-    "firstname" =>"Christian ",     //   Gorr le Boucher
-    "lastname"  =>"Bale",
-    ], 
-    [
-    "firstname" =>"Tessa ",     //   Valkyrie
-    "lastname"  =>"Thompson",
-    ], 
-    [
-    "firstname" =>"Russell ",     //   Zeus
-    "lastname"  =>"Crowe",
-    ], 
-    [
-    "firstname" =>"Jaimie ",     //   Sif
-    "lastname"  =>"Alexander",
-    ], 
-    [
-    "firstname" =>"Chris ",     //   Peter Quill / Star-Lord
-    "lastname"  =>"Pratt",
-    ], 
-    [
-    "firstname" =>"Dave ",     //   Drax
-    "lastname"  =>"Bautista",
-    ], 
-// truman show
-    [
-    "firstname" =>"Jim ",     //   Truman Burbank
-    "lastname"  =>"Carrey",
-    ], 
-    [
-    "firstname" =>"Laura ",     //   Meryl Burbank, Hannah Gill
-    "lastname"  =>"Linney",
-    ], 
-    [
-    "firstname" =>"Ed ",     //  Christof
-    "lastname"  =>"Harris",
-    ], 
-    [
-    "firstname" =>"Natascha ",     //  Lauren Garland
-    "lastname"  =>"McElhone",
-    ], 
-    [
-    "firstname" =>"Noah ",     // Marlon
-    "lastname"  =>"Emmerich",
-    ], 
-// la cité de la peur
+        [
+        "firstname" =>"Kevin",     //    Le Borgne
+        "lastname"  =>"Spacey",
+        ],
+        [
+        "firstname" =>"John",     //    Lilipuce
+        "lastname"  =>"Ratzenberger",
+        ],
+    // aline
+        [
+        "firstname" =>"Valérie",     //    Aline Dieu
+        "lastname"  =>"Lemercier",
+        ],
+        [
+        "firstname" =>"Sylvain",     //    Guy-Claude Kamar
+        "lastname"  =>"Marcel",
+        ],
+        [
+        "firstname" =>"Danielle",     //    Sylvette
+        "lastname"  =>"Fichaud",
+        ],
+        [
+        "firstname" =>"Roc",     //    Anglomard
+        "lastname"  =>"LaFortune",
+        ],
+    // Stranger Things
+        [
+        "firstname" =>"Millie",     //    Onze
+        "lastname"  =>"Bobby Brown",
+        ],
+        [
+        "firstname" =>"Finn",     //    Mike Wheeler
+        "lastname"  =>"Wolfhard",
+        ],
+        [
+        "firstname" =>"Caleb",     //    Lucas Sinclair
+        "lastname"  =>"McLaughlin",
+        ],
+        [
+        "firstname" =>"Noah",     //    Will Byers
+        "lastname"  =>"Schnapp",
+        ],
+        [
+        "firstname" =>"Sadie",     //   Max
+        "lastname"  =>"Sink",
+        ],
+    // Ghosbuster
+        [
+        "firstname" =>"Bill",     //   Dr Peter Venkman
+        "lastname"  =>"Murray",
+        ],
+        [
+        "firstname" =>"Dan",     //  Dr Raymond Stantz
+        "lastname"  =>"Aykroyd",
+        ],
+        [
+        "firstname" =>"Harold",     //  Dr Egon Spengler
+        "lastname"  =>"Ramis",
+        ],
+        [
+        "firstname" =>"Sigourney",     //  Dana Barrett
+        "lastname"  =>"Weaver",
+        ],
+        [
+        "firstname" =>"Ernie",     //  Winston Zeddemore
+        "lastname"  =>"Hudson",
+        ],
+        [
+        "firstname" =>"Annie",     //  Janine Melnitz
+        "lastname"  =>"Potts",
+        ],
+        [
+        "firstname" =>"Rick",     //  Louis Tully
+        "lastname"  =>"Moranis",
+        ],
+    // Le Grinch
+        [
+        "firstname" =>"Jim",     //  Le Grinch
+        "lastname"  =>"Carrey",
+        ],
+        [
+        "firsname" =>"Taylor",     //  Cindy Lou Who
+        "lastname"  =>"Momsen",
+        ],
+        [
+        "firstname" =>"Christine",     //  Martha May Whovier
+        "lastname"  =>"Baranski",
+        ],
+        [
+        "firstname" =>"Jeffrey",     //  Maire Augustus Maywho
+        "lastname"  =>"Tambor",
+        ],
+    //The man from earth
+        [
+        "firstname" =>"David",     //  John Oldman
+        "lastname"  =>"Lee Smith",
+        ],
+        [
+        "firstname" =>"John",     //  Harry
+        "lastname"  =>"Billingsley",
+        ],
+        [
+        "firstname" =>"William",     //  Dr. Arthur M. Jenkins
+        "lastname"  =>"Katt",
+        ],
+        [
+        "firstname" =>"Tony",     //  Dan
+        "lastname"  =>"Todd",
+        ],
+        [
+        "firstname" =>"Ellen",     //  Edith
+        "lastname"  =>"Crawford",
+        ],
+        [
+        "firstname" =>"Annika",     //  Sandy
+        "lastname"  =>"Peterson",
+        ],
+        [
+        "firstname" =>"Alexis",     //  Linda Murphy
+        "lastname"  =>"Thorpe",
+        ],
+    //Interstellar
+        [
+        "firstname" =>"Matthew",     //  Joseph Cooper
+        "lastname"  =>"McConaughey",
+        ],
+        [
+        "firstname" =>"Anne",     //  Amelia Brand
+        "lastname"  =>"Hathaway",
+        ],
+        [
+        "firstname" =>"Jessica",     //   Murphy Cooper
+        "lastname"  =>"Chastain",
+        ],
+        [
+        "firstname" =>"Michael",     //   Professeur John Brand
+        "lastname"  =>"Caine",
+        ],
+        [
+        "firstname" =>"Mackenzie",     //   Murphy Cooper
+        "lastname"  =>"Foy",
+        ],
+        
+        [
+        "firstname" =>"Timothée",     //   Tom Cooper
+        "lastname"  =>"Chalamet",
+        ],
+        
+        [
+        "firstname" =>"Matt",     //   Dr Mann
+        "lastname"  =>"Damon",
+        ],
+    // Matrix
+        [
+        "firstname" =>"Keanu",     //   Thomas A. Anderson, alias « Neo »
+        "lastname"  =>"Reeves",
+        ],
+        [
+        "firstname" =>"Carrie-Anne",     //   Trinity
+        "lastname"  =>"Moss",
+        ],
+        [
+        "firstname" =>"Laurence",     //   Morpheus
+        "lastname"  =>"Fishburne",
+        ], 
+        [
+        "firstname" =>"Hugo",     //   l'agent Smith
+        "lastname"  =>"Weaving",
+        ], 
+        [
+        "firstname" =>"Gloria",     //   l'Oracle
+        "lastname"  =>"Foster",
+        ], 
+        [
+        "firstname" =>"Joe",     //    Cypher ou Mr Reagan
+        "lastname"  =>"Pantoliano",
+        ], 
+        [
+        "firstname" =>"Marcus",     //     Tank
+        "lastname"  =>"Chong",
+        ], 
+        [
+        "firstname" =>"Matt",     //     le Mulot
+        "lastname"  =>"Doran",
+        ], 
+    
+        [
+        "firstname" =>"Belinda",     //     Switch
+        "lastname"  =>"McClory",
+        ], 
+        [
+        "firstname" =>"Julian",     //     Apoc
+        "lastname"  =>"Arahanga",
+        ], 
+        [
+        "firstname" =>"Anthony Ray",     //     Dozer
+        "lastname"  =>"Parker",
+        ], 
+        [
+        "firstname" =>"Paul",     //     l'agent Brown
+        "lastname"  =>"Goddard",
+        ], 
+        [
+        "firstname" =>"Robert",     //     l'agent Jones
+        "lastname"  =>"Taylor",
+        ], 
+    // starship troopers
+        [
+        "firstname" =>"Denise",     //     Carmen Ibanez
+        "lastname"  =>"Richards",
+        ], 
+        [
+        "firstname" =>"Dina",     //     Dizzy Flores
+        "lastname"  =>"Meyer",
+        ], 
+        [
+        "firstname" =>"Casper",     //     Johnny Rico
+        "lastname"  =>"Van Dien",
+        ], 
+        [
+        "firstname" =>"Jake",     //     Ace Levy
+        "lastname"  =>"Busey",
+        ], 
+        [
+        "firstname" =>"Neil Patrick ",     //    Carl Jenkins
+        "lastname"  =>"Harris",
+        ], 
+        [
+        "firstname" =>"Clancy ",     //   Sergeant Charles Zim
+        "lastname"  =>"Brown",
+        ], 
+        [
+        "firstname" =>"Amy ",     //   Pilot Cadet Stack Lumbreiser
+        "lastname"  =>"Smart",
+        ], 
+    // Thor
+        [
+        "firstname" =>"Chris ",     //   Thor
+        "lastname"  =>"Hemsworth",
+        ], 
+        [
+        "firstname" =>"Natalie ",     //   Jane Foster / The Mighty Thor
+        "lastname"  =>"Portman",
+        ], 
+        [
+        "firstname" =>"Christian ",     //   Gorr le Boucher
+        "lastname"  =>"Bale",
+        ], 
+        [
+        "firstname" =>"Tessa ",     //   Valkyrie
+        "lastname"  =>"Thompson",
+        ], 
+        [
+        "firstname" =>"Russell ",     //   Zeus
+        "lastname"  =>"Crowe",
+        ], 
+        [
+        "firstname" =>"Jaimie ",     //   Sif
+        "lastname"  =>"Alexander",
+        ], 
+        [
+        "firstname" =>"Chris ",     //   Peter Quill / Star-Lord
+        "lastname"  =>"Pratt",
+        ], 
+        [
+        "firstname" =>"Dave ",     //   Drax
+        "lastname"  =>"Bautista",
+        ], 
+    // truman show
+        [
+        "firstname" =>"Jim ",     //   Truman Burbank
+        "lastname"  =>"Carrey",
+        ], 
+        [
+        "firstname" =>"Laura ",     //   Meryl Burbank, Hannah Gill
+        "lastname"  =>"Linney",
+        ], 
+        [
+        "firstname" =>"Ed ",     //  Christof
+        "lastname"  =>"Harris",
+        ], 
+        [
+        "firstname" =>"Natascha ",     //  Lauren Garland
+        "lastname"  =>"McElhone",
+        ], 
+        [
+        "firstname" =>"Noah ",     // Marlon
+        "lastname"  =>"Emmerich",
+        ], 
+    // la cité de la peur
 
-    [
-    "firstname" =>"Alain ",     // Serge Karamazov
-    "lastname"  =>"Chabat",
-    ], 
-    [
-    "firstname" =>"Chantal ",     // Odile Deray
-    "lastname"  =>"Lauby",
-    ], 
-    [
-    "firstname" =>"Dominique ",     // Simon Jérémi
-    "lastname"  =>"Farrugia",
-    ], 
-    [
-    "firstname" =>"Gérard ",     // Le commissaire Patrick Bialès
-    "lastname"  =>"Darmon",
-    ], 
-    [
-    "firstname" =>"Sam ",     // Emile Gravier
-    "lastname"  =>"Karmann",
-    ], 
-    [
-    "firstname" =>"Valérie ",     // La veuve joyeuse
-    "lastname"  =>"Lemercier",
-    ], 
-// django unchained
-    [
-    "firstname" =>"Quentin ",     // Frankie
-    "lastname"  =>"Tarantino",
-    ], 
-    [
-    "firstname" =>"Jamie",     // Django
-    "lastname"  =>"Foxx",
-    ], 
-    [
-    "firstname" =>"Christoph",     // Docteur King Schultz
-    "lastname"  =>"Waltz",
-    ], 
-    [
-    "firstname" =>"Leonardo",     // Calvin Candie
-    "lastname"  =>"DiCaprio",
-    ], 
-    [
-    "firstname" =>"Samuel",     // Stephen
-    "lastname"  =>"L. Jackson",
-    ], 
-    [
-    "firstname" =>"Kerry",     // Broomhilda von Shaft
-    "lastname"  =>"Washington",
-    ], 
-    [
-    "firstname" =>"Don",     // Big Daddy
-    "lastname"  =>"Johnson",
-    ], 
-];
+        [
+        "firstname" =>"Alain ",     // Serge Karamazov
+        "lastname"  =>"Chabat",
+        ], 
+        [
+        "firstname" =>"Chantal ",     // Odile Deray
+        "lastname"  =>"Lauby",
+        ], 
+        [
+        "firstname" =>"Dominique ",     // Simon Jérémi
+        "lastname"  =>"Farrugia",
+        ], 
+        [
+        "firstname" =>"Gérard ",     // Le commissaire Patrick Bialès
+        "lastname"  =>"Darmon",
+        ], 
+        [
+        "firstname" =>"Sam ",     // Emile Gravier
+        "lastname"  =>"Karmann",
+        ], 
+        [
+        "firstname" =>"Valérie ",     // La veuve joyeuse
+        "lastname"  =>"Lemercier",
+        ], 
+    // django unchained
+        [
+        "firstname" =>"Quentin ",     // Frankie
+        "lastname"  =>"Tarantino",
+        ], 
+        [
+        "firstname" =>"Jamie",     // Django
+        "lastname"  =>"Foxx",
+        ], 
+        [
+        "firstname" =>"Christoph",     // Docteur King Schultz
+        "lastname"  =>"Waltz",
+        ], 
+        [
+        "firstname" =>"Leonardo",     // Calvin Candie
+        "lastname"  =>"DiCaprio",
+        ], 
+        [
+        "firstname" =>"Samuel",     // Stephen
+        "lastname"  =>"L. Jackson",
+        ], 
+        [
+        "firstname" =>"Kerry",     // Broomhilda von Shaft
+        "lastname"  =>"Washington",
+        ], 
+        [
+        "firstname" =>"Don",     // Big Daddy
+        "lastname"  =>"Johnson",
+        ], 
+    ];
  
-
-foreach ($persons as $currentPerson)
-{
-    $personObj = new Person();
-    $personObj->setFirstname($currentPerson['firstname']);
-    $personObj->setLastname($currentPerson['lastname']);
+// ! ne veut pas récupérer la clé du tableau correctement: à revoir
+// foreach ($persons as $key=> $currentPerson)
+// {
+//     $personObj = new Person();
+//     $personObj->setFirstname($currentPerson['firstname']);
+//     $personObj->setLastname($currentPerson['lastname']);
     
 
-    $manager->persist($personObj);
-}
+//     $manager->persist($personObj);
+// }
     // **** REVIEW (critiques film: movie_id, user_id, content, rating *********
 
-    // **** CASTING (personnages d'un film: person_id, role, credit_order, movie_id *********
-
-$roles =[
-//game of throne
-        "Daenerys Targaryen",
-        "Sansa Stark",
-        "Jon Snow",
-        "Arya Stark",
-        "Cersei Lannister",
-        "Khal Drogo",
-        "Tyrion Lannister",
-        "Brienne de Torth, Brienne",
-        "Ygrid",
-        "Robb Stark",
-        "Margaery Tyrell",
-        "Oberyn Martell",
-        "Jaime Lannister",
-        "Theon Greyjoy",
-        "Bran Stark",
-        "Missandei",
-        "Samwell Tarly",
-        "Dickon Tarly",
-// Da Vinci Code
-        "Robert Langdon",
-        "Sophie Neveu",
-        "Silas",
-        "Bézu Fache",
-        "Sir Leigh Teabing",
-        "Manuel Aringarosa",
-// Bug's Life
-        "Harry le moustique",
-        "Heimlich",
-        "Bug Zapper Bug ",
-        "Tilt",
-        "Le Borgne",
-        "Lilipuce",
-        "Princesse Atta",
-// Aline
-        "Aline Dieu",
-        "Guy-Claude Kamar",
-        "Sylvette",
-        "Anglomard",
-// Stranger Things
-       "Onze",
-       "Mike Wheeler",
-       "Lucas Sinclair",
-       "Will Byers",
-       "Max",
-//Ghostbuster
-        "Dr Peter Venkman",
-        "Dr Raymond Stantz",
-        "Dr Egon Spengler",
-        "Dana Barrett",
-        "Winston Zeddemore",
-        "Janine Melnitz",
-        "Louis Tully",
-// le Grinch
-        "Le Grinch",
-        "Cindy Lou Who",
-        "Martha May Whovier",
-        "Maire Augustus Maywho",
-//the man of earth
-
-        "John Oldman",
-        "Harry",
-        "Dr. Arthur M. Jenkins",
-        "Dan",
-        "Edith",
-        "Sandy",
-        "Linda Murphy",
-//interstellar
-        "Joseph Cooper",
-        "Amelia Brand",
-        "Murphy Cooper",
-        "Professeur John Brand",
-        "Murphy Cooper",
-        "Tom Cooper",
-        "Dr Mann",
-// Matrix
-        "Thomas A. Anderson, alias « Neo »",
-        "Trinity",
-        "Morpheus",
-        "l'agent Smith",
-        "l'Oracle",
-        "Cypher ou Mr Reagan",
-        "Tank",
-        "le Mulot",
-        "Switch",
-        "Apoc",
-        "Dozer",
-        "l'agent Brown",
-        "l'agent Jones",
-// Starship troopers
-        "Carmen Ibanez",
-        "Dizzy Flores",
-        "Johnny Rico",
-        "Ace Levy",
-        "Carl Jenkins ",
-        "Sergeant Charles Zim ",
-        "Pilot Cadet Stack Lumbreiser",
-// Thor
-        "Thor",
-        "Jane Foster / The Mighty Thor",
-        "Gorr le Boucher",
-        "Valkyrie",
-        "Zeus",
-        "Sif",
-        "Peter Quill / Star-Lord",
-        "Dave",
-        "Drax",
-// Truman Show
-        "Truman Burbank",
-        "Meryl Burbank, Hannah Gill",
-        "Christof",
-        "Lauren Garland",
-        "Marlon",
-// La cité de la peur
-        "Serge Karamazov",
-        "Odile Deray",
-        "Simon Jérémi",
-        "Le commissaire Patrick Bialès",
-        "Emile Gravier",
-        "La veuve joyeuse",
-// Django unchained
-        "Frankie",
-        "Django",
-        "Docteur King Schultz",
-        "Calvin Candie",
-        "Stephen",
-        "Broomhilda von Shaft",
-        "Big Daddy",
-
-
-];
-
-        foreach ($roles as $currentRole)
-        {
-            $roleObj = new Casting();
-            $roleObj->setRole($currentRole);
-            $roleObj->setCreditOrder(mt_rand(0,5));
-    // TODO n'arrive pas a passer les clés étrangères
-            // $roleObj->setMovie(17);
-            // $roleObj->setPerson(17);
-
-
-            $manager->persist($roleObj);
-        }
+    
 
 
     $manager->flush();
