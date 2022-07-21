@@ -17,6 +17,10 @@
                 <h2 class="text-muted fw-bold mb-4">Les films et séries/Résultats de recherche</h2>
 {# boucle en appelant le template pour l'affichage des films#}
 
+{# on peut faire un tri direct des données avec la commande: 
+
+                {#% for current_show in show_list|sort((a, b) => a.title <=> b.title) % #}
+
                 {% for current_show in show_list %}
 
                     {% include ('movie/_show_detail.html.twig') %}
@@ -25,7 +29,7 @@
 
             </div>
 
-            <nav class="col-lg-9 offset-lg-3">
+            {# <nav class="col-lg-9 offset-lg-3">
                 <ul class="pagination">
                     <li class="page-item disabled">
                         <a class="page-link">&laquo;</a>
@@ -39,7 +43,7 @@
                         <a class="page-link" href="#">&raquo;</a>
                     </li>
                 </ul>
-            </nav>
+            </nav> #}
 
         </div>
 

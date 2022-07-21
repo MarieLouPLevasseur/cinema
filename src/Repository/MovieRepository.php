@@ -39,6 +39,7 @@ class MovieRepository extends ServiceEntityRepository
         }
     }
 
+// fonction pour les performances de récupération des collections sur la page show (plutot que les requetes multiples)
     public function findForShow($movieId): ?Movie
     {
          $entityManager = $this->getEntityManager();
@@ -56,6 +57,36 @@ class MovieRepository extends ServiceEntityRepository
          // returns an array of Product objects
          return $query->getOneOrNullResult();
         }
+
+    // récupération par Ordre des titres ascendant
+        public function findByOrderedByTitleAsc()
+        {
+            $entityManager = $this->getEntityManager();
+    
+            $query = $entityManager->createQuery(
+                'SELECT m
+                    FROM App\Entity\Movie m
+                ORDER BY m.title ASC
+                '
+            );
+    
+            // dump($query->getSQL());
+            // returns an array of Product objects
+            return $query->getResult();
+        }
+// récupération avec le query Builder
+
+public function findByOrderedByTitleAscQB()
+{
+    $query = $this->createQueryBuilder('m')
+    // ->from('App\Entity\Movie', 'm') // on n'en n'a pas besoin car on est dans un movie Repository
+    ->orderBy('m.title', 'ASC')
+                    ->getQuery();
+
+    // dump($query->getSQL());
+    // returns an array of Product objects
+    return $query->getResult();
+}
 
 //    /**
 //     * @return Movie[] Returns an array of Movie objects

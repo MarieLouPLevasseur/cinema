@@ -103,7 +103,7 @@ class MovieController extends AbstractController
    /**
      * Show movie list 
      *
-     * @Route("/list", name="movie_list", methods="GET")
+     * @Route("/", name="homepage", methods="GET")
      * @return Response
      */
     public function list(MovieRepository $movieRepository) :Response
@@ -113,7 +113,22 @@ class MovieController extends AbstractController
         // on ne veut plus les données en dur:
         // require __DIR__ . '/../../sources/data.php';
 
-        $shows = $movieRepository->findAll();
+        // ? différentes méthodes de récupe de donné pour faire des tris
+        // ? les méthodes sont personnelles, pas de supériorités, tout dépendant de ce qu'on souhaite faire
+        // récupère tous les films tels qu'ils sont entrée en BDD
+         // $shows = $movieRepository->findAll();
+
+        //  une méthode peut consister a le faire directement dans la vue twig
+
+        // permet de trier les film par ordre décroissant selon le titre (prévu par symfo)
+        //   $shows = $movieRepository->findBy([], ['title' => 'DESC']);
+
+        // utiliser une custom query (mis dans repository SQL)
+        //   $shows = $movieRepository->findByOrderedByTitleAsc();
+
+        // utiliser le QueryBuilder (DQL) avec des sélects:
+          $shows = $movieRepository->findByOrderedByTitleAscQB();
+
 
         // dump($shows);
 
