@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\ReviewRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=ReviewRepository::class)
@@ -19,32 +21,45 @@ class Review
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(
+     *      message = "Merci de critiquer le film ou de vous taire à jamais"
+     * )
+     * @Assert\Length(
+     *      min = 100,
+     *      minMessage = "Merci de faire une critique constructive de plus de 100 caractères",
+     * )
      */
     private $content;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotNull
      */
     private $rating;
 
     /**
      * @ORM\ManyToOne(targetEntity=Movie::class, inversedBy="reviews")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull
      */
     private $movie;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reviews")
+     * @Assert\NotNull
      */
     private $user;
 
     /**
      * @ORM\Column(type="json", nullable=true)
+     * @Assert\NotBlank
      */
     private $reactions = [];
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
+     *
+     * @Assert\NotNull
      */
     private $watchedAt;
 

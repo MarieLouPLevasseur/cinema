@@ -7,6 +7,7 @@ use App\Entity\Review;
 use App\Form\ReviewType;
 use App\Utils\TimeConverter;
 use App\Repository\MovieRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -128,13 +129,48 @@ class MovieController extends AbstractController
      * @Route("/{id<\d+>}/critiques/ajout", name="_review_add", methods={"GET", "POST"})
      * @return Response
      */
-    public function reviewAdd(Movie $movie) :Response
+    public function reviewAdd(
+        EntityManagerInterface $em, 
+        Movie $movie, 
+        Request $request
+    ) :Response   
     {
 
         $review = new Review();
 
+        // comme on connait déjà le film on le fixe:
+        $review->setMovie($movie);
+        
+        $form = $this->createForm(ReviewType::class, $review);
+        
+        $form->handleRequest($request);
 
-        $form = $this->createForm(ReviewType::class);
+        if ($form->isSubmitted() && $form->isValid())
+        {
+
+         // ? Traiter le formulaire
+            // entitymanager ( cf paramètre merci ParamConverter)
+            // persist
+            $em->persist($review);
+
+            //flush
+            $em->flush();
+
+            // ? Ajouter un flash message
+            $this->addFlash('success', 'critique ajoutée');
+
+            // ? Rediriger l'utilisateur
+            return $this->redirectToRoute('movie_show', ['id' => $movie->getId()]);
+
+
+
+            //lors des tests
+            // dd($form->getData());
+
+
+
+        }
+
         return $this->render('movie/review_add.html.twig', [
             'form' => $form->createView(),
             'movie' => $movie,
