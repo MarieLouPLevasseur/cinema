@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\front;
 
 use App\Entity\Movie;
 use App\Entity\Review;
@@ -56,7 +56,7 @@ class MovieController extends AbstractController
         // dump($shows);
 
 
-        return $this->render('movie/list.html.twig',[
+        return $this->render('front/movie/list.html.twig',[
             'title' =>'Liste des films et séries',
             'show_list' => $shows,
 
@@ -64,7 +64,7 @@ class MovieController extends AbstractController
 
     }
 
-    // @Route("/films/{id}", requirements={"id"="\d+"})
+    // @Route("/{id}", requirements={"id"="\d+"})
 
      /**
      * Show One Movie
@@ -111,7 +111,7 @@ class MovieController extends AbstractController
  
         // fournir les infos à la vue
 
-        return $this->render('movie/movie.html.twig',[
+        return $this->render('front/movie/movie.html.twig',[
             'title' =>'Film du jour',
             'show' => $show,
             'duration_in_minutes' => $timeConverter->convert($show->getDuration())
@@ -126,7 +126,7 @@ class MovieController extends AbstractController
    /**
      * add a review
      *
-     * @Route("/{id<\d+>}/critiques/ajout", name="_review_add", methods={"GET", "POST"})
+     * @Route("/{id<\d+>}/critiques/ajout", name="review_add", methods={"GET", "POST"})
      * @return Response
      */
     public function reviewAdd(
@@ -171,7 +171,7 @@ class MovieController extends AbstractController
 
         }
 
-        return $this->render('movie/review_add.html.twig', [
+        return $this->render('front/movie/review_add.html.twig', [
             'form' => $form->createView(),
             'movie' => $movie,
 

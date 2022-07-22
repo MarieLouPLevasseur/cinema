@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\front;
 
 use App\Repository\MovieRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,7 +52,7 @@ class MainController extends AbstractController
 
 
         // return new Response('<h1>Homepage</h1>');
-        return $this->render('main/homepage.html.twig',[
+        return $this->render('front/main/homepage.html.twig',[
             'title' =>'Homepage',
             'show_list' => $homepageShows
 

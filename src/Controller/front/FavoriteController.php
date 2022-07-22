@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\front;
 
 use App\Entity\Movie;
 use App\Utils\TimeConverter;
@@ -59,7 +59,7 @@ class FavoriteController extends AbstractController
      * @Route("/favoris", name="movie_favorites", methods="GET")
      * @return Response
      */
-    public function favorites(MovieRepository $movieRepository, Request $request) :Response
+    public function list(MovieRepository $movieRepository, Request $request) :Response
     {
 
         // on démarre une session 
@@ -92,7 +92,7 @@ class FavoriteController extends AbstractController
             //     }
             // }
         // on fournit le tableau à la vue pour dynamiser le template
-        return $this->render('movie/favorite.html.twig',[
+        return $this->render('front/movie/favorite.html.twig',[
             'title' =>'Mes Favoris',
             'show_list' => $favoriteShows,
 

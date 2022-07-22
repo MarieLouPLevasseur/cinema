@@ -26,7 +26,7 @@
 
 {# on inclus les catégories #}
            
-        {% include('movie/_genres_list.html.twig') %}
+        {% include('front/movie/_genres_list.html.twig') %}
 
 
             <div class="col-12 col-lg-9">
@@ -34,7 +34,7 @@
                 <h2 class="text-muted fw-bold mb-4">Les nouveautés</h2>
 {# on inclut les films avec une boucle en appelant le partial template associé #}
            {% for show_id, current_show in show_list %}
-                    {% include ('movie/_show_detail.html.twig') %}
+                    {% include ('front/movie/_show_detail.html.twig') %}
                 {% endfor %}
 
               
