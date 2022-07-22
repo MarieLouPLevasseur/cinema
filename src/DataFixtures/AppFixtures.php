@@ -2,14 +2,15 @@
 
 namespace App\DataFixtures;
 
+use Faker\Factory;
 use App\Entity\User;
 use App\Entity\Genre;
 use App\Entity\Movie;
 use App\Entity\Person;
+use App\Entity\Review;
 use App\Entity\Season;
 use DateTimeImmutable;
 use App\Entity\Casting;
-use App\Entity\Review;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 
@@ -1971,6 +1972,17 @@ class AppFixtures extends Fixture
             $reviewObj = new Review();
             $reviewObj->setRating(mt_rand(1,5));
             $reviewObj->setContent($ReviewDefault);
+
+            // TODO actuellement a null par défaut mais à modifier dans les Entités
+            // fait avec le faker (non installer encore): a activer apres installation
+            $faker = \Faker\Factory::create();
+// ! a relancer apres modif des entités
+            $reviewObj->setReactions($faker->randomElements(
+                ['cry', 'smile', 'sleep', 'think', 'dream'],
+                $faker->numberBetween(1, 5)
+            ));            // $reviewObj->setWatchedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-1 year', '-1 week')));
+            $reviewObj->setWatchedAt(DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-1 year', '-1 week')));
+
 
         // Sélection d'un utilisateur aléatoire pour chaque revieuw
             $randUserIdx = mt_rand(1, sizeof($allUsers));

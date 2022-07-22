@@ -16,7 +16,8 @@
     <!-- favicon -->
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}" type="image/x-icon">
 
-    <title>O'flix - {{ title }}</title>
+    <title>O'flix -    <title>O'flix - {% block title %}{% endblock %}</title>
+</title>
 </head>
 
 <body>
@@ -38,7 +39,7 @@
                         <a class="nav-link active" href="{{path ('homepage')}}">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{path ('homepage')}}"><i class="bi bi-film"></i> Films, séries TV</a>
+                        <a class="nav-link" href="{{path ('movie_list')}}"><i class="bi bi-film"></i> Films, séries TV</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href={{path('movie_favorites')}}><i class="bi bi-bookmark"></i> Ma liste</a>

@@ -38,6 +38,16 @@ class Review
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $reactions = [];
+
+    /**
+     * @ORM\Column(type="datetime_immutable", nullable=true)
+     */
+    private $watchedAt;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,6 +97,30 @@ class Review
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getReactions(): ?array
+    {
+        return $this->reactions;
+    }
+
+    public function setReactions(?array $reactions): self
+    {
+        $this->reactions = $reactions;
+
+        return $this;
+    }
+
+    public function getWatchedAt(): ?\DateTimeImmutable
+    {
+        return $this->watchedAt;
+    }
+
+    public function setWatchedAt(?\DateTimeImmutable $watchedAt): self
+    {
+        $this->watchedAt = $watchedAt;
 
         return $this;
     }

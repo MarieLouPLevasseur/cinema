@@ -11,6 +11,7 @@
     - `navbar-light bg-warning` pour le thème Allociné
   - pensez à changer l'interface au niveau du bouton qui switch le thème
 - ajouter la liste des commentaires sur le detail d'un Movie
+- modifier testConverter pour passer les tests sur les semaines
 
 ## DONE
 

@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une critique{% endblock %}
+
+{% block body %}
+<h1>Formulaire d'ajout d'une review</h1>
+<div class="container">
+   {# {{ form_start(form, {'action': path('review_add'), 'method': 'GET'}) }} #}
+   {{ form_start(form) }}
+        {{ form_row(form.content) }}
+        {{ form_row(form.rating) }}
+        {{ form_row(form.reactions) }}
+        <button class="btn btn-primary">Soumettre</button>
+    {{ form_end(form) }}
+</div>
+{% endblock %}
+
+
+{# If the form's method is not GET or POST, but PUT, PATCH or DELETE, 
+Symfony will insert a hidden field with the name _method that stores this method.
+ The form will be submitted in a normal POST request, but Symfony's routing
+  is capable of detecting the _method parameter and will interpret it as a PUT, PATCH or DELETE request.
+   The Framework Configuration Reference (FrameworkBundle) option must be enabled for this to work #}

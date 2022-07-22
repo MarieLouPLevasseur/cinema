@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sandbox show!{% endblock %}
+
+{% block body %}
+
+<h1>{{ movie.title }}</h1>
+
+{% if movie.seasons|length > 0 %}
+<h2>Saisons</h2>
+
+<ul>
+{% for current_season in movie.seasons %}
+<li>{{ current_season.number }} ( {{ current_season.episodeCount }} épisodes )</li>
+{% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

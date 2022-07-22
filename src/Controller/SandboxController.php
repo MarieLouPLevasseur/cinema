@@ -5,11 +5,14 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Genre;
 use App\Entity\Movie;
+use App\Entity\Person;
 use App\Entity\Season;
 use DateTimeImmutable;
+use App\Form\PersonType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -392,7 +395,51 @@ class SandboxController extends AbstractController
 
 
     }
+// on nomme la route pour le formulaire
+    /**
+     *
+     * @Route("/form/person", name="form_person", methods={"GET", "POST"})
+     */
+    public function formPerson(Request $request, EntityManagerInterface $em)
+    {
+        // ! par convention un formulaire est géré sous une seule méthode: création et récupération données
+        // ! Request=> gestion de la réponse formulaire
+        // ! 
+        // on crée l'object qui sera rempli
+        $person = new Person();
+
+        // on transmet au formulaire la bonne classe
+        $form = $this->createForm(PersonType::class, $person);
+
+        // ? Gestion de la requête:
+        // on récupère le formulaire soumis
+        $form->handleRequest($request);
+
+        // on injecte en base de donné si soumis
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $em->persist($person);
+            $em->flush();
+
+            // après un traitement :on fait une redirection (évite les réinjection notamment si paiment:non souhaitable)
+              // il est bon d'afficher un message pour dire que le travail a été effectué
+            $this->addFlash('success', 'Utilisateur créé');
+
+            // après un traitement de formulaire on effectue une redirection
+            $this->redirectToRoute('homepage');
+        }
+
+        // ? création du formulaire:
+        return $this->render('sandbox/form/person.html.twig', [
+            'form' => $form->createView(),
+        ]);
+        // 2e méthode pour retourner les données
+        //penser a faire le template
+        // return $this->renderForm('sandbox/form/person.html.twig', [
+        //     'form' => $form,
+        // ])
 
 
+    }
 
 }

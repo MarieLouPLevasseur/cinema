@@ -87,6 +87,12 @@ class Movie
         $this->castings = new ArrayCollection();
     }
 
+// ! converti en string pour avoir l'ajout review
+    public function __toString()
+    {
+        return $this->title . '(' . $this->getType() . ')';
+    }
+
     /**
      * cette méthode sert à Twig pour pouvoir afficher une valeur lorsque l'on fait un show.type
      *

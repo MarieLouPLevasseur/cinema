@@ -44,6 +44,12 @@ class User
         $this->reviews = new ArrayCollection();
     }
 
+    //  ! permet d'avoir la lecture pour l'ajout review
+    public function __toString()
+    {
+        return $this->getUsername();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

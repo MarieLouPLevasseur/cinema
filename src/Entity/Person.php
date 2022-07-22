@@ -18,6 +18,10 @@ class Person
      * @ORM\Column(type="integer")
      */
     private $id;
+// ! on peut passer les contraintes de validation directement dans les annotation avec le composant "Validator"
+// * @Assert\NotNull(message= "Le prénom siouplé")
+// * @Assert\NotNull
+
 
     /**
      * @ORM\Column(type="string", length=255)
