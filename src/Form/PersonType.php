@@ -21,7 +21,7 @@ class PersonType extends AbstractType
             // permet d'enlever le require dans l'input
             'required' => false,
             // permet d'ajouter une classe au formulaire pour agit sur le CSS
-            'attr' => ['class' => "toto"]
+            // 'attr' => ['class' => "toto"]
 
 
         ])

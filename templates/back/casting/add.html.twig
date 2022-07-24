@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<h1> Formulaire pour l'ajout d'un casting</h1>
+
+<p> il faut me créer un formulaire d'ajout tout neuf</p>
+
+
+<div class="container">
+{# ! on force le no validate: on ne fait jamais confiance aux données utilisateur #}
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        {# {{ form_row(form.content) }} #}
+        {{ form_rest(form) }}
+        <button class="btn btn-primary">Soumettre</button>
+    {{ form_end(form) }}
+</div>
+
+{% endblock %}

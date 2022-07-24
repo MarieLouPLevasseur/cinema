@@ -2,7 +2,6 @@
 
 namespace App\Controller\back;
 
-use App\Entity\Movie;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

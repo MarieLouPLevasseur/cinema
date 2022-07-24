@@ -1,0 +1,51 @@
+
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+   
+
+   <h1> Bienvenue dans le Backoffice </h1>
+
+
+               {% include('back/_nav_backoffice.html.twig') %}
+
+<div class="container-fluid justify-content-start">
+<h2 class="text-center">Liste des Castings </h2>
+<a class="btn btn-success " href="{{path ('back_casting_add')}}" role="button" aria-disabled="add casting">Ajouter un casting</a>
+
+
+
+ {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+
+ <div class="row align-items-start ">
+{# <ul class="list-group"> #}
+
+    {% for current_casting in castings %}
+
+    <div class= "text-center col" > {{current_casting.movie.title}}
+    </div>
+    
+        <div class="list-group-item col-12"> {{current_casting.role}}
+<a class="btn btn-primary " href="{{path ('back_casting_edit', {id: current_casting.id} )}}" role="button" aria-disabled="edit casting">Modifier</a>
+<a class="btn btn-danger " href="{{path ("back_casting_delete",{id: current_casting.id} )}}" role="button" aria-disabled="edit">supprimer</a>
+        {# <button type="button" class="btn btn-danger col-1 align-content-end" aria-label="remove casting"> Supprimer</button> #}
+        </div>
+    {% endfor %}
+
+
+
+{# </ul> #}
+
+</div>
+</div>
+
+  {% endblock %}

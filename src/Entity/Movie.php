@@ -87,7 +87,7 @@ class Movie
         $this->castings = new ArrayCollection();
     }
 
-// ! converti en string pour avoir l'ajout review
+// ! converti en string pour avoir l'ajout review et Casting
     public function __toString()
     {
         return $this->title . '(' . $this->getType() . ')';
