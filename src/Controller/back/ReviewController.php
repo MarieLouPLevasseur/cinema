@@ -37,6 +37,8 @@ class ReviewController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $reviewRepository->add($review, true);
 
+            $this->addFlash('success', "la critique a bien été ajoutée");
+
             return $this->redirectToRoute('back_review_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -67,6 +69,8 @@ class ReviewController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $reviewRepository->add($review, true);
 
+            $this->addFlash('success', "La critituqe a bien été modifiée");
+
             return $this->redirectToRoute('back_review_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -77,13 +81,16 @@ class ReviewController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="delete", methods={"POST"},  requirements={"id"="\d+"})
+     * @Route("/{id}/delete", name="delete", methods={"GET"},  requirements={"id"="\d+"})
      */
     public function delete(Request $request, Review $review, ReviewRepository $reviewRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$review->getId(), $request->request->get('_token'))) {
+        // if ($this->isCsrfTokenValid('delete'.$review->getId(), $request->request->get('_token'))) {
             $reviewRepository->remove($review, true);
-        }
+
+            $this->addFlash('success', "La critique a bien été supprimée");
+
+        // }
 
         return $this->redirectToRoute('back_review_index', [], Response::HTTP_SEE_OTHER);
     }

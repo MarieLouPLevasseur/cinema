@@ -1,5 +1,71 @@
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a href={{path ('homepage')}} class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none header-logo">
+                <img src="{{ asset('favicon.png') }}" height="24" alt="Logo O'flix">
+                <span class="header-logo__title">O'flix</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{path ('back_homepage')}}">Accueil BackOffice</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{path ('back_movie_index')}}"><i class="bi bi-film"></i> Films et séries</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href={{path ('back_casting_index')}}><i class="bi bi-bookmark"></i> Castings</a>
+                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href={{path ('back_genre_index')}}><i class="bi bi-bookmark"></i> Genres</a>
+                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href={{path ('back_person_index')}}><i class="bi bi-bookmark"></i> Acteurs</a>
+                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href={{path ('back_review_index')}}><i class="bi bi-bookmark"></i> Critiques</a>
+                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href={{path ('back_season_index')}}><i class="bi bi-bookmark"></i> Saisons</a>
+                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href={{path ('back_user_index')}}><i class="bi bi-bookmark"></i> Utilisateurs</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown">
+                            <span>Charles</span>
+                            <i class="bi bi-person-square"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Profil</a></li>
+                            <li><a class="dropdown-item" href="#">Backoffice</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Déconnexion</a></li>
+                        </ul>
+                    </li>
+                </ul>
 
-<nav class="navbar navbar-dark bg-primary navbar-expand-lg">
+                <button type="button" class="btn btn-danger me-2">Connexion</button>
+
+                <form class="d-flex" action="list.html">
+                    <input class="form-control form-control-sm me-2" name="search" type="search" placeholder="Rechercher...">
+                    <button class="btn btn-outline-danger" type="submit"><i class="bi bi-search"></i></button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+
+
+{# <nav class="navbar navbar-dark bg-primary navbar-expand-lg">
  <a class="navbar-brand" href="{{path ('back_homepage')}}">Accueil Backoffice</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -7,28 +73,28 @@
   <div class="collapse navbar-collapse" id="navbarText">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Films <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href={{path ('back_movie_index')}}>Films <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Genres</a>
+        <a class="nav-link" href={{path ('back_genre_index')}}>Genres</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Saisons</a>
+        <a class="nav-link" href={{path ('back_season_index')}}>Saisons</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Casting</a>
+        <a class="nav-link" href={{path ('back_casting_index')}}>Casting</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Acteurs (person)</a>
+        <a class="nav-link" href={{path ('back_person_index')}}>Acteurs (person)</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Utilisateurs</a>
+        <a class="nav-link" href={{path ('back_user_index')}}>Utilisateurs</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Reviews</a>
+        <a class="nav-link" href={{path ('back_review_index')}}>Reviews</a>
       </li>
       
     </ul>
   
   </div>
-  </nav>
+  </nav> #}

@@ -1,1 +1,42 @@
-<h1> Je suis la vue INDEX d'un MOVIE en Backoffice </h1>
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+               {% include('back/_nav_backoffice.html.twig') %}
+
+<div class="container-fluid justify-content-start">
+<h2 class="text-center">Liste des Films </h2>
+<a class="btn btn-success " href="{{path ('back_movie_add')}}" role="button" aria-disabled="add movie">Ajouter un film</a>
+
+
+ {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+ <div class="row align-items-start m-10 p-10">
+<ul class="list-group">
+
+    {% for current_movie in movies %}
+     
+{# TODO revoir l'affichage du template pour l'améliorer #}
+
+<div class="list-group-item col-12"> {{current_movie.title}}
+<a class="btn btn-primary " href="{{path ('back_movie_edit', {id: current_movie.id} )}}" role="button" aria-disabled="edit casting">Modifier</a>
+<a class="btn btn-danger " href="{{path ("back_movie_delete",{id: current_movie.id} )}}" role="button" aria-disabled="edit">supprimer</a>
+        </div>
+       
+    {% endfor %}
+
+
+ </ul> 
+
+ </div>
+</div>
+
+  {% endblock %}

@@ -1,19 +1,13 @@
-
 {% extends 'base.html.twig' %}
 
 
 {% block body %}
-   
-
-   <h1> Bienvenue dans le Backoffice </h1>
-
 
                {% include('back/_nav_backoffice.html.twig') %}
 
 <div class="container-fluid justify-content-start">
-<h2 class="text-center">Liste des Castings </h2>
-<a class="btn btn-success " href="{{path ('back_casting_add')}}" role="button" aria-disabled="add casting">Ajouter un casting</a>
-
+<h2 class="text-center">Liste des Genres </h2>
+<a class="btn btn-success " href="{{path ('back_genre_add')}}" role="button" aria-disabled="add genre">Ajouter un genre</a>
 
 
  {% for label, messages in app.flashes %}
@@ -28,19 +22,16 @@
  <div class="row align-items-start m-10 p-10">
 <ul class="list-group">
 
-    {% for current_casting in castings %}
+    {% for current_genre in genres %}
      
-{# TODO il faut modifier dynamiquement le nom du film par carte #}
+{# TODO revoir l'affichage du template pour l'améliorer #}
 
-    {{current_casting.movie.title}}
-
-<div class="list-group-item col-12"> {{current_casting.role}}
-<a class="btn btn-primary " href="{{path ('back_casting_edit', {id: current_casting.id} )}}" role="button" aria-disabled="edit casting">Modifier</a>
-<a class="btn btn-danger " href="{{path ("back_casting_delete",{id: current_casting.id} )}}" role="button" aria-disabled="edit">supprimer</a>
+<div class="list-group-item col-12"> {{current_genre.name}}
+<a class="btn btn-primary " href="{{path ('back_genre_edit', {id: current_genre.id} )}}" role="button" aria-disabled="edit casting">Modifier</a>
+<a class="btn btn-danger " href="{{path ("back_genre_delete",{id: current_genre.id} )}}" role="button" aria-disabled="edit">supprimer</a>
         </div>
        
     {% endfor %}
-
 
 
  </ul> 

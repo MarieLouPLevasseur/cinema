@@ -1,1 +1,11 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+  {% include('back/_nav_backoffice.html.twig') %}
+
+
 <h1> Je suis la vue READ du casting: # {{casting.id}} : {{casting.role}} en Backoffice </h1>
+
+{% endblock %}

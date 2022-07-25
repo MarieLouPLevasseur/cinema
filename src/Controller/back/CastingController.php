@@ -71,6 +71,9 @@ class CastingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $castingRepository->add($casting, true);
 
+            $this->addFlash('success', 'Le Casting a bien été modifié');
+
+
             return $this->redirectToRoute('back_casting_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -85,11 +88,13 @@ class CastingController extends AbstractController
      */
     public function delete(Request $request, Casting $casting, CastingRepository $castingRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$casting->getId(), $request->request->get('_token'))) {
+        // if ($this->isCsrfTokenValid('delete'.$casting->getId(), $request->request->get('_token'))) {
+
+        
             $castingRepository->remove($casting, true);
             
             $this->addFlash('success', 'Casting supprimé');
-        }
+        // }
 
 
         return $this->redirectToRoute('back_casting_index', [], Response::HTTP_SEE_OTHER);

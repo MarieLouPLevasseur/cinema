@@ -38,6 +38,12 @@ class Genre {
     {
         $this->movies = new ArrayCollection();
     }
+
+    // ! converti en string pour avoir l'ajout movie
+    public function __toString()
+    {
+        return $this->name;
+    }
     
     /**
      * Get the value of id

@@ -37,6 +37,9 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $userRepository->add($user, true);
 
+
+            $this->addFlash('success', "L'utilisateur a bien été ajouté");
+
             return $this->redirectToRoute('back_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -67,6 +70,8 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $userRepository->add($user, true);
 
+            $this->addFlash('success', "L'utilisateur a bien été modifié");
+
             return $this->redirectToRoute('back_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -77,13 +82,16 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/delete", name="delete", methods={"POST"},  requirements={"id"="\d+"})
+     * @Route("/{id}/delete", name="delete", methods={"GET"},  requirements={"id"="\d+"})
      */
     public function delete(Request $request, User $user, UserRepository $userRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+        // if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
             $userRepository->remove($user, true);
-        }
+
+            $this->addFlash('success', "L'utilisateur a bien été supprimé");
+
+        // }
 
         return $this->redirectToRoute('back_user_index', [], Response::HTTP_SEE_OTHER);
     }

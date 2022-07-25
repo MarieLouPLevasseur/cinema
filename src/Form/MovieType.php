@@ -6,6 +6,7 @@ use App\Entity\Movie;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class MovieType extends AbstractType
 {
@@ -13,13 +14,30 @@ class MovieType extends AbstractType
     {
         $builder
             ->add('isan')
-            ->add('title')
-            ->add('duration')
-            ->add('releasedAt')
-            ->add('summary')
+            ->add('title', null,[
+                'label' => 'Titre du film'
+
+            ])
+            ->add('duration', null,[
+                'label' => 'Durée en minutes'
+
+            ])
+            ->add('releasedAt', DateType::class, [
+                'label' => 'Date de sortie',
+                'widget' => 'single_text',
+                'input' => 'datetime_immutable',
+
+            ])
+            ->add('summary', null,[
+                'label' => 'Résumé',
+
+            ])
             ->add('synopsis')
-            ->add('poster')
-            ->add('rating')
+            ->add('poster', null, [
+                'label' => 'Poster/image au format URL'
+
+            ])
+            // ->add('rating')
             ->add('genres')
         ;
     }

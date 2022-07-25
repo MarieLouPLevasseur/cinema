@@ -2,18 +2,18 @@
 
 {% block body %}
 
+               {% include('back/_nav_backoffice.html.twig') %}
+
+
 <h1> Liste des caractéristique du personnage : {{casting.id}} {{casting.role}}</h1>
-
-<p> il faut me créer un formulaire d'édition </p>
-
 
 <div class="container">
 {# ! on force le no validate: on ne fait jamais confiance aux données utilisateur #}
     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
         {# {{ form_row(form.content) }} #}
-        {# {{ form_rest(form) }} #}
-    {{ form_end(form) }}
+        {{ form_rest(form) }}
         <button class="btn btn-primary">Soumettre</button>
+    {{ form_end(form) }}
 </div>
 {% endblock %}
 

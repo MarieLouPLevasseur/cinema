@@ -37,6 +37,9 @@ class PersonController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $personRepository->add($person, true);
 
+            $this->addFlash('success', "l'acteur a bien été ajouté");
+
+
             return $this->redirectToRoute('back_person_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -67,6 +70,8 @@ class PersonController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $personRepository->add($person, true);
 
+            $this->addFlash('success', "l'acteur a bien été modifié");
+
             return $this->redirectToRoute('back_person_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -77,13 +82,16 @@ class PersonController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="delete", methods={"POST"},  requirements={"id"="\d+"})
+     * @Route("/{id}/delete", name="delete", methods={"GET"},  requirements={"id"="\d+"})
      */
     public function delete(Request $request, Person $person, PersonRepository $personRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$person->getId(), $request->request->get('_token'))) {
+        // if ($this->isCsrfTokenValid('delete'.$person->getId(), $request->request->get('_token'))) {
             $personRepository->remove($person, true);
-        }
+
+            $this->addFlash('success', "l'acteur a bien été supprimé");
+
+        // }
 
         return $this->redirectToRoute('back_person_index', [], Response::HTTP_SEE_OTHER);
     }

@@ -1,1 +1,20 @@
-<h1> Je suis la vue ADD d'un MOVIE en Backoffice </h1>
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+               {% include('back/_nav_backoffice.html.twig') %}
+
+
+<h1> Formulaire pour l'ajout d'un movie</h1>
+
+
+<div class="container">
+{# ! on force le no validate: on ne fait jamais confiance aux données utilisateur #}
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        {# {{ form_row(form.content) }} #}
+        {{ form_rest(form) }}
+        <button class="btn btn-primary">Soumettre</button>
+    {{ form_end(form) }}
+</div>
+
+{% endblock %}

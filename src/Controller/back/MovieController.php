@@ -37,6 +37,8 @@ class MovieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $movieRepository->add($movie, true);
 
+            $this->addFlash('success', 'Le Movie a bien été ajouté');
+
             return $this->redirectToRoute('back_movie_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -67,6 +69,8 @@ class MovieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $movieRepository->add($movie, true);
 
+            $this->addFlash('success', 'Le Movie a bien été modifié');
+
             return $this->redirectToRoute('back_movie_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -77,13 +81,14 @@ class MovieController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="delete", methods={"POST"}, requirements={"id"="\d+"})
+     * @Route("/{id}/delete", name="delete", methods={"GET"}, requirements={"id"="\d+"})
      */
     public function delete(Request $request, Movie $movie, MovieRepository $movieRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$movie->getId(), $request->request->get('_token'))) {
+        // if ($this->isCsrfTokenValid('delete'.$movie->getId(), $request->request->get('_token'))) {
             $movieRepository->remove($movie, true);
-        }
+        // }
+        $this->addFlash('success', 'Le Movie a bien été supprimé');
 
         return $this->redirectToRoute('back_movie_index', [], Response::HTTP_SEE_OTHER);
     }

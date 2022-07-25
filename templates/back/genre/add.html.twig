@@ -1,18 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Critiquer le film {{ movie.title }}!{% endblock %}
-
 {% block body %}
 
-            {% include('front/main/_navfront.html.twig') %}
+               {% include('back/_nav_backoffice.html.twig') %}
 
-<h1>Ajouter une critique sur {{ movie }}</h1>
+
+<h1> Formulaire pour l'ajout d'un genre</h1>
+
+
 <div class="container">
 {# ! on force le no validate: on ne fait jamais confiance aux données utilisateur #}
     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-        {{ form_row(form.content) }}
+        {# {{ form_row(form.content) }} #}
         {{ form_rest(form) }}
         <button class="btn btn-primary">Soumettre</button>
     {{ form_end(form) }}
 </div>
+
 {% endblock %}

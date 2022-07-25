@@ -37,6 +37,8 @@ class SeasonController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $seasonRepository->add($season, true);
 
+            $this->addFlash('success', "La saison a bien été ajoutée");
+
             return $this->redirectToRoute('back_season_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -67,6 +69,9 @@ class SeasonController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $seasonRepository->add($season, true);
 
+            $this->addFlash('success', "La saison a bien été modifiée");
+
+
             return $this->redirectToRoute('back_season_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -77,13 +82,16 @@ class SeasonController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="delete", methods={"POST"},  requirements={"id"="\d+"})
+     * @Route("/{id}/delete", name="delete", methods={"GET"},  requirements={"id"="\d+"})
      */
     public function delete(Request $request, Season $season, SeasonRepository $seasonRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$season->getId(), $request->request->get('_token'))) {
+        // if ($this->isCsrfTokenValid('delete'.$season->getId(), $request->request->get('_token'))) {
             $seasonRepository->remove($season, true);
-        }
+
+            $this->addFlash('success', "La saison a bien été supprimée");
+
+        // }
 
         return $this->redirectToRoute('back_season_index', [], Response::HTTP_SEE_OTHER);
     }
