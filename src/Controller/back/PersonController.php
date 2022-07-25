@@ -43,7 +43,7 @@ class PersonController extends AbstractController
             return $this->redirectToRoute('back_person_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('back/person/new.html.twig', [
+        return $this->renderForm('back/person/add.html.twig', [
             'person' => $person,
             'form' => $form,
         ]);

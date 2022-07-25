@@ -1,1 +1,43 @@
-<h1> Je suis la vue INDEX d'un PERSON en Backoffice </h1>
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+               {% include('back/_nav_backoffice.html.twig') %}
+
+<div class="container-fluid justify-content-start">
+<h2 class="text-center">Liste des Acteurs </h2>
+<a class="btn btn-success " href="{{path ('back_person_add')}}" role="button" aria-disabled="add person">Ajouter un acteur</a>
+
+
+ {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+ <div class="row align-items-start m-10 p-10">
+<ul class="list-group">
+
+    {% for current_actor in people %}
+     
+{# TODO revoir l'affichage du template pour l'améliorer #}
+{# TODO afficher les acteurs par casting #}
+
+<div class="list-group-item col-12"> {{current_actor.firstname}} {{current_actor.lastname}}
+<a class="btn btn-primary " href="{{path ('back_person_edit', {id: current_actor.id} )}}" role="button" aria-disabled="edit casting">Modifier</a>
+<a class="btn btn-danger " href="{{path ("back_person_delete",{id: current_actor.id} )}}" role="button" aria-disabled="edit">supprimer</a>
+        </div>
+       
+    {% endfor %}
+
+
+ </ul> 
+
+ </div>
+</div>
+
+  {% endblock %}
