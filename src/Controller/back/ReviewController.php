@@ -42,7 +42,7 @@ class ReviewController extends AbstractController
             return $this->redirectToRoute('back_review_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('back/review/new.html.twig', [
+        return $this->renderForm('back/review/add.html.twig', [
             'review' => $review,
             'form' => $form,
         ]);

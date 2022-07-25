@@ -25,27 +25,40 @@
                 {% endfor %}
             {% endfor %}
 
- <div class="row align-items-start m-10 p-10">
-<ul class="list-group">
+ <div class="container">
+    <h1>Liste des castings</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Roles</th>
+                <th>Credit Order</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for current_casting in castings %}
 
-    {% for current_casting in castings %}
-     
-{# TODO il faut modifier dynamiquement le nom du film par carte #}
+{# TODO il faudrait une séparation avec le titre afficher qu'une fois pour une liste de role #}
+            <tr>
+                <td>{{ current_casting.id }}</td>
+                <td>{{ current_casting.role }}</td>
+                <td>{{current_casting.creditOrder}}</td>
 
-    {{current_casting.movie.title}}
+                <td>
+                    <a class="btn btn-success " href="{{path ('back_casting_read', {id: current_casting.id} )}}" role="button" aria-disabled="edit casting">Voir</a>
+                    <a class="btn btn-primary " href="{{path ('back_casting_edit', {id: current_casting.id} )}}" role="button" aria-disabled="edit casting">Modifier</a>
+                    <a class="btn btn-danger " href="{{path ("back_casting_delete",{id: current_casting.id} )}}" role="button" aria-disabled="edit"  onclick="return confirm('Etes vous sur ?');">supprimer</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
 
-<div class="list-group-item col-12"> {{current_casting.role}}
-<a class="btn btn-primary " href="{{path ('back_casting_edit', {id: current_casting.id} )}}" role="button" aria-disabled="edit casting">Modifier</a>
-<a class="btn btn-danger " href="{{path ("back_casting_delete",{id: current_casting.id} )}}" role="button" aria-disabled="edit">supprimer</a>
-        </div>
-       
-    {% endfor %}
 
 
-
- </ul> 
-
- </div>
 </div>
 
   {% endblock %}

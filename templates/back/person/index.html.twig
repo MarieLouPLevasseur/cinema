@@ -19,25 +19,32 @@
                 {% endfor %}
             {% endfor %}
 
- <div class="row align-items-start m-10 p-10">
-<ul class="list-group">
-
-    {% for current_actor in people %}
-     
-{# TODO revoir l'affichage du template pour l'améliorer #}
-{# TODO afficher les acteurs par casting #}
-
-<div class="list-group-item col-12"> {{current_actor.firstname}} {{current_actor.lastname}}
-<a class="btn btn-primary " href="{{path ('back_person_edit', {id: current_actor.id} )}}" role="button" aria-disabled="edit casting">Modifier</a>
-<a class="btn btn-danger " href="{{path ("back_person_delete",{id: current_actor.id} )}}" role="button" aria-disabled="edit">supprimer</a>
-        </div>
-       
-    {% endfor %}
-
-
- </ul> 
-
- </div>
+ <div class="container">
+    <h1>Liste des acteurs</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>nom</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for current_actor in people %}
+            <tr>
+                <td>{{ current_actor.id }}</td>
+                <td>{{ current_actor.firstname }} {{ current_actor.lastname }}</td>
+                <td>
+                    <a class="btn btn-success " href="{{path ('back_person_read', {id: current_actor.id} )}}" role="button" aria-disabled="edit casting">Voir</a>
+                    <a class="btn btn-primary " href="{{path ('back_person_edit', {id: current_actor.id} )}}" role="button" aria-disabled="edit casting">Modifier</a>
+                    <a class="btn btn-danger " href="{{path ("back_person_delete",{id: current_actor.id} )}}" role="button" aria-disabled="edit"  onclick="return confirm('Etes vous sur ?');">supprimer</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
 </div>
 
   {% endblock %}

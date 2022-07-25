@@ -39,6 +39,13 @@ class MovieType extends AbstractType
             ])
             // ->add('rating')
             ->add('genres')
+
+            // ->add('genres', EntityType::class, [
+            //     'class' => Genre::class,
+            //     'choice_label' => 'name',
+            //     'multiple' => true,
+            //     'expanded' => true,
+            // ])
         ;
     }
 

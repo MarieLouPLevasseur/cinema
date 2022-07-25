@@ -19,37 +19,41 @@
                 {% endfor %}
             {% endfor %}
 
- <div class="row align-items-start m-10 p-10">
-<ul class="list-group">
-
-    {% for current_review in reviews %}
-     
-{# TODO revoir l'affichage du template pour l'améliorer #}
-{# TODO afficher les critques par film #}
-
-<div class="list-group-item col-12"> {{current_review.content}} </br> notation : {{current_review.rating}} </br> 
-
-{%  if current_review.rating is not null %}
-{# ! reaction ne fonctionne pas: il veut boucler sur un tableau, à revoir #}
-{# reaction : {{current_review.reactions}}   #}
-{% endif %}
-<div>
-{# <div class="list-group-item col-12"> <div> #}
-{# <div class="list-group-item col-12"> {{current_review.reactions}} <div> #}
-
-
-<a class="btn btn-primary " href="{{path ('back_review_edit', {id: current_review.id} )}}" role="button" aria-disabled="edit casting">Modifier</a>
-
-<a class="btn btn-danger " href="{{path ("back_review_delete",{id: current_review.id} )}}" role="button" aria-disabled="edit">supprimer</a>
-        </div>
-        </div>
-       
-    {% endfor %}
-
-
- </ul> 
-
- </div>
+ <div class="container">
+    <h1>Liste des critiques</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>films associés</th>
+                <th>contenu</th>
+                <th>notation</th>
+                <th>réactions</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for current_review in reviews %}
+            <tr>
+                <td>{{ current_review.id }}</td>
+                <td>{{ current_review.movie.title }}</td>
+                <td>{{ current_review.content }}</td>
+                <td>{{ current_review.rating }}</td>
+                <td></td>
+                {# <td>{{ current_review.reactions }}</td> #}
+                <td>
+                    <a class="btn btn-success " href="{{path ('back_review_read', {id: current_review.id} )}}" role="button" aria-disabled="edit casting">Voir</a>
+                    <a class="btn btn-primary " href="{{path ('back_review_edit', {id: current_review.id} )}}" role="button" aria-disabled="edit casting">Modifier</a>
+                    <a class="btn btn-danger " href="{{path ("back_review_delete",{id: current_review.id} )}}" role="button" aria-disabled="edit" onclick="return confirm('Etes vous sur ?');">supprimer</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 </div>
+</div>
+
+</div>
+                    <a class="btn btn-success " href="{{path ('back_review_read', {id: current_review.id} )}}" role="button" aria-disabled="edit casting">Voir</a>
 
   {% endblock %}

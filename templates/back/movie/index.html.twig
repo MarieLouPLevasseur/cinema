@@ -19,24 +19,54 @@
                 {% endfor %}
             {% endfor %}
 
- <div class="row align-items-start m-10 p-10">
-<ul class="list-group">
+<div class="container">
+    <h1>Listes des films</h1>
 
-    {% for current_movie in movies %}
-     
-{# TODO revoir l'affichage du template pour l'améliorer #}
-
-<div class="list-group-item col-12"> {{current_movie.title}}
-<a class="btn btn-primary " href="{{path ('back_movie_edit', {id: current_movie.id} )}}" role="button" aria-disabled="edit casting">Modifier</a>
-<a class="btn btn-danger " href="{{path ("back_movie_delete",{id: current_movie.id} )}}" role="button" aria-disabled="edit">supprimer</a>
-        </div>
-       
-    {% endfor %}
-
-
- </ul> 
-
- </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Image</th>
+                <th>Titre</th>
+                <th>Durée</th>
+                <th>Date de sortie</th>
+                <th>Notations</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for current_movie in movies %}
+            <tr>
+                <td>{{ current_movie.id }}</td>
+                <td>
+                {% if current_movie.poster != "" %}
+                    <img style="max-width:100px" src="{{ current_movie.poster }}" />
+                {% else %}
+                    <p>Pas d'image définie</p>
+                {% endif %}
+                </td>
+                <td>{{ current_movie.title }}</td>
+                <td>{{ current_movie.duration }}</td>
+                <td>{{ current_movie.releasedAt ? current_movie.releasedAt|date('d/m/Y') : '' }}</td>
+                <td>{{ current_movie.rating }}</td>
+                <td>
+                    <a class="btn btn-success " href="{{path ('back_movie_read', {id: current_movie.id} )}}" role="button" aria-disabled="edit casting">Voir</a>
+                    <a class="btn btn-primary " href="{{path ('back_movie_edit', {id: current_movie.id} )}}" role="button" aria-disabled="edit casting">Modifier</a>
+                    <a class="btn btn-danger " href="{{path ('back_movie_delete', {id: current_movie.id} )}}" role="button" aria-disabled="edit casting"  onclick="return confirm('Etes vous sur ?');">Supprimer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 </div>
+</div>
+
+</div>
+
+
 
   {% endblock %}

@@ -16,7 +16,7 @@ class FavoriteController extends AbstractController
     /**
      * Show Favorite movies
      *
-    * @Route("/favoris/add/{id}",name="movie_favorites_add", requirements={"id"="\d+"}, methods="GET")
+    * @Route("/favoris/{id}",name="movie_favorites_add", requirements={"id"="\d+"}, methods="GET")
      * @return Response
      */
     public function favorites_add(int $id, Request $request) :Response

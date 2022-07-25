@@ -1,1 +1,57 @@
-<h1> Je suis la vue INDEX d'un SEASON en Backoffice </h1>
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+               {% include('back/_nav_backoffice.html.twig') %}
+
+<div class="container-fluid justify-content-start">
+<h2 class="text-center">Liste des saisons </h2>
+<a class="btn btn-success " href="{{path ('back_review_add')}}" role="button" aria-disabled="add person">Ajouter une saison</a>
+
+
+ {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+<div class="container">
+    <h1>Liste des season</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>série associée</th>
+                <th>numéro de la saison</th>
+                <th>nombre d'épisode</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for current_season in seasons %}
+
+{# TODO il faudrait une séparation avec le titre afficher qu'une fois pour une liste de role #}
+            <tr>
+                <td>{{ current_season.id }}</td>
+                <td>{{ current_season.movie.title }}</td>
+                <td>{{current_season.number}}</td>
+                <td>{{current_season.episodeCount}}</td>
+
+                <td>
+                    <a class="btn btn-success " href="{{path ('back_season_read', {id: current_season.id} )}}" role="button" aria-disabled="edit casting">Voir</a>
+                    <a class="btn btn-primary " href="{{path ('back_season_edit', {id: current_season.id} )}}" role="button" aria-disabled="edit casting">Modifier</a>
+                    <a class="btn btn-danger " href="{{path ("back_season_delete",{id: current_season.id} )}}" role="button" aria-disabled="edit"  onclick="return confirm('Etes vous sur ?');">supprimer</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+</div>
+
+  {% endblock %}

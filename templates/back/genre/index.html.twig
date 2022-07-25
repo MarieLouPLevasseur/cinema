@@ -6,8 +6,8 @@
                {% include('back/_nav_backoffice.html.twig') %}
 
 <div class="container-fluid justify-content-start">
-<h2 class="text-center">Liste des Genres </h2>
-<a class="btn btn-success " href="{{path ('back_genre_add')}}" role="button" aria-disabled="add genre">Ajouter un genre</a>
+    <h2 class="text-center">Liste des Genres </h2>
+    <a class="btn btn-success " href="{{path ('back_genre_add')}}" role="button" aria-disabled="add genre">Ajouter un genre</a>
 
 
  {% for label, messages in app.flashes %}
@@ -19,24 +19,43 @@
                 {% endfor %}
             {% endfor %}
 
- <div class="row align-items-start m-10 p-10">
-<ul class="list-group">
 
-    {% for current_genre in genres %}
-     
-{# TODO revoir l'affichage du template pour l'améliorer #}
+<div class="container">
+    <h1>Liste des genres</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for current_genre in genres %}
+            <tr>
+                <td>{{ current_genre.id }}</td>
+                <td>{{ current_genre.name }}</td>
+                <td>
+                    <a class="btn btn-success " href="{{path ('back_genre_read', {id: current_genre.id} )}}" role="button" aria-disabled="edit casting">Voir</a>
+                    <a class="btn btn-primary " href="{{path ('back_genre_edit', {id: current_genre.id} )}}" role="button" aria-disabled="edit casting">Modifier</a>
+                    <a class="btn btn-danger " href="{{path ("back_genre_delete",{id: current_genre.id} )}}" role="button" aria-disabled="edit"  onclick="return confirm('Etes vous sur ?');">supprimer</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
 
-<div class="list-group-item col-12"> {{current_genre.name}}
-<a class="btn btn-primary " href="{{path ('back_genre_edit', {id: current_genre.id} )}}" role="button" aria-disabled="edit casting">Modifier</a>
-<a class="btn btn-danger " href="{{path ("back_genre_delete",{id: current_genre.id} )}}" role="button" aria-disabled="edit">supprimer</a>
-        </div>
-       
-    {% endfor %}
 
 
- </ul> 
 
- </div>
+
+
+
+
+
+ 
 </div>
 
   {% endblock %}

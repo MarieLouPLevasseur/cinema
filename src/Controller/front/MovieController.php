@@ -26,7 +26,7 @@ class MovieController extends AbstractController
   /**
      * list all movies action
      *
-     * @Route("/", name="list", methods={"GET"})
+     * @Route("", name="list", methods={"GET"})
      * @return Response
      */
     public function list(MovieRepository $movieRepository) :Response
