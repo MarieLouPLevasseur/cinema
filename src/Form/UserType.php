@@ -3,10 +3,13 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Attribute;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class UserType extends AbstractType
 {
@@ -22,7 +25,12 @@ class UserType extends AbstractType
                     'utilisateur' => 'ROLE_USER',
                 ],
             ])
-            ->add('password')
+            ->add('password', null,[
+                // ! mettre le password non lisible meme pour l'administrateur
+                'data' => ' ',
+                'required'   => true,
+                // 'attr'=>['always_empty'=>true,]
+            ])
         ;
     }
 
