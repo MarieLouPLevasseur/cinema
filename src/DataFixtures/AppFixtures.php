@@ -13,9 +13,17 @@ use DateTimeImmutable;
 use App\Entity\Casting;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    private $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
+
     public function load(ObjectManager $manager): void
     {
        
@@ -61,7 +69,7 @@ class AppFixtures extends Fixture
 
         // *************DONNES EN DOUBLON*****************************
 
-        // **** CASTING (personnages d'un film: person_id, role, credit_order, movie_id *********
+    // **** CASTING (personnages d'un film: person_id, role, credit_order, movie_id *********
 
         $roles =        [
         //game of throne
@@ -194,7 +202,7 @@ class AppFixtures extends Fixture
         ];
       
 
-        // **** PERSON (acteur d'un film : firstname, lastname) *********
+    // **** PERSON (acteur d'un film : firstname, lastname) *********
         $persons =[
         // Game of Throne
             [
@@ -663,7 +671,7 @@ class AppFixtures extends Fixture
             "lastname"  =>"Johnson",
             ],
         ];
-    //********************FIN DOUBLON **************************** */
+     //********************FIN DOUBLON **************************** */
 
     // **** USER (écrit les critiques: email, username, role *********
 
@@ -741,43 +749,81 @@ class AppFixtures extends Fixture
             'Lise'
         ];
 
-            $loremLastName= [
-            "Lawson",
-            "Bailey",
-            "Espinoza",
-            "Stuart",
-            "Wyatt",
-            "Kerr",
-            "Ball",
-            "Bradley",
-            "Duran",
-            "Moody",
-            "Alvarado",
-            "Boyle",
-            "Riley",
-            "Castillo",
-            "Charles",
-            "Dalton",
-            "Murray",
-            "Eaton",
-            "Khan",
-            "Leonard",
-            "Craig",
-            "Villanueva",
-            "Wise",
-            "Goodman",
-            "Stein",
-            "Solomon",
-            "Haney",
-            "Beard",
-            "Rojas"
-        ];
+    $loremLastName= [
+        "Lawson",
+        "Bailey",
+        "Espinoza",
+        "Stuart",
+        "Wyatt",
+        "Kerr",
+        "Ball",
+        "Bradley",
+        "Duran",
+        "Moody",
+        "Alvarado",
+        "Boyle",
+        "Riley",
+        "Castillo",
+        "Charles",
+        "Dalton",
+        "Murray",
+        "Eaton",
+        "Khan",
+        "Leonard",
+        "Craig",
+        "Villanueva",
+        "Wise",
+        "Goodman",
+        "Stein",
+        "Solomon",
+        "Haney",
+        "Beard",
+        "Rojas"
+    ];
 
-        $loremRole = ["admin", "co-admin", "simple_user"];
+        // $loremRole = ["admin", "co-admin", "simple_user"];
     //tableau des objects users
         $allUsers =[];
 
-        for ($i = 0; $i < 55; $i++) {
+        // Utilisateur ADMIN
+        $adminUser = new User();
+        $adminUser->setEmail('admin@oflix.com');
+        $adminUser->setUsername('admin Oflix');
+        $adminUser->setRole('ROLE_ADMIN');
+
+        $hashedPassword = $this->passwordHasher->hashPassword($adminUser, 'devinci');
+        $adminUser->setPassword($hashedPassword);
+
+        $manager->persist($adminUser);
+
+        // Utilisateur MANAGER
+
+        $stdUser = new User();
+        $stdUser->setEmail('manager@oflix.com');
+        $stdUser->setUsername('manager Oflix');
+        $stdUser->setRole('ROLE_MANAGER');
+
+        $hashedPassword = $this->passwordHasher->hashPassword($stdUser, 'devinci');
+        $stdUser->setPassword($hashedPassword);
+
+        $manager->persist($stdUser);
+
+        // Utilisateur USER
+        $stdUser = new User();
+        $stdUser->setEmail('user@oflix.com');
+        $stdUser->setUsername('user Oflix');
+        $stdUser->setRole('ROLE_USER');
+
+        $hashedPassword = $this->passwordHasher->hashPassword($stdUser, 'devinci');
+        $stdUser->setPassword($hashedPassword);
+
+        $manager->persist($stdUser);
+
+        for ($i = 0; $i < 10; $i++) {
+
+
+            
+            // ******ANCIEN CODE
             $userObj = new User();
             $userFirstNameKeyRandom = (array_rand($loremFirstName));
             $userFirstNameDefault = $loremFirstName[$userFirstNameKeyRandom];
@@ -785,14 +831,20 @@ class AppFixtures extends Fixture
             $userLastNameKeyRandom = (array_rand($loremFirstName));
             $userLastNameDefault = $loremFirstName[$userLastNameKeyRandom];
 
-            $userRoleKeyRandom = (array_rand($loremRole));
-            $userRoleDefault = $loremRole[$userRoleKeyRandom];
+            // $userRoleKeyRandom = (array_rand($loremRole));
+            // $userRoleDefault = $loremRole[$userRoleKeyRandom];
             
             $userObj->setUsername($userFirstNameDefault." ".$userLastNameDefault);
             $userObj->setEmail($userFirstNameDefault.".".$userLastNameDefault."@gmail.com");
-            $userObj->setRole($userRoleDefault);
+            $userObj->setRole('ROLE_USER');
 
-            // mise en tableau pour réutilisation ultérieure
+            $hashedPassword = $this->passwordHasher->hashPassword($userObj, 'devinci');
+            $userObj->setPassword($hashedPassword);
+
+            // ****************************
+
+          
+            // mise en tableau pour réutilisation ultérieure (uniquement les users pour utilisateurs sur les critiques reviews)
             $allUsers[]= $userObj;
 
             $manager->persist($userObj);
@@ -1973,7 +2025,7 @@ class AppFixtures extends Fixture
             $reviewObj->setRating(mt_rand(1,5));
             $reviewObj->setContent($ReviewDefault);
 
-            // TODO actuellement a null par défaut mais à modifier dans les Entités
+// ! actuellement a null par défaut mais à modifier dans les Entités
             // fait avec le faker (non installer encore): a activer apres installation
             $faker = \Faker\Factory::create();
 // ! a relancer apres modif des entités
