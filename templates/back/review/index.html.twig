@@ -39,8 +39,11 @@
                 <td>{{ current_review.movie.title }}</td>
                 <td>{{ current_review.content }}</td>
                 <td>{{ current_review.rating }}</td>
-                <td></td>
-                {# <td>{{ current_review.reactions }}</td> #}
+                <td>
+            {% for current_reaction in current_review.reactions %}
+                {{ current_reaction }}
+            {% endfor %}
+                </td>
                 <td>
                     <a class="btn btn-success " href="{{path ('back_review_read', {id: current_review.id} )}}" role="button" aria-disabled="edit casting">Voir</a>
                     <a class="btn btn-primary " href="{{path ('back_review_edit', {id: current_review.id} )}}" role="button" aria-disabled="edit casting">Modifier</a>
@@ -54,6 +57,5 @@
 </div>
 
 </div>
-                    <a class="btn btn-success " href="{{path ('back_review_read', {id: current_review.id} )}}" role="button" aria-disabled="edit casting">Voir</a>
 
   {% endblock %}
