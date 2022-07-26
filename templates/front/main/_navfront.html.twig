@@ -24,12 +24,27 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown">
-                            <span>Charles</span>
+                            <span>
+                           {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        {{ app.user.username }}</p>
+                        {% else %}
+                        invité
+                        {% endif %}
+                            </span>
                             <i class="bi bi-person-square"></i>
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#">Profil</a></li>
-                            <li><a class="dropdown-item" href="#">Backoffice</a></li>
+
+            {# **OK**  le lien backOffice ne devrait apparaitre que si utilisateur est MANAGER ou ADMIN #}
+                          {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+                                {% if (app.user.role == "ROLE_ADMIN") or (app.user.role == "ROLE_MANAGER")%}
+                       
+                                    <li><a class="dropdown-item" href={{path ("back_homepage")}}>Backoffice</a></li>
+                                {% endif %}
+                        {% endif %}
+                            
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
