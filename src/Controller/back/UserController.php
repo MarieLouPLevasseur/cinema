@@ -41,12 +41,14 @@ class UserController extends AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // ! enregistrement du MDP par défaut avec devinci sans enregistrement manuel
+            // enregistrement du MDP par défaut avec devinci sans enregistrement manuel
             // $password = $passwordHasher->hashPassword($user, "devinci");
 
+            // hachage MDP avant de le passé en BDD
             $password = $passwordHasher->hashPassword($user, $user->getPassword());
-
             $user ->setPassword($password);
+
+            // cette méthode persist et flush
             $userRepository->add($user, true);
 
 
@@ -82,6 +84,10 @@ class UserController extends AbstractController
           ): Response
     {
         $form = $this->createForm(UserType::class, $user);
+
+        // permet de retirer le champs mot de passe que pour l'édition
+        $form->remove('password');
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

@@ -2,8 +2,9 @@
 
 namespace App\Tests\Front;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class SmokeTest extends WebTestCase
 {
@@ -29,4 +30,7 @@ class SmokeTest extends WebTestCase
             // ['/favoris/2', Response::HTTP_FOUND],
         ];
     }
+
+    
+
 }

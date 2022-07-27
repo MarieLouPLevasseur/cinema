@@ -1,1 +1,39 @@
-<h1> Je suis la vue READ d'un SEASON en Backoffice </h1>
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+               {% include('back/_nav_backoffice.html.twig') %}
+
+<div class="container">
+    <h1>Saison</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ season.id }}</td>
+            </tr>
+            <tr>
+                <th>Série associée</th>
+                <td>{{ season.movie.title }}</td>
+            </tr>
+            <tr>
+                <th>Saison numéro</th>
+                <td>{{ season.number }}</td>
+            </tr>
+            <tr>
+                <th>Nombre d'épisode</th>
+                <td>{{ season.episodeCount }}</td>
+            </tr>
+            {# <tr> #}
+                {# <th>Password</th> #}
+                {# <td>{{ season.password }}</td> #}
+            {# </tr> #}
+        </tbody>
+    </table>
+        <a class="btn btn-primary " href="{{path ('back_season_edit', {id: season.id} )}}" role="button" aria-disabled="edit casting">Modifier</a>
+        <a class="btn btn-danger " href="{{path ("back_season_delete",{id: season.id} )}}" role="button" aria-disabled="edit" onclick="return confirm('Etes vous sur ?');">supprimer</a>
+
+
+</div>
+{% endblock %}

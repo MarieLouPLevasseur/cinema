@@ -2,8 +2,71 @@
 
 
 {% block body %}
-
                {% include('back/_nav_backoffice.html.twig') %}
-<h1> Je suis la vue READ d'un MOVIE en Backoffice </h1>
 
-{%  endblock %}
+<div class="container">
+    <h1>Film: {{movie.title}}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ movie.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ movie.title }}</td>
+            </tr>
+            <tr>
+                <th>Durée</th>
+                <td>{{ movie.duration }}</td>
+            </tr>
+            <tr>
+                <th>Date de sortie</th>
+                <td>{{ movie.releasedAt ? movie.releasedAt|date('d/m/Y') : '' }}</td>
+            </tr>
+             <tr>
+                <th>Résumé</th>
+                <td>{{ movie.summary }}</td>
+            </tr>
+             <tr>
+                <th>Synopsis</th>
+                <td>{{ movie.synopsis }}</td>
+            </tr>
+{# TODO il ne veut pas prendre les saisons, a corriger #}
+{# {% dump(movie.seasons) %} #}
+
+{# {% if movie.seasons.number != "" %} #}
+            <tr>
+            <th>Saison numéro</th>
+                {# <td>{{ movie.season.number }} nombre épisodes: {{ movie.season.episodeCount }}</td> #}
+            </tr>
+
+            {# {% endif %}   #}
+           
+
+             <tr> 
+                <th>Poster</th>
+                <td>
+                
+            {% if movie.poster != "" %}
+                    <img style="max-width:100px" src="{{ movie.poster }}" />
+            {% else %}
+                    <p>Pas d'image définie</p>
+            {% endif %}                
+                </td>
+            </tr>
+             <tr>
+                <th>Notation</th>
+                <td>{{ movie.rating }}</td>
+            </tr>
+            
+            
+        </tbody>
+    </table>
+        <a class="btn btn-primary " href="{{path ('back_movie_edit', {id: movie.id} )}}" role="button" aria-disabled="edit casting">Modifier</a>
+        <a class="btn btn-danger " href="{{path ("back_movie_delete",{id: movie.id} )}}" role="button" aria-disabled="edit" onclick="return confirm('Etes vous sur ?');">supprimer</a>
+
+
+</div>
+{% endblock %}

@@ -26,6 +26,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotNull
      * @Assert\Email(
      *     message = "The email '{{ value }}' is not a valid email.")
      */
@@ -33,11 +34,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotNull
+     * @Assert\Length(
+     *   min=3,
+     *   max=20
+     * )
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotNull
      */
     private $role;
 
@@ -48,14 +55,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * 
-     * 
-     * @Assert\Length(
-     *      min = 5,
-     *      max = 50,
-     *      minMessage = "Your first name must be at least {{ limit }} characters long",
-     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters")
-     * 
+     * @Assert\NotNull
      */
     private $password;
 
@@ -63,6 +63,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->reviews = new ArrayCollection();
     }
+  
 
     //  ! permet d'avoir la lecture pour l'ajout review
     public function __toString()
@@ -107,6 +108,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         return [$this->role];
+    }
+
+     /**
+     * Permet d'afficher un nom de role lisible par les utilisateurs ( utilisé dans twig notamment )
+     *
+     * @return string
+     */
+    public function getRoleName(): string
+    {
+        switch($this->role)
+        {
+            case 'ROLE_ADMIN' :
+                return 'Administrateur';
+            case 'ROLE_MANAGER' :
+                return 'Manager';
+            case 'ROLE_USER' :
+                return 'Utilisateur';
+        }
     }
 
     public function setRole(?string $role): self

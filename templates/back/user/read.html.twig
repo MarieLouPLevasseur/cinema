@@ -1,1 +1,39 @@
-<h1> Je suis la vue READ d'un USER en Backoffice </h1>
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+               {% include('back/_nav_backoffice.html.twig') %}
+
+<div class="container">
+    <h1>User</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Username</th>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <th>Role</th>
+                <td>{{ user.role }}</td>
+            </tr>
+            {# <tr> #}
+                {# <th>Password</th> #}
+                {# <td>{{ user.password }}</td> #}
+            {# </tr> #}
+        </tbody>
+    </table>
+        <a class="btn btn-primary " href="{{path ('back_user_edit', {id: user.id} )}}" role="button" aria-disabled="edit casting">Modifier</a>
+        <a class="btn btn-danger " href="{{path ("back_user_delete",{id: user.id} )}}" role="button" aria-disabled="edit" onclick="return confirm('Etes vous sur ?');">supprimer</a>
+
+
+</div>
+{% endblock %}

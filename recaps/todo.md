@@ -1,3 +1,5 @@
+# Reste à faire
+
 ## TODO
 
 - terminer le tableau de routes
@@ -11,7 +13,19 @@
     - `navbar-light bg-warning` pour le thème Allociné
   - pensez à changer l'interface au niveau du bouton qui switch le thème
 - ajouter la liste des commentaires sur le detail d'un Movie
-- modifier testConverter pour passer les tests sur les semaines
+- modier testConverter pour passer les tests sur les semaines
+- dans le formulaire d'ajout de Review, supprimer le champ User du formulaire pour utiliser l'utilisateur qui est connecté
+- afficher les flash messages sur les pages qui en ont besoin ( un include peut etre )
+- ajouter les AccessControlTest pour les Manager et les Admin
+- passer les roles en entités
+  - modifier le MCD ( avec les relations )
+  - modifier les entités
+    - supprimer la propriété role
+    - utiliser le maker pour faire la relation
+  - faire la migration
+    - attention à récupérer les roles des utilisateurs
+  - vérifier que ca marche
+
 
 ## DONE
 
@@ -19,7 +33,7 @@
 
 ### Fixtures
 
-- [NelmioAliceFixtures](https://github.com/nelmio/alice) qui permet d'utiliser du markdown pour générer des fixtures. cf [la fiche récap sur Kourou](https://kourou.oclock.io/ressources/fiche-recap/fixtures-avancees-avec-nelmio-alice/)
+- [NelmioAliceFixtures](https://github.com/nelmio/alice) qui permet d'utiliser du yaml pour générer des fixtures. cf [la fiche récap sur Kourou](https://kourou.oclock.io/ressources/fiche-recap/fixtures-avancees-avec-nelmio-alice/)
 
 ### Custom Queries
 

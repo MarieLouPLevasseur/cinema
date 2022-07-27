@@ -1,1 +1,47 @@
-<h1> Je suis la vue READ d'un REVIEW en Backoffice </h1>
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+               {% include('back/_nav_backoffice.html.twig') %}
+
+<div class="container">
+    <h1>Critique</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ review.id }}</td>
+            </tr>
+            <tr>
+                <th>Utilisateur</th>
+                <td>{{ review.user.username }}</td>
+            </tr>
+            <tr>
+                <th>film/série</th>
+                <td>{{ review.movie.title }}</td>
+            </tr>
+            <tr>
+                <th>Contenu</th>
+                <td>{{ review.content }}</td>
+            </tr>
+            <tr>
+                <th>Notation</th>
+                <td>{{ review.rating }}</td>
+            </tr>
+            <tr>
+                <th>Réaction</th>
+                <td>
+                {% for current_reaction in review.reactions %}
+                {{ current_reaction }} <br>
+                {% endfor %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+        <a class="btn btn-primary " href="{{path ('back_review_edit', {id: review.id} )}}" role="button" aria-disabled="edit casting">Modifier</a>
+        <a class="btn btn-danger " href="{{path ("back_review_delete",{id: review.id} )}}" role="button" aria-disabled="edit" onclick="return confirm('Etes vous sur ?');">supprimer</a>
+
+
+</div>
+{% endblock %}
