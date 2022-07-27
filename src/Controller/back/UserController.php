@@ -5,7 +5,9 @@ namespace App\Controller\back;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,7 +19,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/index", name="index", methods={"GET"})
+     * @Route("/", name="index", methods={"GET"})
      */
     public function index(UserRepository $userRepository): Response
     {
@@ -78,11 +80,39 @@ class UserController extends AbstractController
      */
     public function edit(
         Request $request,
-         User $user,
-          UserRepository $userRepository,
-          UserPasswordHasherInterface $passwordHasher
-          ): Response
+        Security $security,
+        User $user,
+        UserRepository $userRepository): Response
     {
+        // retire le droit utilisateur à manager
+        $this->denyAccessUnlessGranted('ROLE_MANAGER');
+
+        // @isGranted("ROLE_")dans les annotations avec le bon USE
+
+        // ! cette ligne permet de remplacer l'ensemble du bloc plus bas dans les voter
+        // $this->denyAccessUnlessGranted('USER_UPDATE', $user);
+
+        // **********BLOCK de remplacement coller dans le VOTER **************
+        // si le user a modifier a le role Manager ou Admin
+        // et que l'utilisateur connecté à le Role Manager
+            // alors on limite l'accès
+    // TODO a corriger car la route security Yaml ne permet pas non plus la modif des users correctement
+        // if ($user->getRole() === 'ROLE_ADMIN' || $user->getRole() === 'ROLE_MANAGER')
+        // {
+
+        //         // et que l'utilisateur connecté a le role Manager
+        //         if (in_array('ROLE_MANAGER', $security->getUser()->getRoles()))
+        //         {
+        //             // alors on limite l'accès
+        //             throw $this->createAccessDeniedException('Les managers ne peuvent modifier que des utilisateurs');
+        //         }
+
+        //     // alors on limite l'accès
+        //     throw $this->createAccessDeniedException();
+
+        // }
+        // ********************************************************************
+
         $form = $this->createForm(UserType::class, $user);
 
         // permet de retirer le champs mot de passe que pour l'édition
@@ -91,10 +121,10 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // inutile car l'accès 
+            // $password = $passwordHasher->hashPassword($user, $user->getPassword());
+            // $user ->setPassword($password);
 
-            $password = $passwordHasher->hashPassword($user, $user->getPassword());
-
-            $user ->setPassword($password);
 
             $userRepository->add($user, true);
 
@@ -109,6 +139,7 @@ class UserController extends AbstractController
         ]);
     }
 
+    // ! route a modifier, chez greg  route /{id} avec méthode POST: modifier les tests par la suite
     /**
      * @Route("/{id}/delete", name="delete", methods={"GET"},  requirements={"id"="\d+"})
      */

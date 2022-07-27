@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ReviewController extends AbstractController
 {
     /**
-     * @Route("/index", name="index", methods={"GET"})
+     * @Route("/", name="index", methods={"GET"})
      */
     public function index(ReviewRepository $reviewRepository): Response
     {

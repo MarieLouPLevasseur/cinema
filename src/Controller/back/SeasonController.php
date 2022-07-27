@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SeasonController extends AbstractController
 {
     /**
-     * @Route("/index", name="index", methods={"GET"})
+     * @Route("/", name="index", methods={"GET"})
      */
     public function index(SeasonRepository $seasonRepository): Response
     {

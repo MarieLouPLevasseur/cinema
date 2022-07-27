@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CastingController extends AbstractController
 {
     /**
-     * @Route("/index", name="index", methods={"GET"})
+     * @Route("/", name="index", methods={"GET"})
      */
     public function index(CastingRepository $castingRepository): Response
     {

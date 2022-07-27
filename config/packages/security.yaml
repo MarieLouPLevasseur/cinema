@@ -41,17 +41,22 @@ security:
 
 # correction : 
         # - { path: ^/films/\d+/critiques/ajout, roles: ROLE_USER }
+        # - { path: ^/back/user/\d+/edit$, roles: ROLE_MANAGER } # edition
+        # - { path: ^/back/$, roles: ROLE_MANAGER } # accueil back
         # - { path: ^/back/[^/]+/\d+$, roles: ROLE_MANAGER } # show 
         # - { path: ^/back/[^/]+/$, roles: ROLE_MANAGER } # liste 
         # - { path: ^/back, roles: ROLE_ADMIN }
 
+# ! regex pour edition User a revoir car ne fonctionne pas correctement avec le usercontroller
 
-
+        - { path: ^/back/(casting|movie|person|season|review)/\d+/(edit), roles: ROLE_ADMIN }
         - { path: ^/back/(user|casting|movie|person|season|review)/\d+/(edit|delete), roles: ROLE_ADMIN }
         - { path: ^/back/(user|casting|movie|person|season)/add, roles: ROLE_ADMIN }
         
 
         - { path: ^/back/, roles: ROLE_MANAGER }
+        - { path: ^/back/user/\d+/edit$, roles: ROLE_MANAGER } # edition user: voter que si le user a modif = user (pas admin ou manager)
+
         - { path: ^/back/(user|casting|movie|person|season)/index, roles: ROLE_MANAGER }
         - { path: ^/back/(user|casting|movie|person|season)/\d+, roles: ROLE_MANAGER }
 
