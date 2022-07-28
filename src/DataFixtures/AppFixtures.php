@@ -14,14 +14,21 @@ use App\Entity\Casting;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AppFixtures extends Fixture
 {
     private $passwordHasher;
+    private $slugger;
 
-    public function __construct(UserPasswordHasherInterface $passwordHasher)
+
+    public function __construct(
+        UserPasswordHasherInterface $passwordHasher,
+        SluggerInterface $slugger)
     {
         $this->passwordHasher = $passwordHasher;
+        $this->slugger = $slugger;
+
     }
 
     public function load(ObjectManager $manager): void
@@ -1929,6 +1936,9 @@ class AppFixtures extends Fixture
             $movieObj->setSynopsis($currentMovie['synopsis']);
             $movieObj->setSummary($currentMovie['summary']);
             $movieObj->setPoster($currentMovie['poster']);
+
+            // mise en place du slug en bdd
+            $movieObj->setSlug($this->slugger->slug($currentMovie['title']));
 
             // on peut convertir de plusieurs manière une chaine de caractère en entier
             // en précisant le type entre parenthèse avant la valeur
