@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 
 
@@ -68,20 +69,24 @@ class MovieController extends AbstractController
 
      /**
      * Show One Movie
-     * @Route("/{id}",name="show", requirements={"id"="\d+"}, methods="GET")
-     *
+     * @Route("/{slug}",name="show", methods="GET")
      * @param int $id
      * @return Response
      */
     public function show(Movie $show, MovieRepository $movieRepository, TimeConverter $timeConverter) :Response
     {
+
+        // if($show->getSlug() !== $slug) {
+        //     return $this->redirectToRoute('category_show', [
+        //         'id' => $id,
+        //         'slug' => $show->getSlug()
+        //     ]);
+        // }
+
+
         //  préparer les données
-        // TODO ce serait mieux d'avoir une classe qui récupère un film par ID
-         // pour se faire on peut inclure le fichier directement
-        //  require __DIR__ . '/../../sources/data.php';
 
-        //  dump($id);
-
+        // Avec le ParamConverter, l'id offset est géré automatiquement
          //si l'id n'existe pas on arrete le script
         //  if (! isset($shows[$id]))
         //  {
@@ -91,7 +96,6 @@ class MovieController extends AbstractController
         //      // permet de pouvoir exécuter du code malgré l'erreur 
         //      // et de garder une 404: page non trouvé en environnement de prod
         //      throw $this->createNotFoundException('The product does not exist');
-
         //  }
 
 
