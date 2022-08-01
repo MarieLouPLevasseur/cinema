@@ -4,11 +4,12 @@ namespace App\Controller\back;
 
 use App\Entity\Movie;
 use App\Form\MovieType;
+use App\Utils\MySlugger;
 use App\Repository\MovieRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/back/movie", name= "back_movie_")
@@ -28,13 +29,20 @@ class MovieController extends AbstractController
     /**
      * @Route("/add", name="add", methods={"GET", "POST"})
      */
-    public function add(Request $request, MovieRepository $movieRepository): Response
+    public function add(
+        Request $request,
+        MovieRepository $movieRepository,
+        MySlugger $mySlugger): Response
     {
         $movie = new Movie();
         $form = $this->createForm(MovieType::class, $movie);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // on slugify le titre fournit par le user avant de l'enregistrer en BDD
+            $movie->setSlug($mySlugger->slugify($movie->getTitle()));
+
             $movieRepository->add($movie, true);
 
             $this->addFlash('success', 'Le Movie a bien été ajouté');
@@ -61,12 +69,20 @@ class MovieController extends AbstractController
     /**
      * @Route("/{id}/edit", name="edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Movie $movie, MovieRepository $movieRepository): Response
+    public function edit(
+        Request $request,
+        Movie $movie,
+        MovieRepository $movieRepository,
+        MySlugger $mySlugger): Response
     {
         $form = $this->createForm(MovieType::class, $movie);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+        // on slugify le titre fournit par le user avant de l'enregistrer en BDD
+        $movie->setSlug($mySlugger->slugify($movie->getTitle()));
+
             $movieRepository->add($movie, true);
 
             $this->addFlash('success', 'Le Movie a bien été modifié');

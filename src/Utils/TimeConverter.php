@@ -31,6 +31,7 @@ class TimeConverter  extends AbstractExtension
     //     $this->request = $request;
     // }
 
+    // ! revoir le code du prof pour mettre à jour le comportement avec l'injection de dépendance et la config environnement
         //TEST a supprimer
         // $totalMinutes = 1440.5;
 
