@@ -1939,7 +1939,9 @@ class AppFixtures extends Fixture
             $movieObj->setPoster($currentMovie['poster']);
 
             // mise en place du slug en bdd
-            $movieObj->setSlug($this->slugger->slugify($currentMovie['title']));
+            //modifier pour mettre une chaine vide pour tester la commande automatique en console
+            // $movieObj->setSlug($this->slugger->slugify($currentMovie['title']));
+            $movieObj->setSlug(' ');
 
             // on peut convertir de plusieurs manière une chaine de caractère en entier
             // en précisant le type entre parenthèse avant la valeur

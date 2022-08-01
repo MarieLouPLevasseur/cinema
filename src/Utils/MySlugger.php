@@ -40,4 +40,16 @@ class MySlugger {
         return $mySlug;
 
     }
+// ! le set est nécessaire pour la Command pour l'option mettre en minuscule
+     /**
+     * Set the value of toLower
+     *
+     * @return  self
+     */ 
+    public function setToLower($toLower)
+    {
+        $this->toLower = $toLower;
+
+        return $this;
+    }
 }
