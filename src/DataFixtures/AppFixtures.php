@@ -11,20 +11,21 @@ use App\Entity\Review;
 use App\Entity\Season;
 use DateTimeImmutable;
 use App\Entity\Casting;
+use App\Utils\MySlugger;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
     private $passwordHasher;
     private $slugger;
 
-
+    // injection dans le construct de NOTRE service pour mettre le slug en minuscule
     public function __construct(
         UserPasswordHasherInterface $passwordHasher,
-        SluggerInterface $slugger)
+        MySlugger $slugger)
     {
         $this->passwordHasher = $passwordHasher;
         $this->slugger = $slugger;
@@ -1938,7 +1939,7 @@ class AppFixtures extends Fixture
             $movieObj->setPoster($currentMovie['poster']);
 
             // mise en place du slug en bdd
-            $movieObj->setSlug($this->slugger->slug($currentMovie['title']));
+            $movieObj->setSlug($this->slugger->slugify($currentMovie['title']));
 
             // on peut convertir de plusieurs manière une chaine de caractère en entier
             // en précisant le type entre parenthèse avant la valeur
