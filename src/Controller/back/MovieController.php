@@ -32,7 +32,8 @@ class MovieController extends AbstractController
     public function add(
         Request $request,
         MovieRepository $movieRepository,
-        MySlugger $mySlugger): Response
+        MySlugger $mySlugger
+        ): Response
     {
         $movie = new Movie();
         $form = $this->createForm(MovieType::class, $movie);
@@ -40,8 +41,9 @@ class MovieController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            // le titre sera sluggifier avec un ecouteur d'évenement
             // on slugify le titre fournit par le user avant de l'enregistrer en BDD
-            $movie->setSlug($mySlugger->slugify($movie->getTitle()));
+            // $movie->setSlug($mySlugger->slugify($movie->getTitle()));
 
             $movieRepository->add($movie, true);
 
@@ -73,15 +75,17 @@ class MovieController extends AbstractController
         Request $request,
         Movie $movie,
         MovieRepository $movieRepository,
-        MySlugger $mySlugger): Response
+        MySlugger $mySlugger
+        ): Response
     {
         $form = $this->createForm(MovieType::class, $movie);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            // le titre sera sluggifier avec un ecouteur d'évenement
         // on slugify le titre fournit par le user avant de l'enregistrer en BDD
-        $movie->setSlug($mySlugger->slugify($movie->getTitle()));
+        // $movie->setSlug($mySlugger->slugify($movie->getTitle()));
 
             $movieRepository->add($movie, true);
 

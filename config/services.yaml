@@ -29,6 +29,12 @@ services:
     App\Utils\MySlugger:
         bind:
             $toLower: '%env(resolve:SLUGIFY_TO_LOWER)%'
-
+    App\EventListener\MovieListener:
+        tags:
+            -
+                # these are the options required to define the entity listener
+                name: 'doctrine.orm.entity_listener'
+                event: 'preFlush'
+                entity: 'App\Entity\Movie'
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
