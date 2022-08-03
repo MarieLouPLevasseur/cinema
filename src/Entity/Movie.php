@@ -6,6 +6,8 @@ use App\Repository\MovieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=MovieRepository::class)
@@ -16,26 +18,31 @@ class Movie
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"api_v1_movie_list", "movie_genre"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=25, nullable=true)
+     * @Groups({"api_v1_movie_list", "movie_genre"})
      */
     private $isan;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"api_v1_movie_list", "movie_genre"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"api_v1_movie_list", "movie_genre"})
      */
     private $duration;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
+     * @Groups({"api_v1_movie_list" , "movie_genre"})
      */
     private $releasedAt;
 
@@ -51,6 +58,7 @@ class Movie
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"api_v1_movie_list", "movie_genre"})
      */
     private $poster;
 
@@ -66,6 +74,7 @@ class Movie
 
     /**
      * @ORM\ManyToMany(targetEntity=Genre::class, inversedBy="movies")
+     * @Groups({"api_v1_movie_list", "movie_genre"})
      */
     private $genres;
 

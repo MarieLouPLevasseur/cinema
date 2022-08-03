@@ -1,0 +1,27 @@
+
+## liste tous les films
+GET http://localhost:8000/api/v1_0/movies/
+
+### show 1 film by ID
+
+GET http://localhost:8000/api/v1_0/movies/181
+
+## TODO delete (ne fonctionne pas encore)
+
+DELETE http://localhost:8000/api/v1_0/movies/181
+
+## show 1 movie random
+
+GET http://localhost:8000/api/v1_0/movies/random
+
+## TODO ajout d'un film (nefonctionne pas encore)
+
+POST http://localhost:8000/api/v1_0/movies
+
+## récupère tous les genres
+
+GET  http://localhost:8000/api/v1_0/genres/
+
+## récupère tous les films d'un genre donné
+
+GET  http://localhost:8000/api/v1_0/genres/165/movies

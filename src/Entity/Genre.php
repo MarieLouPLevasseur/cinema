@@ -5,9 +5,12 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use App\Repository\GenreRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+* @ORM\Entity(repositoryClass=GenreRepository::class)
  */
 class Genre {
 
@@ -16,6 +19,7 @@ class Genre {
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"group_genre"})
      * 
      * @var int
      */
@@ -24,13 +28,16 @@ class Genre {
     /**
      *
      * @ORM\Column(type="string", length=255)
-     * 
+     * @Groups({"group_genre"})
+     *
      * @var string
      */
     private $name;
 
     /**
      * @ORM\ManyToMany(targetEntity=Movie::class, mappedBy="genres")
+     * @Groups({"group_genre"})
+     * 
      */
     private $movies;
 
