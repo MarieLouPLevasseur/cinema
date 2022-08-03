@@ -82,7 +82,8 @@ class UserController extends AbstractController
         Request $request,
         Security $security,
         User $user,
-        UserRepository $userRepository): Response
+        UserRepository $userRepository,
+        UserPasswordHasherInterface $passwordHasher): Response
     {
         // retire le droit utilisateur à manager
         $this->denyAccessUnlessGranted('ROLE_MANAGER');
@@ -114,9 +115,9 @@ class UserController extends AbstractController
         // ********************************************************************
 
         $form = $this->createForm(UserType::class, $user);
-
+        // ! champs réactiver pour test des subscribers à l'édition
         // permet de retirer le champs mot de passe que pour l'édition
-        $form->remove('password');
+        // $form->remove('password');
 
         $form->handleRequest($request);
 
@@ -124,6 +125,21 @@ class UserController extends AbstractController
             // inutile car l'accès 
             // $password = $passwordHasher->hashPassword($user, $user->getPassword());
             // $user ->setPassword($password);
+
+             // est ce qu'un mot de passe a été saisi?
+
+            //  dd($form);
+             // si oui alors le hasher et le remplacer dans l'objet user
+                // on récupère le mot de passe dans passwordClear
+                $passwordClear = $form->get('password')->getData();
+
+                if (! empty($passwordClear))
+                {
+                    // si oui alors le hashé et le remplacer dans l'objet user
+                    $hashedPassword = $passwordHasher->hashPassword($user, $passwordClear);
+                    $user->setPassword($hashedPassword);
+                }
+    
 
 
             $userRepository->add($user, true);
