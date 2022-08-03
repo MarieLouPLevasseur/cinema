@@ -52,11 +52,21 @@ Sur la page de read on peut ajouter des boutons d'actions
 
 Ces Controllers sont dans un dossier Api
 
-| URL | Méthode HTTP | Contrôleur       | Méthode | Titre HTML           | Commentaire    |
-| --- | ------------ | ---------------- | ------- | -------------------- | -------------- |
-| `/api/movies/{id}` | `GET` | `FavoriteController` | `favoriteAdd`  |  | ajoute en session et redirige |
+> :hand: Convention de nommage : https://restfulapi.net/resource-naming/
+
+| Endpoint                       | Méthode HTTP | Controller | Description                                                                                   | Retour                          |
+| ------------------------------ | ------------ | ---------- | --------------------------------------------------------------------------------------------- | ------------------------------- |
+| `/api/v1.0/movies`             | `GET`        | `MovieController` | Récupération de tous les films                                                                | 200                             |
+| `/api/v1.0/movies/{id}`        | `GET`        | `MovieController` | Récupération du film dont l'id est fourni                                                     | 200 ou 404                      |
+| `/api/v1.0/movies/{id}`        | `DELETE`     | `MovieController` | Suppression d'un film dont l'id est fourni                                                    | 200 ou 404                      |
+| `/api/v1.0/movies/random`      | `GET`        | `MovieController` | Récupération du film au hasard                                                                | 200 ou 404                      |
+| `/api/v1.0/movies`             | `POST`       | `MovieController` | Ajout d'un film _+ la donnée JSON qui représente le nouveau film_                             | 201 + Location: /movies/{newID} |
+| `/api/v1.0/movies/{id}`        | `PUT`        | `MovieController` | Modification d'un film dont l'id est fourni _+ la donnée JSON qui représente le film modifié_ | 200, 204 ou 404                 |
+| `/api/v1.0/genres`             | `GET`        | `GenreController` | Récupération de tous les genres                                                               | 200                             |
+| `/api/v1.0/genres/{id}/movies` | `GET`        | `GenreController` | Récupération de tous les films du genre donné                                                 | 200 ou 404                      |
 
 ## Sandbox
 
-On a un controller pour faire des tests, dedans c'est en mode YOLO !!! 
+On a un controller pour faire des tests, dedans c'est en mode YOLO !!!
+
 ![](https://img.wattpad.com/4454f9faf5799ae831bf57c1416ba15dffd8f1f5/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f776174747061642d6d656469612d736572766963652f53746f7279496d6167652f6843574d714c7332565a304a4b413d3d2d3339333538383833352e313462316561336531376334383536613930333930343834353039332e706e67?s=fit&w=720&h=720)
