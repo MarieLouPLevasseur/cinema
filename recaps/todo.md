@@ -17,6 +17,7 @@
 - dans le formulaire d'ajout de Review, supprimer le champ User du formulaire pour utiliser l'utilisateur qui est connecté
 - afficher les flash messages sur les pages qui en ont besoin ( un include peut etre )
 - ajouter les AccessControlTest pour les Manager et les Admin
+  
 - passer les roles en entités
   - modifier le MCD ( avec les relations )
   - modifier les entités
@@ -25,6 +26,7 @@
   - faire la migration
     - attention à récupérer les roles des utilisateurs
   - vérifier que ca marche
+- dans les controller d'API factoriser la fonction prepareResponse
 
 
 ## DONE

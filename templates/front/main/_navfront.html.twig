@@ -19,32 +19,32 @@
                     <li class="nav-item">
                         <a class="nav-link" href={{path('movie_favorites')}}><i class="bi bi-bookmark"></i> Ma liste</a>
                     </li>
-                {# {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
-                 <li class="nav-item">
-                       Bonjour, {{ app.user.username }}
-                        Mail: {{app.user.email}}
-                        Role: {{app.user.role}}
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+                        {% if (app.user.role == "ROLE_ADMIN") or (app.user.role == "ROLE_MANAGER")%}
                        
-                    </li> #}
-                      {# <li class="nav-item">
-                        <a class="nav-link" href={{path('movie_favorites')}}><i class="bi bi-bookmark"></i> Ma liste</a>
-                    </li> #}
-                        {# {% endif %} #}
+                            <li class="nav-item"><a class="nav-link" href={{path ("back_homepage")}}>Backoffice</a></li>
+                        {% endif %}
+                    {% endif %}
+
+           
                     
                    
                 </ul>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown">
+                        <a class="nav-link
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                dropdown-toggle
+                        {% endif  %} "
+                          href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
                             <span>
             {#autre possibilité: {% if app.user %} #}
 
                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                        Name: {{ app.user.username }} <br>
-                        Mail: {{app.user.email}} <br>
-                        Role: {{app.user.role}}
+                        Bienvenue: {{ app.user.username }} <br>
+                      
 
 
                         {% else %}
@@ -53,37 +53,29 @@
                             </span>
                             <i class="bi bi-person-square"></i>
                         </a>
-                         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-
-                            <a role="button"class="btn btn-danger " href={{path ("app_logout")}} aria-label= "logout">Déconnexion</a>
-                {% endif  %}
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Profil</a></li>
-
+                        
+                       
             {# **OK**  le lien backOffice ne devrait apparaitre que si utilisateur est MANAGER ou ADMIN #}
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
-                                {% if (app.user.role == "ROLE_ADMIN") or (app.user.role == "ROLE_MANAGER")%}
-                       
-                                    <li><a class="dropdown-item" href={{path ("back_homepage")}}>Backoffice</a></li>
-                                {% endif %}
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Profil</a></li>
+
+
+                              
                     {% endif %}
 
-{# pourquoi il n'affiche pas la déconnexion si on est connecté  #}
-                {# {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-
-                            <li><a role="button"class="btn btn-danger " href={{path ("app_logout")}} aria-label= "logout">Déconnexion</a></li>
-                {% endif  %} #}
-
-
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
+                                               
                         </ul>
+                        
                     </li>
+                    
                 </ul>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
-                {# <button type="button" class="btn btn-danger me-2" onclick={{path('app_login')}}>Connexion</button> #}
+                            <a class="btn btn-danger " href={{path ("app_logout")}} role="button" aria-label= "logout">Déconnexion</a>
+                {% endif  %}
+
                 {% if not app.user %}
 
                 <a class="btn btn-danger " href={{path ("app_login")}} role="button" aria-label="login">Connexion</a>
