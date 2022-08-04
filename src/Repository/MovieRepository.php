@@ -109,6 +109,35 @@ public function findByOrderedByTitleAscQB()
          return $query->getResult();
     }
 
+      
+     /**
+      * Find/search movies by title/content
+      *
+      * @param string $query user search 
+
+      * @return void
+      */
+     public function findMoviesByName(string $query)
+     {
+         $builder = $this->createQueryBuilder('m');
+         $builder
+             ->where(
+                 $builder->expr()->andX(
+                     $builder->expr()->orX(
+                         $builder->expr()->like('m.title', ':query'),
+                         $builder->expr()->like('m.summary', ':query'),
+                         $builder->expr()->like('m.synopsis', ':query'),
+                     ),
+                    //  $builder->expr()->isNotNull('m.released_at')
+                 )
+             )
+             ->setParameter('query', '%' . $query . '%')
+         ;
+         return $builder
+             ->getQuery()
+             ->getResult();
+     }
+
 //    /**
 //     * @return Movie[] Returns an array of Movie objects
 //     */
