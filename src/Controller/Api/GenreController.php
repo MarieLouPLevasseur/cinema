@@ -102,7 +102,7 @@ class GenreController extends AbstractController
         Request $request, 
         SerializerInterface $serializer,
         ValidatorInterface $validator
-        ) 
+    ) 
     {
         // pour récupérer le json on utilise getContent
         // https://symfony.com/doc/current/components/http_foundation.html#accessing-request-data
@@ -135,6 +135,9 @@ class GenreController extends AbstractController
         return $this->prepareResponse('OK', [], [], false, Response::HTTP_CREATED );
     }
 
+
+
+    
 //    ! Rajouter les autres fonctions
 
     /**

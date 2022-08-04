@@ -17,6 +17,19 @@ GET http://localhost:8000/api/v1_0/movies/random
 ### TODO ajout d'un film (nefonctionne pas encore)
 
 POST http://localhost:8000/api/v1_0/movies
+content-type: application/json
+
+{
+    "isan": "",
+    "title": "From API",
+    "duration": 42,
+    "releasedAt": "2022-08-01T20:11:00+02:00",
+    "summary": "Neuf familles nobles se battent pour le contr\u00f4le des terres de Westeros, tandis qu\u0027un ancien ennemi revient...",
+    "synopsis": "Il y a tr\u00e8s longtemps, \u00e0 une \u00e9poque oubli\u00e9e, une force a d\u00e9truit l\u0027\u00e9quilibre des saisons. Dans un pays o\u00f9 l\u0027\u00e9t\u00e9 peut durer plusieurs ann\u00e9es et l\u0027hiver toute une vie, des forces sinistres et surnaturelles se pressent aux portes du Royaume des Sept Couronnes. La confr\u00e9rie de la Garde de Nuit, prot\u00e9geant le Royaume de toute cr\u00e9ature pouvant provenir d\u0027au-del\u00e0 du Mur protecteur, n\u0027a plus les ressources n\u00e9cessaires pour assurer la s\u00e9curit\u00e9 de tous. Apr\u00e8s un \u00e9t\u00e9 de dix ann\u00e9es, un hiver rigoureux s\u0027abat sur le Royaume avec la promesse d\u0027un avenir des plus sombres. Pendant ce temps, complots et rivalit\u00e9s se jouent sur le continent pour s\u0027emparer du Tr\u00f4ne de Fer, le symbole du pouvoir absolu.",
+    "poster": "https:\/\/m.media-amazon.com\/images\/M\/MV5BYTRiNDQwYzAtMzVlZS00NTI5LWJjYjUtMzkwNTUzMWMxZTllXkEyXkFqcGdeQXVyNDIzMzcwNjc@._V1_SX300.jpg",
+    "rating": 4.7,
+    "genres": []
+  }
 
 
 #############

@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -61,12 +63,12 @@ class MovieController extends AbstractController
         return $this->json($movie, Response::HTTP_OK, [], ['groups' => 'api_v1_movie_show']); //200
     }
 
-     /**
+    /**
      * delete a movie
      *
      * @Route("/{id<\d+>}", name="delete", methods="DELETE")
      * 
-     */
+    */
     public function delete($id, EntityManagerInterface $em, MovieRepository $movieRepository) :Response
     {
         // TODO a tester
@@ -125,22 +127,44 @@ class MovieController extends AbstractController
         return $this->json($movieRandom, 200, [], ['groups' => 'api_v1_movie_show']);
     }
 
-     /**
-     * add a movie
+    /**
+     * Adds one movie
      *
-     * @Route("/", name="add", methods="POST")
-     * 
+     * @Route("", name="add", methods="POST")
+     * @return Response
      */
-    public function add(MovieRepository $movieRepository, Request $request) 
+    public function add(
+        EntityManagerInterface $em, 
+        Request $request, 
+        SerializerInterface $serializer,
+        ValidatorInterface $validator
+        )
     {
-        // récupérer les données fournies
+        // pour récupérer le json on utilise getContent
+        // https://symfony.com/doc/current/components/http_foundation.html#accessing-request-data
+        $data = $request->getContent();
 
-        $jsonData = json_decode($request->getContent(), true);
+        // on créé un objet à partir du json
+        // https://symfony.com/doc/current/components/serializer.html#deserializing-an-object
+        $movie = $serializer->deserialize($data, Movie::class, 'json');
 
+        // validation de l'objet grace au composant validator
+        // qui va nous permettre de vérifier les contraintes définies au niveau de l'entité
+        $errors = $validator->validate($movie);
 
-        dump($jsonData);
-        dump("TODO: Vous avez tenté d'ajouter un objet movie: la route n'est pas finie");
-        // TODO effectuer l'ajout en BDD, renvoyer une réponse de confirmation et faire une redirection
+        // todo générer un message d'erreur plus joli
+        if (count($errors) > 0) {
+
+            $errorsString = (string) $errors;
+
+            return $this->prepareResponse($errorsString, [], [], true, Response::HTTP_BAD_REQUEST);
+        }
+
+        // on enregistre en BDD
+        $em->persist($movie);
+        $em->flush();
+
+        return $this->prepareResponse('Created', [], [], false, Response::HTTP_CREATED );
     }
 
     /**
