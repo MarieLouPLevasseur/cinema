@@ -2,6 +2,7 @@
 
 namespace App\Controller\front;
 
+use App\Repository\GenreRepository;
 use App\Repository\MovieRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,7 +19,7 @@ class MainController extends AbstractController
      * @Route("/", name="homepage", methods="GET")
      * @return Response
      */
-    public function homepage(MovieRepository $movieRepository) :Response
+    public function homepage(MovieRepository $movieRepository, GenreRepository $genreRepository) :Response
     {
 
         // préparer les données
@@ -29,6 +30,8 @@ class MainController extends AbstractController
         $shows = $movieRepository->findAll();
         $homepageShows = [];
 
+
+        $genres = $genreRepository->findAll();
         // on récupère que 2 éléments au hasard du tableau shows
         // spoiler normalement ce code on le rangerait dans une classe
         // array_rand 
@@ -53,8 +56,9 @@ class MainController extends AbstractController
 
         // return new Response('<h1>Homepage</h1>');
         return $this->render('front/main/homepage.html.twig',[
-            'title' =>'Homepage',
-            'show_list' => $homepageShows
+            'title'     =>'Homepage',
+            'show_list' => $homepageShows,
+            'genre_list'=> $genres,
 
         ]);
 

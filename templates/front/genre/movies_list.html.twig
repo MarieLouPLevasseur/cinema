@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+            {% include('front/main/_navfront.html.twig') %}
+
+    <!-- main -->
+
+    <div class="container-xl bg-light p-5 border-top">
+
+        <div class="row mb-2">
+{# on inclus les catérogies #}
+            {% include('front/movie/_genres_list.html.twig') %}
+
+            
+
+            <div class="col-12 col-lg-9">
+
+                <h2 class="text-muted fw-bold mb-4">Films par Genre: {{genre_list.name}}</h2>
+
+{# on peut faire un tri direct des données avec la commande: 
+
+                {#% for current_show in show_list|sort((a, b) => a.title <=> b.title) % #}
+
+                {% for current_show in genre_list.movies %}
+
+                    {% include ('front/movie/_show_detail.html.twig') %}
+
+            {% endfor %}
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+  {% endblock %}

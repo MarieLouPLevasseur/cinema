@@ -1,8 +1,16 @@
 <div class="col-12 col-lg-3">
     <h2 class="text-center text-muted fw-bold mb-4">Les genres</h2>
     <ul class="d-flex flex-column flex-wrap list-unstyled justify-content-center">
-        <li class="btn btn-sm btn-outline-danger mx-1 mb-2">Action</li>
-        <li class="btn btn-sm btn-outline-danger mx-1 mb-2">Animation</li>
+
+
+    {# TODO dynamisation affiche liste des genres #}
+
+    {% for current_genre in genre_list %}
+     <a href="{{ path('front_genre_movies_list', {id: current_genre.id}) }}">  <li class="btn btn-sm btn-outline-danger mx-1 mb-2 col-12">  {{current_genre.name}}</li></a>
+
+    {% endfor %}
+
+        {# <li class="btn btn-sm btn-outline-danger mx-1 mb-2">Animation</li>
         <li class="btn btn-sm btn-outline-danger mx-1 mb-2">Aventure</li>
         <li class="btn btn-sm btn-outline-danger mx-1 mb-2">Comédie</li>
         <li class="btn btn-sm btn-outline-danger mx-1 mb-2">Dessin animé</li>
@@ -16,6 +24,6 @@
         <li class="btn btn-sm btn-outline-danger mx-1 mb-2">Romance</li>
         <li class="btn btn-sm btn-outline-danger mx-1 mb-2">Science-fiction</li>
         <li class="btn btn-sm btn-outline-danger mx-1 mb-2">Thriller</li>
-        <li class="btn btn-sm btn-outline-danger mx-1 mb-2">Western</li>
+        <li class="btn btn-sm btn-outline-danger mx-1 mb-2">Western</li> #}
     </ul>
 </div>

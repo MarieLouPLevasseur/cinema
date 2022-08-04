@@ -5,6 +5,7 @@ namespace App\Controller\front;
 use App\Entity\Movie;
 use App\Entity\Review;
 use App\Form\ReviewType;
+use App\Repository\GenreRepository;
 use App\Utils\TimeConverter;
 use App\Repository\MovieRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -30,7 +31,7 @@ class MovieController extends AbstractController
      * @Route("", name="list", methods={"GET"})
      * @return Response
      */
-    public function list(MovieRepository $movieRepository) :Response
+    public function list(MovieRepository $movieRepository, GenreRepository $genreRepository) :Response
     {
         // récupérer la liste des films
         //inclure la page source ou le fichier directement
@@ -53,13 +54,16 @@ class MovieController extends AbstractController
         // utiliser le QueryBuilder (DQL) avec des sélects:
           $shows = $movieRepository->findByOrderedByTitleAscQB();
 
+          $genres = $genreRepository->findAll();
+
 
         // dump($shows);
 
 
         return $this->render('front/movie/list.html.twig',[
-            'title' =>'Liste des films et séries',
-            'show_list' => $shows,
+            'title'      =>'Liste des films et séries',
+            'show_list'  => $shows,
+            'genre_list' => $genres,
 
         ]);
 
@@ -102,15 +106,15 @@ class MovieController extends AbstractController
          //sinon on continue le script
 
         // $show = $shows[$id];
-    // dump($show);
+        // dump($show);
 
-    // on créer un objet TimeConvert et on appel sa méthode
-    // $timeConverter = new TimeConverter();
-    // dump($timeConverter->convert($show['duration']));
-    // avoir la durée au format xxhyym
+        // on créer un objet TimeConvert et on appel sa méthode
+        // $timeConverter = new TimeConverter();
+        // dump($timeConverter->convert($show['duration']));
+        // avoir la durée au format xxhyym
 
-    // nouvelle requete pour optimiser performance de la récup des datas (issus des jointures)
-    $movie = $movieRepository->findForShow($show->getId());
+        // nouvelle requete pour optimiser performance de la récup des datas (issus des jointures)
+        $movie = $movieRepository->findForShow($show->getId());
 
  
         // fournir les infos à la vue
@@ -182,5 +186,7 @@ class MovieController extends AbstractController
         ]);
     }
 
+
+   
 
 }

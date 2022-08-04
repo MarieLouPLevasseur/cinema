@@ -5,8 +5,9 @@
             {% include('front/main/_navfront.html.twig') %}
 
 {# {{dump(movies)}} #}
+    <div class="container-xl bg-light p-5 border-top">
 
- <div class="col-8 col-lg-9 center">
+ <div class="col-10 col-lg-9 center">
 
                 <h2 class="text-muted fw-bold mb-4">Les films et séries/Résultats de recherche</h2>
     {% for current_show in movies %}
@@ -16,6 +17,7 @@
 
     {% endfor %}
 
+ </div>
  </div>
 
 {% endblock %}
