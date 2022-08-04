@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -162,6 +163,64 @@ class MovieController extends AbstractController
 
         // on enregistre en BDD
         $em->persist($movie);
+        $em->flush();
+
+        return $this->prepareResponse('Created', [], [], false, Response::HTTP_CREATED );
+    }
+
+     /**
+     * Edit one movie
+     *
+     * @Route("/{id<\d+>}", name="edit", methods="PATCH")
+     * @return Response
+     */
+    public function edit(
+        $id,
+        EntityManagerInterface $em, 
+        MovieRepository $movieRepository,
+        Request $request, 
+        SerializerInterface $serializer,
+        ValidatorInterface $validator
+        )
+    {
+        // récupérer les données du movie dont l'id est fourni
+        $movie = $movieRepository->find($id);
+        if ($movie === null )
+        {
+            // si le movie n'existe pas on le signale à l'utilisateur
+            return $this->prepareResponse(
+                'No movie found for Id [' . $id . ']',
+                [],
+                [],
+                true,
+                Response::HTTP_NOT_FOUND
+            );
+        }
+
+        // pour récupérer le json on utilise getContent
+        // https://symfony.com/doc/current/components/http_foundation.html#accessing-request-data
+        $data = $request->getContent();
+
+       
+        // on modifie l'objet à partir du json
+        // le AbstractNormalizer::OBJECT_TO_POPULATE regardera les champs et mettra a jour automatiquement s'il le trouve
+        // https://symfony.com/doc/current/components/serializer.html#deserializing-an-object
+        $serializer->deserialize($data, Movie::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $movie]);
+
+        // validation de l'objet grace au composant validator
+        // qui va nous permettre de vérifier les contraintes définies au niveau de l'entité
+        $errors = $validator->validate($movie);
+
+        // todo générer un message d'erreur plus joli
+        if (count($errors) > 0) {
+
+            $errorsString = (string) $errors;
+
+            return $this->prepareResponse($errorsString, [], [], true, Response::HTTP_BAD_REQUEST);
+        }
+
+        // on enregistre en BDD
+        // $em->persist($movie);
         $em->flush();
 
         return $this->prepareResponse('Created', [], [], false, Response::HTTP_CREATED );
