@@ -40,7 +40,7 @@
                     return response.json();
                 })
             },
-            {handleLoadMoviesBtnClick: function(evt)
+            handleLoadMoviesBtnClick: function(evt)
             {
                 fetch(app.apiUrl + "/movies")
                 .then(function (response) {
