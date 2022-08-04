@@ -1,27 +1,49 @@
 
-## liste tous les films
+### liste tous les films
 GET http://localhost:8000/api/v1_0/movies/
 
 ### show 1 film by ID
 
 GET http://localhost:8000/api/v1_0/movies/181
 
-## TODO delete (ne fonctionne pas encore)
+### TODO delete (ne fonctionne pas encore)
 
 DELETE http://localhost:8000/api/v1_0/movies/181
 
-## show 1 movie random
+### show 1 movie random
 
 GET http://localhost:8000/api/v1_0/movies/random
 
-## TODO ajout d'un film (nefonctionne pas encore)
+### TODO ajout d'un film (nefonctionne pas encore)
 
 POST http://localhost:8000/api/v1_0/movies
 
-## récupère tous les genres
 
-GET  http://localhost:8000/api/v1_0/genres/
+#############
+### GENRE ###
+#############
 
-## récupère tous les films d'un genre donné
+### récupère tous les genres
 
-GET  http://localhost:8000/api/v1_0/genres/165/movies
+GET http://localhost:8000/api/v1_0/genres/
+
+### TODO get a genre
+GET http://localhost:8000/api/v1_0/genres/401
+
+### récupère tous les films d'un genre donné
+
+GET http://localhost:8000/api/v1_0/genres/165/movies
+
+### ! fait doublon avec la récupération des films avec un genre donné solution 2: a revoir ne marche pas
+GET http://localhost:8000/api/v1_0/genres/165/movies2
+
+### TODO get a random genre à faire
+GET http://localhost:8000/api/v1_0/genres/random
+
+### Adds a genre but should generate an error min length is 2 character
+POST http://localhost:8000/api/v1_0/genres
+content-type: application/json
+
+{
+    "name": "nouvelle creation depuis API"
+}

@@ -88,6 +88,27 @@ public function findByOrderedByTitleAscQB()
     return $query->getResult();
 }
 
+ /**
+     * find all movies for given genre
+     *
+     * @param int $genreId
+     * @return Movie[]
+     */
+    public function findByGenre($genreId): array
+    {
+         $entityManager = $this->getEntityManager();
+ 
+         $query = $entityManager->createQuery(
+             'SELECT m
+             FROM App\Entity\Movie m
+             JOIN m.genres g
+             WHERE g.id = :genreId
+             '
+         )->setParameter('genreId', $genreId);
+ 
+         return $query->getResult();
+    }
+
 //    /**
 //     * @return Movie[] Returns an array of Movie objects
 //     */

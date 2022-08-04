@@ -19,7 +19,12 @@ class Genre {
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"group_genre"})
+     * 
+     * @Groups({"api_v1_movie_list"})
+     * @Groups({"api_v1_movie_show"})
+     * 
+     * @Groups({"api_v1_genre_list"})
+     * @Groups({"api_v1_genre_show"})
      * 
      * @var int
      */
@@ -28,7 +33,17 @@ class Genre {
     /**
      *
      * @ORM\Column(type="string", length=255)
-     * @Groups({"group_genre"})
+     * 
+     * @Assert\NotNull
+     * @Assert\Length(
+     *      min=2
+     * )
+     * 
+     * @Groups({"api_v1_movie_list"})
+     * @Groups({"api_v1_movie_show"})
+     * 
+     * @Groups({"api_v1_genre_show"})
+     * @Groups({"api_v1_genre_list"})
      *
      * @var string
      */
@@ -36,7 +51,10 @@ class Genre {
 
     /**
      * @ORM\ManyToMany(targetEntity=Movie::class, mappedBy="genres")
-     * @Groups({"group_genre"})
+     * 
+     * 
+     * @Groups({"api_v1_genre_list"})
+     * @Groups({"api_v1_genre_show"})
      * 
      */
     private $movies;

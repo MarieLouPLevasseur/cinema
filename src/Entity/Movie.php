@@ -18,78 +18,114 @@ class Movie
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"api_v1_movie_list", "movie_genre"})
+     * 
+     * @Groups({"api_v1_movie_list"})
+     * @Groups({"api_v1_movie_show"})
+     * 
+     * @Groups({"api_v1_genre_list"})
+     * @Groups({"api_v1_genre_list_movies"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=25, nullable=true)
-     * @Groups({"api_v1_movie_list", "movie_genre"})
+     * 
+     * @Groups({"api_v1_movie_list"})
+     * @Groups({"api_v1_movie_show"})
+     * @Groups({"api_v1_genre_list_movies"})
      */
     private $isan;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"api_v1_movie_list", "movie_genre"})
+     * 
+     * @Groups({"api_v1_movie_list"})
+     * @Groups({"api_v1_movie_show"})
+     * 
+     * @Groups({"api_v1_genre_list"})
+     * @Groups({"api_v1_genre_list_movies"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"api_v1_movie_list", "movie_genre"})
+     * 
+     * @Groups({"api_v1_movie_list"})
+     * @Groups({"api_v1_movie_show"})
+     * @Groups({"api_v1_genre_list_movies"})
      */
     private $duration;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
-     * @Groups({"api_v1_movie_list" , "movie_genre"})
+     * 
+     * @Groups({"api_v1_movie_list" })
+     * @Groups({"api_v1_movie_show"})
+     * @Groups({"api_v1_genre_list_movies"})
      */
     private $releasedAt;
 
     /**
      * @ORM\Column(type="text")
+     * 
+     * @Groups({"api_v1_movie_show"})
      */
     private $summary;
 
     /**
      * @ORM\Column(type="text")
+     * 
+     * @Groups({"api_v1_movie_show"})
      */
     private $synopsis;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"api_v1_movie_list", "movie_genre"})
+     * 
+     * @Groups({"api_v1_movie_list"})
+     * @Groups({"api_v1_movie_show"})
      */
     private $poster;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * 
+     * @Groups({"api_v1_movie_show"})
+     * @Groups({"api_v1_genre_list_movies"})
      */
     private $rating;
 
     /**
      * @ORM\OneToMany(targetEntity=Season::class, mappedBy="movie", orphanRemoval=true)
+     * 
+     * @Groups({"api_v1_movie_show"})
      */
     private $seasons;
 
     /**
      * @ORM\ManyToMany(targetEntity=Genre::class, inversedBy="movies")
-     * @Groups({"api_v1_movie_list", "movie_genre"})
+     * @Groups({"api_v1_movie_list"})
+     * @Groups({"api_v1_movie_show"})
      */
     private $genres;
 
     /**
      * @ORM\OneToMany(targetEntity=Review::class, mappedBy="movie", orphanRemoval=true)
+     * 
      */
     private $reviews;
 
     /**
      * @ORM\OneToMany(targetEntity=Casting::class, mappedBy="movie", orphanRemoval=true)
+     * 
+     * @Groups({"api_v1_movie_show"})
      */
     private $castings;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Groups({"api_v1_movie_show"})
      */
     private $slug;
 

@@ -6,6 +6,8 @@ use App\Repository\PersonRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * @ORM\Entity(repositoryClass=PersonRepository::class)
@@ -16,6 +18,7 @@ class Person
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"api_v1_movie_show"})
      */
     private $id;
 // ! on peut passer les contraintes de validation directement dans les annotation avec le composant "Validator"
@@ -25,11 +28,15 @@ class Person
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Groups({"api_v1_movie_show"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Groups({"api_v1_movie_show"})
      */
     private $lastname;
 
