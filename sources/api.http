@@ -1,6 +1,15 @@
+### Login
+POST http://localhost:8000/api/login_check
+content-type: application/json
+
+{
+    "username":"admin@oflix.com",
+    "password":"devinci"
+}
 
 ### liste tous les films
 GET http://localhost:8000/api/v1_0/movies/
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2NTk2MTg4MzYsImV4cCI6MTY1OTYyMjQzNiwicm9sZXMiOlsiUk9MRV9BRE1JTiJdLCJlbWFpbCI6ImFkbWluQG9mbGl4LmNvbSJ9.fRQHA_i0uGIz5KgQ8js1xYa6K1VrjP7lEs5cbXn5y4RaAGAOR76_HpBzBZwf5ygBItATySxKEiK2I_0HtlqTts20v-cP0vp2k6DLkauZr93P_SvhScNqL25QWxVwDqinkEFd03x4AOYzEtemszmhB6L2t3H0UUtTy5dCJ0ml8YWvh1AkW1-TMJkcWyPOqGmn_atZhPfeKa8_1D9F2CIoBWECbaH7HWGKAnUxmmat59_o9HvVzae9wKgQIiyTTJA2odzYIPlUA_hhysDSH6om2RmusTmUhkaBYr1XzjGigYvdzr6jJZ-LAYezjcy_KZM--fu7I5VO2jsxKCoWlLF1kQ
 
 ### show 1 film by ID
 
