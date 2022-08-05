@@ -75,9 +75,9 @@ class SandboxController extends AbstractController
      */
     public function movieShow(Movie $movie)
     {
-        dump($movie); // sans 
+        // dump($movie); // sans 
         $movie->getSeasons()->first()->getNumber();
-        dd($movie);
+        // dd($movie);
 
     }
 

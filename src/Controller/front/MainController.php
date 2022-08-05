@@ -51,7 +51,7 @@ class MainController extends AbstractController
         // ? méhode 2: découpe précise du tableau
 
 
-        dump($homepageShows);
+        // dump($homepageShows);
 
 
         // return new Response('<h1>Homepage</h1>');

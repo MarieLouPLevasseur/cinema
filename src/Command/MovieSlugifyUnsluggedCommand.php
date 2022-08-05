@@ -77,7 +77,7 @@ class MovieSlugifyUnsluggedCommand extends Command
             // $allmovies= $manager->getRepository(Movie::class)->findAll();
             // $allmovies=  $this->$manager->getRepository(Movie::class)->findAll();
             $movieList = $this->movieRepo->findBy(['slug' => ''], [], $numberOfMoviesToUpdate);
-            dump($movieList);
+            // dump($movieList);
 
 
         // sluggifier le titre pour chaque movie

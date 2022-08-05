@@ -4,7 +4,7 @@
         <!-- img src="https://m.media-amazon.com/images/M/MV5BNThmZGY4NzgtMTM4OC00NzNkLWEwNmEtMjdhMGY5YTc1NDE4XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg" class="img-fluid" -->
     </div>
     <div class="col-8 p-4 d-flex flex-column position-static">
-        <a href="{{ path('movie_favorites_add', {id: current_show.id}) }}" class="movie__favorite fs-1 my-2 mx-3 link-danger"><i class="bi bi-bookmark-plus"></i></a>
+        <a href="{{ path('front_favoris_add', {id: current_show.id}) }}" class="movie__favorite fs-1 my-2 mx-3 link-danger"><i class="bi bi-bookmark-plus"></i></a>
 {# TODO changer le type car actuellement fixé en dur: créer un nouveau champs dans movie pour le fixer #}
         <strong class="d-inline-block mb-2 text-primary">{{ current_show.type }}</strong>
         <h3 class="mb-1">{{ current_show.title }}</h3>
